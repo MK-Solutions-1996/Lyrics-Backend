@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const ButtonContainer = styled.button`
   text-transform: capitalize;
   font-size: 1.4rem;
+  font-weight: bold;
   background: transparent;
   border: 0.05rem solid var(--mainBlack); /*From App.css*/
   border-color: var(--mainBlack);
@@ -43,5 +44,14 @@ export const LongLabelContainer = styled.label`
   padding: 0.1rem;
   height: auto;
   width: auto;
+  color: var(--mainBlack);
+`;
+
+export const TextAreaContainer = styled.textarea`
+  font-size: 1rem;
+  height: auto;
+  width: 20vw;
+  margin: 0.1rem;
+  padding: 0.1rem;
   color: var(--mainBlack);
 `;

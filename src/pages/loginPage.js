@@ -23,7 +23,7 @@ function login() {
               className="form-control"
               id="usr"
               name="username"
-              placeholder="Employee No."
+              placeholder="User Name"
             ></InputContainer>
           </div>
           <div className="form-group center">
@@ -36,12 +36,12 @@ function login() {
             ></InputContainer>
           </div>
           <div className="center">
-            <Link to="/viewCategory">
+            <Link to="/mainPage">
               <ButtonContainer>Login</ButtonContainer>
             </Link>
           </div>
           <div className="center">
-            <Link to="/viewCategory">
+            <Link to="/">
               <LongLabelContainer>Forgot your password?</LongLabelContainer>
             </Link>
           </div>

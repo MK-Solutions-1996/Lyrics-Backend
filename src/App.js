@@ -3,15 +3,27 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
 //import { Provider } from "react-redux";
-import LoginPage from "../src/pages/login";
-import DefaultPage from "../src/pages/defaultes";
-import ViewCategory from "./pages/category/viewCategories";
+import LoginPage from "./pages/loginPage";
+import DefaultPage from "./pages/defaultes";
+import MainPage from "./pages/mainPage";
+import AddArtist from "./pages/artist/addArtist";
+import ViewArtists from "./pages/artist/viewArtists";
+import AddSong from "./pages/song/addSong";
+import ViewSongs from "./pages/song/viewSongs";
+import AddCategory from "./pages/category/addCategory";
+import ViewCategories from "./pages/category/viewCategories";
 
 function App() {
   return (
     <Switch>
       <Route exact path="/" component={LoginPage}></Route>
-      <Route exact path="/viewCategory" component={ViewCategory}></Route>
+      <Route exact path="/mainPage" component={MainPage}></Route>
+      <Route exact path="/addArtist" component={AddArtist}></Route>
+      <Route exact path="/viewArtists" component={ViewArtists}></Route>
+      <Route exact path="/addSong" component={AddSong}></Route>
+      <Route exact path="/viewSongs" component={ViewSongs}></Route>
+      <Route exact path="/addCategory" component={AddCategory}></Route>
+      <Route exact path="/viewCategories" component={ViewCategories}></Route>
       <Route component={DefaultPage}></Route>
     </Switch>
   );
