@@ -32,58 +32,61 @@ function AddSong() {
           <div className="center">
             <TopicContainer>Add Song</TopicContainer>
           </div>
-
-          <div className="form-group center">
-            <InputContainer
-              type="text"
-              className="form-control"
-              id="title_name_sinhala"
-              name="title_name_sinhala"
-              placeholder="Title Name (Sinhala)"
-            ></InputContainer>
+          <div className="direction">
+            <div className="form-group center">
+              <InputContainer
+                type="text"
+                className="form-control"
+                id="title_name_sinhala"
+                name="title_name_sinhala"
+                placeholder="Title Name (Sinhala)"
+              ></InputContainer>
+            </div>
+            <div className="form-group center">
+              <InputContainer
+                type="text"
+                className="form-control"
+                id="title_name_singlish"
+                name="title_name_singlish"
+                placeholder="Title Name (Singlish)"
+              ></InputContainer>
+            </div>
           </div>
-          <div className="form-group center">
-            <InputContainer
-              type="text"
-              className="form-control"
-              id="title_name_singlish"
-              name="title_name_singlish"
-              placeholder="Title Name (Singlish)"
-            ></InputContainer>
-          </div>
-          <div className="form-group center">
-            <Dropdown
-              className="dropdown"
-              value={artist}
-              options={artists}
-              ariaLabel="Test"
-              onChange={e => setArtist(e.value)}
-              placeholder="Choose Artist Id"
-              optionLabel="label"
-              style={{
-                width: "20vw",
-                height: "2rem",
-                borderRadius: "0.4rem",
-                margin: "0.3rem"
-              }}
-            />
-          </div>
-          <div className="form-group center">
-            <MultiSelect
-              className="dropdown"
-              value={category}
-              options={categories}
-              onChange={e => setCategory(e.value)}
-              style={{
-                width: "20vw",
-                height: "2rem",
-                borderRadius: "0.4rem",
-                margin: "0.3rem"
-              }}
-              filter={true}
-              filterPlaceholder="Search"
-              placeholder="Choose Categories"
-            />
+          <div className="direction">
+            <div className="form-group center">
+              <Dropdown
+                className="dropdown"
+                value={artist}
+                options={artists}
+                ariaLabel="Test"
+                onChange={e => setArtist(e.value)}
+                placeholder="Choose Artist Id"
+                optionLabel="label"
+                style={{
+                  width: "20vw",
+                  height: "2rem",
+                  borderRadius: "0.4rem",
+                  margin: "0.3rem"
+                }}
+              />
+            </div>
+            <div className="form-group center">
+              <MultiSelect
+                className="dropdown"
+                value={category}
+                options={categories}
+                onChange={e => setCategory(e.value)}
+                style={{
+                  width: "20vw",
+                  height: "2rem",
+                  borderRadius: "0.4rem",
+                  margin: "0.3rem"
+                }}
+                filter={true}
+                filterPlaceholder="Search"
+                placeholder="Choose Categories"
+              />
+            </div>
           </div>
           <div className="form-group center">
             <InputContainer

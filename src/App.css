@@ -1,10 +1,13 @@
 :root {
   --mainRed: #9c160b;
+  --lightRed: #f84130;
   --darkRed: #6a180d;
   --mainWhite: #ffffff;
   --mainBlack: #000000;
   --mainDark: #1e0b0c;
   --darkRed2: #3c0c08;
+  --mainYellow: #ffa400;
+  --mainBlue: #441cd1;
 }
 
 * {
@@ -36,10 +39,24 @@
   margin: 10vh 20vw;
   width: auto;
   border-radius: 0.5rem;
-  background-color: rgba(156, 22, 11, 0.7) !important;
+  background-color: rgba(248, 65, 48, 0.7) !important;
 }
 
 .direction {
   display: flex;
   flex-direction: row;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 50vh;
+  width: 50vw;
+  overflow: auto;
+  display: block;
+  margin: 1rem;
+}
+
+.table td,
+th {
+  text-align: center;
 }

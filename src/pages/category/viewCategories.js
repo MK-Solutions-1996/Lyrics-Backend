@@ -1,21 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { NavigationBar } from "../../components/NavigationBar";
-import { ButtonContainer } from "../../components/Customs";
+import {
+  TopicContainer,
+  ButtonContainer,
+  DeleteIconButtonContainer,
+  EditIconButtonContainer
+} from "../../components/Customs";
 
-function viewCategory() {
+function ViewCategory() {
+  const [categories] = useState([
+    { name: "John" },
+    { name: "Mary" },
+    { name: "July" }
+  ]);
+
   return (
     <div className="background">
       <NavigationBar />
       <div className="center">
         <div className="card">
-          <Link to="/addCategory">
-            <ButtonContainer>Add Category</ButtonContainer>
-          </Link>
+          <div className="center">
+            <TopicContainer>View All Categories</TopicContainer>
+          </div>
+          <div className="direction">
+            <div className="my-custom-scrollbar">
+              <table class="table table-hover table-dark">
+                <thead>
+                  <tr className="thead-dark">
+                    <th align="center">Category Name</th>
+                    <th align="center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categories.map(i => (
+                    <tr className="table-light text-dark">
+                      <td>{i.name}</td>
+                      <td className="direction center">
+                        <EditIconButtonContainer>
+                          <i class="fas fa-edit"></i>
+                        </EditIconButtonContainer>
+                        <DeleteIconButtonContainer>
+                          <i class="fas fa-trash"></i>
+                        </DeleteIconButtonContainer>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="center">
+              <Link to="/addCategory">
+                <ButtonContainer>
+                  <i class="fas fa-plus">New</i>
+                </ButtonContainer>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default viewCategory;
+export default ViewCategory;

@@ -22,6 +22,36 @@ export const ButtonContainer = styled.button`
   }
 `;
 
+export const DeleteIconButtonContainer = styled.button`
+  color: var(--mainRed);
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  margin: 0.2rem 0.5rem 0.2rem 0;
+  &:hover {
+    color: var(--mainBlack) !important;
+  }
+`;
+
+export const EditIconButtonContainer = styled.button`
+  color: var(--mainYellow);
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  margin: 0.2rem 0.5rem 0.2rem 0;
+  &:hover {
+    color: var(--mainBlack) !important;
+  }
+`;
+
+export const ViewIconButtonContainer = styled.button`
+  color: var(--mainBlue);
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  margin: 0.2rem 0.5rem 0.2rem 0;
+  &:hover {
+    color: var(--mainBlack) !important;
+  }
+`;
+
 export const TopicContainer = styled.label`
   text-align: center;
   font-size: 2.1rem;
@@ -50,7 +80,7 @@ export const LongLabelContainer = styled.label`
 export const TextAreaContainer = styled.textarea`
   font-size: 1rem;
   height: auto;
-  width: 20vw;
+  width: 40vw;
   margin: 0.1rem;
   padding: 0.1rem;
   color: var(--mainBlack);
