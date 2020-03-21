@@ -9,12 +9,16 @@ import {
 } from "../../components/Customs";
 
 function ViewCategory() {
+  //sample data
   const [categories] = useState([
     { name: "John" },
     { name: "Mary" },
     { name: "July" }
   ]);
 
+  const updateCategory = name => {
+    // <Link to="/updateCategory" categoryName={name}></Link>;
+  };
   return (
     <div className="background">
       <NavigationBar />
@@ -37,7 +41,9 @@ function ViewCategory() {
                     <tr className="table-light text-dark">
                       <td>{i.name}</td>
                       <td className="direction center">
-                        <EditIconButtonContainer>
+                        <EditIconButtonContainer
+                          onClick={() => updateCategory(i.name)}
+                        >
                           <i class="fas fa-edit"></i>
                         </EditIconButtonContainer>
                         <DeleteIconButtonContainer>

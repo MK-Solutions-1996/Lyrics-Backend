@@ -14,6 +14,9 @@ function ViewArtists() {
     { sinhalaName: "උමාරියා", singlisName: "Umaria", period: 21 },
     { sinhalaName: "ලහිරු", singlisName: "Lahiru", period: 21 }
   ]);
+  const updateArtist = artist => {
+    // <Link to="/updateArtist" artist={artist}></Link>;
+  };
   return (
     <div className="background">
       <NavigationBar />
@@ -40,7 +43,9 @@ function ViewArtists() {
                       <td>{i.singlisName}</td>
                       <td>{i.period}</td>
                       <td className="direction center">
-                        <EditIconButtonContainer>
+                        <EditIconButtonContainer
+                          onClick={() => updateArtist(i)}
+                        >
                           <i class="fas fa-edit"></i>
                         </EditIconButtonContainer>
                         <DeleteIconButtonContainer>

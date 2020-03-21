@@ -40,6 +40,10 @@ function ViewSongs() {
       likes: 200
     }
   ]);
+
+  const updateSong = song => {
+    // <Link to="/updateSong" song={song}></Link>;
+  };
   return (
     <div className="background">
       <NavigationBar />
@@ -73,7 +77,7 @@ function ViewSongs() {
                         <ViewIconButtonContainer>
                           <i class="fas fa-eye"></i>
                         </ViewIconButtonContainer>
-                        <EditIconButtonContainer>
+                        <EditIconButtonContainer onClick={() => updateSong(i)}>
                           <i class="fas fa-edit"></i>
                         </EditIconButtonContainer>
                         <DeleteIconButtonContainer>
