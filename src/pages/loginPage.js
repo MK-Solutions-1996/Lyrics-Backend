@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TopNavBar } from "../components/TopNavBar";
 import {
@@ -8,7 +8,25 @@ import {
   LongLabelContainer
 } from "../components/Customs";
 
-function login() {
+import { useSelector, useDispatch } from 'react-redux';
+import { signin_action } from '../redux';
+
+function Login() {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const payload = {
+    username: username,
+    password: password
+  };
+
+  const dispatch = useDispatch();
+  const signin_state = useSelector(state => state.signin);
+  const { loading, user, error } = signin_state;
+
+  console.log('error:', error);
+
   return (
     <div className="background">
       <TopNavBar />
@@ -24,6 +42,7 @@ function login() {
               id="usr"
               name="username"
               placeholder="User Name"
+              onChange={(e) => setUsername(e.target.value)}
             ></InputContainer>
           </div>
           <div className="form-group center">
@@ -33,12 +52,14 @@ function login() {
               id="pwd"
               name="password"
               placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
             ></InputContainer>
           </div>
           <div className="center">
-            <Link to="/mainPage">
-              <ButtonContainer>Login</ButtonContainer>
-            </Link>
+            {/* <Link to="/mainPage">
+              <ButtonContainer onClick={() => dispatch(signin_action(payload))}>Login</ButtonContainer>
+            </Link> */}
+            <ButtonContainer onClick={() => dispatch(signin_action(payload))}>Login</ButtonContainer>
           </div>
           <div className="center">
             <Link to="/">
@@ -51,4 +72,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;
