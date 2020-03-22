@@ -4,17 +4,17 @@ import {
   FETCH_ALL,
   FETCH_SINGLE,
   FETCH_ERROR
-} from "./artist_types";
+} from "./song_types";
 
 const initial_state = {
   loading: false,
   message: "",
-  artists: [],
-  singleArtist: {},
+  songs: [],
+  singleSong: {},
   error: ""
 };
 
-const artist_reducer = (state = initial_state, action) => {
+const song_reducer = (state = initial_state, action) => {
   switch (action.type) {
     case FETCH_LOADING:
       return {
@@ -32,14 +32,14 @@ const artist_reducer = (state = initial_state, action) => {
       return {
         ...state,
         loading: false,
-        artists: action.payload,
+        songs: action.payload,
         error: ""
       };
     case FETCH_SINGLE:
       return {
         ...state,
         loading: false,
-        singleArtist: action.payload,
+        singleSong: action.payload,
         error: ""
       };
     case FETCH_ERROR:
@@ -53,4 +53,4 @@ const artist_reducer = (state = initial_state, action) => {
   }
 };
 
-export default artist_reducer;
+export default song_reducer;

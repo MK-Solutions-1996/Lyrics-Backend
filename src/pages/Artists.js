@@ -30,7 +30,7 @@ function Artists() {
   const [period, setPeriod] = useState("");
   const [isUpdateArtist, setIsUpdateArtist] = useState(false);
   const updateArtist = artist => {
-    setIsUpdateCategory(true);
+    setIsUpdateArtist(true);
     setArtistId(artist._id);
     setSinhalaName(artist.sinhalaName);
     setSinglisName(artist.singlishName);
@@ -133,7 +133,7 @@ function Artists() {
                     onChange={e => setPeriod(e.target.value)}
                   ></InputContainer>
                 </div>
-                {setIsUpdateCategory === true ? (
+                {isUpdateArtist === true ? (
                   <div className="center">
                     <SubButtonContainer
                       onClick={() =>

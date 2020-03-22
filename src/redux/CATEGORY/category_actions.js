@@ -5,7 +5,7 @@ import {
   FETCH_ALL,
   FETCH_SINGLE,
   FETCH_ERROR
-} from "./artist_types";
+} from "./category_types";
 
 const fetchLoading = () => {
   return {
@@ -20,17 +20,17 @@ const fetchMessage = message => {
   };
 };
 
-const fetchALL = artists => {
+const fetchALL = categories => {
   return {
     type: FETCH_ALL,
-    payload: artists
+    payload: categories
   };
 };
 
-const fetchSingle = artist => {
+const fetchSingle = category => {
   return {
     type: FETCH_ALL,
-    payload: artist
+    payload: category
   };
 };
 
@@ -41,23 +41,21 @@ const fetchError = error => {
   };
 };
 
-export const save_artist_action = payload => {
+export const save_category_action = payload => {
   return dispatch => {
     dispatch(fetchLoading());
     Axios({
       method: "POST",
-      url: process.env.REACT_APP_BASE_URL + "/artist",
+      url: process.env.REACT_APP_BASE_URL + "/category",
       data: {
-        sinhalaName: payload.sinhalaName,
-        singlishName: payload.singlishName,
-        period: payload.period
+        name: payload.name
       },
       headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
         //history.push('/mainPage');
         dispatch(fetchMessage("Saved successfully"));
-        dispatch(get_all_artists_action());
+        dispatch(get_all_categories_action());
       })
       .catch(err => {
         const error = err.response;
@@ -66,12 +64,12 @@ export const save_artist_action = payload => {
   };
 };
 
-export const get_all_artists_action = () => {
+export const get_all_categories_action = () => {
   return dispatch => {
     dispatch(fetchLoading());
     Axios({
       method: "GET",
-      url: process.env.REACT_APP_BASE_URL + "/artist",
+      url: process.env.REACT_APP_BASE_URL + "/category",
       headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(res => {
@@ -86,48 +84,18 @@ export const get_all_artists_action = () => {
   };
 };
 
-export const update_artist_action = (artistId, payload) => {
-  const update_payload = [
-    { key: "sinhalaName", value: payload.sinhalaName },
-    { key: "singlishName", value: payload.singlishName },
-    { key: "period", value: payload.period }
-  ];
-
-  console.log("update_payload:", update_payload);
-  console.log("artistId:", artistId);
-
-  return dispatch => {
-    dispatch(fetchLoading());
-    Axios({
-      method: "PATCH",
-      url: process.env.REACT_APP_BASE_URL + "/artist/" + artistId,
-      data: update_payload,
-      headers: { api_key: process.env.REACT_APP_API_KEY }
-    })
-      .then(() => {
-        //history.push('/mainPage');
-        dispatch(fetchMessage("Updated successfully"));
-        dispatch(get_all_artists_action());
-      })
-      .catch(err => {
-        const error = err.response;
-        dispatch(fetchError(error));
-      });
-  };
-};
-
-export const delete_artist_action = artistId => {
+export const delete_category_action = id => {
   return dispatch => {
     dispatch(fetchLoading());
     Axios({
       method: "DELETE",
-      url: process.env.REACT_APP_BASE_URL + "/artist/" + artistId,
+      url: process.env.REACT_APP_BASE_URL + "/category/" + id,
       headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
         //history.push('/mainPage');
         dispatch(fetchMessage("Deleted successfully"));
-        dispatch(get_all_artists_action());
+        dispatch(get_all_categories_action());
       })
       .catch(err => {
         const error = err.response;

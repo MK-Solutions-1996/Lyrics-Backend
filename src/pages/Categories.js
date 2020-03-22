@@ -1,28 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationBar } from "../components/NavigationBar";
 import {
   TopicContainer,
   SubTopicContainer,
   SubButtonContainer,
   DeleteIconButtonContainer,
-  EditIconButtonContainer,
   InputContainer
 } from "../components/Customs";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  get_all_categories_action,
+  save_category_action,
+  delete_category_action
+} from "../redux";
 
 function Categories() {
   //sample data
-  const [categories] = useState([
-    { name: "John" },
-    { name: "Mary" },
-    { name: "July" }
-  ]);
+  // const [categories] = useState([
+  //   { name: "John" },
+  //   { name: "Mary" },
+  //   { name: "July" }
+  // ]);
 
-  const [categoryName, setCategoryName] = useState("");
-  const [isUpdateCategory, setIsUpdateCategory] = useState(false);
-  const updateCategory = category => {
-    setIsUpdateCategory(true);
-    setCategoryName(category.name);
+  const [name, setName] = useState("");
+
+  const category_state = useSelector(state => state.category);
+  const dispatch = useDispatch();
+  const { loading, categories, error } = category_state;
+
+  useEffect(() => {
+    dispatch(get_all_categories_action());
+  }, []);
+
+  const payload = {
+    name: name
   };
+
   return (
     <div className="background">
       <NavigationBar />
@@ -46,12 +59,16 @@ function Categories() {
                       <tr className="table-light text-dark">
                         <td>{i.name}</td>
                         <td className="direction center">
-                          <EditIconButtonContainer
+                          {/* <EditIconButtonContainer
                             onClick={() => updateCategory(i)}
                           >
                             <i class="fas fa-edit"></i>
-                          </EditIconButtonContainer>
-                          <DeleteIconButtonContainer>
+                          </EditIconButtonContainer> */}
+                          <DeleteIconButtonContainer
+                            onClick={() =>
+                              dispatch(delete_category_action(i._id))
+                            }
+                          >
                             <i class="fas fa-trash"></i>
                           </DeleteIconButtonContainer>
                         </td>
@@ -71,19 +88,23 @@ function Categories() {
                     id="category_name"
                     name="category_name"
                     placeholder="Category Name"
-                    value={categoryName}
-                    onChange={e => setCategoryName(e.target.value)}
+                    // value={name}
+                    onChange={e => setName(e.target.value)}
                   ></InputContainer>
                 </div>
-                {isUpdateCategory === true ? (
+                {/* {isUpdateCategory === true ? (
                   <div className="center">
                     <SubButtonContainer>Update</SubButtonContainer>
                   </div>
-                ) : (
-                  <div className="center">
-                    <SubButtonContainer>Add</SubButtonContainer>
-                  </div>
-                )}
+                ) : ( */}
+                <div className="center">
+                  <SubButtonContainer
+                    onClick={() => dispatch(save_category_action(payload))}
+                  >
+                    Add
+                  </SubButtonContainer>
+                </div>
+                {/* )} */}
               </div>
             </div>
           </div>

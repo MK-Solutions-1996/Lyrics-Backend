@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationBar } from "../components/NavigationBar";
 import { Dropdown } from "primereact/dropdown";
 import { MultiSelect } from "primereact/multiselect";
@@ -13,46 +13,29 @@ import {
   ViewIconButtonContainer
 } from "../components/Customs";
 
+import { useSelector, useDispatch } from "react-redux";
+import {
+  get_all_songs_action,
+  save_song_action,
+  update_song_action,
+  delete_song_action,
+  get_all_artists_action,
+  get_all_categories_action
+} from "../redux";
+
 function Songs() {
   //sample data
-  const [songs] = useState([
-    {
-      sinhalaTitle: "සංසාර සිහිනේ",
-      singlishTitle: "Sansara Sihine",
-      artistId: "50",
-      categories: ["Sinhala", "Love"],
-      song:
-        "සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා පියමැන එන්න මේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී පියමැන එන්න මගේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා සිහින දකින්න මේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී සිහින දකින්න මගේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා",
-      likes: 200
-    },
-    {
-      sinhalaTitle: "සංසාර සිහිනේ",
-      singlishTitle: "Sansara Sihine",
-      artistId: "50",
-      categories: ["Sinhala", "Love"],
-      song:
-        "සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා පියමැන එන්න මේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී පියමැන එන්න මගේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා සිහින දකින්න මේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී සිහින දකින්න මගේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා",
-      likes: 200
-    },
-    {
-      sinhalaTitle: "සංසාර සිහිනේ",
-      singlishTitle: "Sansara Sihine",
-      artistId: "50",
-      categories: ["Sinhala", "Love"],
-      song:
-        "සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා පියමැන එන්න මේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී පියමැන එන්න මගේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා සිහින දකින්න මේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී සිහින දකින්න මගේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා",
-      likes: 200
-    },
-    {
-      sinhalaTitle: "සංසාර සිහිනේ",
-      singlishTitle: "Sansara Sihine",
-      artistId: "50",
-      categories: ["Sinhala", "Love"],
-      song:
-        "සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා පියමැන එන්න මේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී පියමැන එන්න මගේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා සිහින දකින්න මේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී සිහින දකින්න මගේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා",
-      likes: 200
-    }
-  ]);
+  // const [songs] = useState([
+  //   {
+  //     sinhalaTitle: "සංසාර සිහිනේ",
+  //     singlishTitle: "Sansara Sihine",
+  //     artistId: "50",
+  //     categories: ["Sinhala", "Love"],
+  //     song:
+  //       "සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා පියමැන එන්න මේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී පියමැන එන්න මගේ සිහිනේ සිරකාරිය වන්න තුරුලට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා සිහින දකින්න මේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා කුමරී සිහින දකින්න මගේ සිහිනේ හිමිකාරිය වන්න දිවියට එන්න පවසන් නුඹ මගෙමයි කියා සංසාර සිහිනයේ මා නුඹේ කුමරා සංසාර සිහිනේ පෙර මග මා සිටියා කවදාද නුඹ එන්නේ ආදර දේදුන්නේ අඩවන් නෙතු විහිදා මා නුඹේ කුමරා සංසාර සිහිනයේ මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා මා නුඹේ කුමරා",
+  //     likes: 200
+  //   }
+  // ]);
 
   //sample data
   const [artists] = useState([
@@ -64,8 +47,9 @@ function Songs() {
     { label: "Love", value: "Love" }
   ]);
 
-  const [isUpdateCategory, setIsUpdateCategory] = useState(false);
+  const [isUpdateSong, setIsUpdateSong] = useState(false);
 
+  const [songId, setSongId] = useState("");
   const [sinhalaTitle, setSinhalaTitle] = useState("");
   const [singlishTitle, setSinglishTitle] = useState("");
   const [artistId, setArtistId] = useState("");
@@ -74,13 +58,31 @@ function Songs() {
   const [likes, setLikes] = useState(0);
 
   const updateSong = song => {
-    setIsUpdateCategory(true);
+    setIsUpdateSong(true);
+    setSongId(song._id);
     setSinhalaTitle(song.sinhalaTitle);
     setSinglishTitle(song.singlishTitle);
     setArtistId(song.artistId);
     setCategory(song.categories);
     setSong(song.song);
     setLikes(song.likes);
+  };
+
+  const song_state = useSelector(state => state.song);
+  const dispatch = useDispatch();
+  const { loading, songs, error } = song_state;
+
+  useEffect(() => {
+    dispatch(get_all_songs_action());
+  }, []);
+
+  const payload = {
+    sinhalaTitle: sinhalaTitle,
+    singlishTitle: singlishTitle,
+    artistId: artistId,
+    categories: categories,
+    song: song,
+    likes: likes
   };
   return (
     <div className="background">
@@ -118,7 +120,9 @@ function Songs() {
                         <EditIconButtonContainer onClick={() => updateSong(i)}>
                           <i class="fas fa-edit"></i>
                         </EditIconButtonContainer>
-                        <DeleteIconButtonContainer>
+                        <DeleteIconButtonContainer
+                          onClick={() => dispatch(delete_song_action(i._id))}
+                        >
                           <i class="fas fa-trash"></i>
                         </DeleteIconButtonContainer>
                       </td>
@@ -216,13 +220,23 @@ function Songs() {
                   ></TextAreaContainer>
                 </div>
               </div>
-              {isUpdateCategory === true ? (
+              {isUpdateSong === true ? (
                 <div className="center">
-                  <SubButtonContainer>Update</SubButtonContainer>
+                  <SubButtonContainer
+                    onClick={() =>
+                      dispatch(update_song_action(songId, payload))
+                    }
+                  >
+                    Update
+                  </SubButtonContainer>
                 </div>
               ) : (
                 <div className="center">
-                  <SubButtonContainer>Add</SubButtonContainer>
+                  <SubButtonContainer
+                    onClick={() => dispatch(save_song_action(payload))}
+                  >
+                    Add
+                  </SubButtonContainer>
                 </div>
               )}
             </div>
