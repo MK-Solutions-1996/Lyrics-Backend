@@ -6,7 +6,8 @@ import {
   InputContainer
 } from "../../components/Customs";
 
-function updateCategory(categoryName) {
+function UpdateCategory(props) {
+  const category = props.category;
   return (
     <div className="background">
       <NavigationBar />
@@ -23,7 +24,7 @@ function updateCategory(categoryName) {
               name="category_name"
               // placeholder="Category Name"
             >
-              {console.log("Testing", categoryName)}
+              {console.log("Testing", category)}
             </InputContainer>
           </div>
           <div className="center">
@@ -35,4 +36,4 @@ function updateCategory(categoryName) {
   );
 }
 
-export default updateCategory;
+export default UpdateCategory;

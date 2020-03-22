@@ -14,8 +14,8 @@ import ViewSongs from "./pages/song/viewSongs";
 import AddCategory from "./pages/category/addCategory";
 import UpdateCategory from "./pages/category/updateCategory";
 import ViewCategories from "./pages/category/viewCategories";
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   return (

@@ -22,6 +22,28 @@ export const ButtonContainer = styled.button`
   }
 `;
 
+export const SubButtonContainer = styled.button`
+  text-transform: capitalize;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: transparent;
+  border: 0.05rem solid var(--mainGrey); /*From App.css*/
+  border-color: var(--mainGrey);
+  border-radius: 0.5rem;
+  color: var(--mainGrey) !important;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  margin: 0.2rem 0.5rem 0.2rem 0;
+  transition: all 0.5s ease-in-out;
+  &:hover {
+    background: var(--mainGrey) !important;
+    color: var(--mainRed) !important;
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const DeleteIconButtonContainer = styled.button`
   color: var(--mainRed);
   padding: 0.2rem 0.5rem;
@@ -57,6 +79,14 @@ export const TopicContainer = styled.label`
   font-size: 2.1rem;
   font-weight: bolder;
   color: var(--mainBlack);
+  margin: 0.5rem;
+`;
+
+export const SubTopicContainer = styled.label`
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: var(--mainGrey);
   margin: 0.5rem;
 `;
 

@@ -4,6 +4,7 @@
   --darkRed: #6a180d;
   --mainWhite: #ffffff;
   --mainBlack: #000000;
+  --mainGrey: #2e2b2b;
   --mainDark: #1e0b0c;
   --darkRed2: #3c0c08;
   --mainYellow: #ffa400;
@@ -38,6 +39,7 @@
   padding: 2vh 2vw;
   margin: 10vh 20vw;
   width: auto;
+  height: auto;
   border-radius: 0.5rem;
   background-color: rgba(248, 65, 48, 0.7) !important;
 }
