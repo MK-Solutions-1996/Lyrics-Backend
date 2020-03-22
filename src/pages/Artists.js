@@ -18,9 +18,9 @@ function Artists() {
   const [sinhalaName, setSinhalaName] = useState("");
   const [singlisName, setSinglisName] = useState("");
   const [period, setPeriod] = useState("");
-  const [isUpdateCategory, setIsUpdateCategory] = useState(false);
+  const [isUpdateArtist, setIsUpdateArtist] = useState(false);
   const updateArtist = artist => {
-    setIsUpdateCategory(true);
+    setIsUpdateArtist(true);
     setSinhalaName(artist.sinhalaName);
     setSinglisName(artist.singlisName);
     setPeriod(artist.period);
@@ -103,9 +103,17 @@ function Artists() {
                     onChange={e => setPeriod(e.target.value)}
                   ></InputContainer>
                 </div>
-                {isUpdateCategory === true ? (
+                {isUpdateArtist === true ? (
                   <div className="center">
                     <SubButtonContainer>Update</SubButtonContainer>
+                    {console.log(
+                      "Data:",
+                      sinhalaName,
+                      "",
+                      singlisName,
+                      "",
+                      period
+                    )}
                   </div>
                 ) : (
                   <div className="center">
