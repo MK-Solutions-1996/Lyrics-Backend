@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavigationBar } from "../../components/NavigationBar";
+import { NavigationBar } from "../components/NavigationBar";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -7,10 +7,9 @@ import {
   DeleteIconButtonContainer,
   EditIconButtonContainer,
   InputContainer
-} from "../../components/Customs";
-import UpdateCategory from "./updateCategory";
+} from "../components/Customs";
 
-function ViewCategory(props) {
+function Categories() {
   //sample data
   const [categories] = useState([
     { name: "John" },
@@ -18,10 +17,11 @@ function ViewCategory(props) {
     { name: "July" }
   ]);
 
+  const [categoryName, setCategoryName] = useState("");
   const [isUpdateCategory, setIsUpdateCategory] = useState(false);
-
-  const updateCategory = e => {
+  const updateCategory = category => {
     setIsUpdateCategory(true);
+    setCategoryName(category.name);
   };
   return (
     <div className="background">
@@ -33,7 +33,7 @@ function ViewCategory(props) {
               <TopicContainer>View All Categories</TopicContainer>
             </div>
             <div className="direction">
-              <div className="my-custom-scrollbar">
+              <div className="my-custom-scrollbar2">
                 <table class="table table-hover table-dark">
                   <thead>
                     <tr className="thead-dark">
@@ -46,12 +46,11 @@ function ViewCategory(props) {
                       <tr className="table-light text-dark">
                         <td>{i.name}</td>
                         <td className="direction center">
-                          <EditIconButtonContainer onClick={updateCategory}>
+                          <EditIconButtonContainer
+                            onClick={() => updateCategory(i)}
+                          >
                             <i class="fas fa-edit"></i>
                           </EditIconButtonContainer>
-
-                          {isUpdateCategory && <UpdateCategory category={i} />}
-
                           <DeleteIconButtonContainer>
                             <i class="fas fa-trash"></i>
                           </DeleteIconButtonContainer>
@@ -72,11 +71,19 @@ function ViewCategory(props) {
                     id="category_name"
                     name="category_name"
                     placeholder="Category Name"
+                    value={categoryName}
+                    onChange={e => setCategoryName(e.target.value)}
                   ></InputContainer>
                 </div>
-                <div className="center">
-                  <SubButtonContainer>Add New</SubButtonContainer>
-                </div>
+                {isUpdateCategory === true ? (
+                  <div className="center">
+                    <SubButtonContainer>Update</SubButtonContainer>
+                  </div>
+                ) : (
+                  <div className="center">
+                    <SubButtonContainer>Add</SubButtonContainer>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -86,4 +93,4 @@ function ViewCategory(props) {
   );
 }
 
-export default ViewCategory;
+export default Categories;

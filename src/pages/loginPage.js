@@ -8,14 +8,12 @@ import {
   LongLabelContainer
 } from "../components/Customs";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { signin_action } from '../redux';
-
+import { useSelector, useDispatch } from "react-redux";
+import { signin_action } from "../redux";
 
 function Login() {
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const payload = {
     username: username,
@@ -26,10 +24,8 @@ function Login() {
   const signin_state = useSelector(state => state.signin);
   const { loading, user, error } = signin_state;
 
-  console.log('user:', user);
-  console.log('error:', error);
-
-
+  console.log("user:", user);
+  console.log("error:", error);
 
   return (
     <div className="background">
@@ -46,7 +42,7 @@ function Login() {
               id="usr"
               name="username"
               placeholder="User Name"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={e => setUsername(e.target.value)}
             ></InputContainer>
           </div>
           <div className="form-group center">
@@ -56,19 +52,21 @@ function Login() {
               id="pwd"
               name="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
             ></InputContainer>
-          </div >
-          {
-            error.data && <div className="center">
+          </div>
+          {error.data && (
+            <div className="center">
               <p>{error.data}</p>
             </div>
-          }
+          )}
           <div className="center">
             {/* <Link to="/mainPage">
               <ButtonContainer onClick={() => dispatch(signin_action(payload))}>Login</ButtonContainer>
             </Link> */}
-            <ButtonContainer onClick={() => dispatch(signin_action(payload))}>Login</ButtonContainer>
+            <ButtonContainer onClick={() => dispatch(signin_action(payload))}>
+              Login
+            </ButtonContainer>
           </div>
           <div className="center">
             <Link to="/">

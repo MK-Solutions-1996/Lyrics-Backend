@@ -37,7 +37,7 @@
 
 .card {
   padding: 2vh 2vw;
-  margin: 10vh 20vw;
+  margin: 10vh 5vw;
   width: auto;
   height: auto;
   border-radius: 0.5rem;
@@ -60,8 +60,25 @@
 
 .my-custom-scrollbar {
   position: relative;
-  height: 50vh;
-  width: 50vw;
+  height: 60vh;
+  width: 60vw;
+  overflow: auto;
+  display: block;
+  margin: 1rem;
+}
+.my-custom-scrollbar2 {
+  position: relative;
+  height: 60vh;
+  width: 40vw;
+  overflow: auto;
+  display: block;
+  margin: 1rem;
+}
+
+.my-custom-scrollbar3 {
+  position: relative;
+  height: 60vh;
+  width: 40vw;
   overflow: auto;
   display: block;
   margin: 1rem;
