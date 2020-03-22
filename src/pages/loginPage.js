@@ -11,6 +11,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { signin_action } from '../redux';
 
+
 function Login() {
 
   const [username, setUsername] = useState('');
@@ -25,7 +26,10 @@ function Login() {
   const signin_state = useSelector(state => state.signin);
   const { loading, user, error } = signin_state;
 
+  console.log('user:', user);
   console.log('error:', error);
+
+
 
   return (
     <div className="background">
@@ -54,7 +58,12 @@ function Login() {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             ></InputContainer>
-          </div>
+          </div >
+          {
+            error.data && <div className="center">
+              <p>{error.data}</p>
+            </div>
+          }
           <div className="center">
             {/* <Link to="/mainPage">
               <ButtonContainer onClick={() => dispatch(signin_action(payload))}>Login</ButtonContainer>

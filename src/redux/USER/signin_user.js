@@ -1,14 +1,16 @@
 import Axios from "axios";
+import history from '../../history';
+
 
 const intial_state = {
   loading: false,
-  user: {},
-  error: {}
+  user: "",
+  error: ""
 };
 
 //Types
 const FETCH_LOADING = "FETCH_LOADING";
-const FETCH_SUCCESS = "FETCH_LOADING";
+const FETCH_SUCCESS = "FETCH_SUCCESS";
 const FETCH_ERROR = "FETCH_ERROR";
 
 const fetchLoading = () => {
@@ -20,7 +22,7 @@ const fetchLoading = () => {
 const fetchSuccess = user => {
   return {
     type: FETCH_SUCCESS,
-    payload: user
+    payload: user,
   };
 };
 
@@ -30,6 +32,8 @@ const fetchError = error => {
     payload: error
   };
 };
+
+
 
 export const signin_action = payload => {
   return dispatch => {
@@ -45,12 +49,12 @@ export const signin_action = payload => {
     })
       .then(res => {
         const result = res.data;
+        history.push('/mainPage');
         dispatch(fetchSuccess(result));
-        console.log("Success Msg:", result);
       })
       .catch(err => {
         const error = err.response;
-        dispatch(fetchError(error.data));
+        dispatch(fetchError(error));
       });
   };
 };
@@ -66,7 +70,8 @@ export const signin_reducer = (state = intial_state, action) => {
       return {
         ...state,
         loading: false,
-        user: action.payload
+        user: action.payload,
+        error : ""
       };
     case FETCH_ERROR:
       return {
