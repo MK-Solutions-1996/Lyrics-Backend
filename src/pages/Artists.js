@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationBar } from "../components/NavigationBar";
 import {
   TopicContainer,
@@ -9,22 +9,50 @@ import {
   EditIconButtonContainer
 } from "../components/Customs";
 
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  get_all_artists_action,
+  save_artist_action,
+  delete_artist_action,
+  update_artist_action
+} from '../redux';
+
 function Artists() {
-  const [artists] = useState([
-    { sinhalaName: "සනුක", singlisName: "Sanuka", period: "21" },
-    { sinhalaName: "උමාරියා", singlisName: "Umaria", period: "21" },
-    { sinhalaName: "ලහිරු", singlisName: "Lahiru", period: "21" }
-  ]);
+  // const [artists] = useState([
+  //   { sinhalaName: "සනුක", singlishName: "Sanuka", period: "21" },
+  //   { sinhalaName: "උමාරියා", singlishName: "Umaria", period: "21" },
+  //   { sinhalaName: "ලහිරු", singlishName: "Lahiru", period: "21" }
+  // ]);
+
+  const [artistId, setArtistId] = useState("");
   const [sinhalaName, setSinhalaName] = useState("");
-  const [singlisName, setSinglisName] = useState("");
+  const [singlishName, setSinglisName] = useState("");
   const [period, setPeriod] = useState("");
   const [isUpdateCategory, setIsUpdateCategory] = useState(false);
   const updateArtist = artist => {
     setIsUpdateCategory(true);
+    setArtistId(artist._id);
     setSinhalaName(artist.sinhalaName);
-    setSinglisName(artist.singlisName);
+    setSinglisName(artist.singlishName);
     setPeriod(artist.period);
   };
+
+
+  const artist_state = useSelector(state => state.artist);
+  const dispatch = useDispatch();
+  const { loading, artists, error } = artist_state;
+
+  useEffect(() => {
+    dispatch(get_all_artists_action());
+  }, []);
+
+  const payload = {
+    sinhalaName: sinhalaName,
+    singlishName: singlishName,
+    period: period
+  }
+
+
   return (
     <div className="background">
       <NavigationBar />
@@ -49,7 +77,7 @@ function Artists() {
                     {artists.map(i => (
                       <tr className="table-light text-dark">
                         <td>{i.sinhalaName}</td>
-                        <td>{i.singlisName}</td>
+                        <td>{i.singlishName}</td>
                         <td>{i.period}</td>
                         <td className="direction center">
                           <EditIconButtonContainer
@@ -57,7 +85,7 @@ function Artists() {
                           >
                             <i class="fas fa-edit"></i>
                           </EditIconButtonContainer>
-                          <DeleteIconButtonContainer>
+                          <DeleteIconButtonContainer onClick={() => dispatch(delete_artist_action(i._id))}>
                             <i class="fas fa-trash"></i>
                           </DeleteIconButtonContainer>
                         </td>
@@ -88,7 +116,7 @@ function Artists() {
                     id="artist_name_singlish"
                     name="artist_name_singlish"
                     placeholder="Artist Name (Singlish)"
-                    value={singlisName}
+                    value={singlishName}
                     onChange={e => setSinglisName(e.target.value)}
                   ></InputContainer>
                 </div>
@@ -105,13 +133,13 @@ function Artists() {
                 </div>
                 {isUpdateCategory === true ? (
                   <div className="center">
-                    <SubButtonContainer>Update</SubButtonContainer>
+                    <SubButtonContainer onClick={() => dispatch(update_artist_action(artistId, payload))}>Update</SubButtonContainer>
                   </div>
                 ) : (
-                  <div className="center">
-                    <SubButtonContainer>Add</SubButtonContainer>
-                  </div>
-                )}
+                    <div className="center">
+                      <SubButtonContainer onClick={() => dispatch(save_artist_action(payload))}>Add</SubButtonContainer>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
