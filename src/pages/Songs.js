@@ -80,7 +80,7 @@ function Songs() {
     sinhalaTitle: sinhalaTitle,
     singlishTitle: singlishTitle,
     artistId: artistId,
-    categories: categories,
+    categories: category,
     song: song,
     likes: likes
   };
