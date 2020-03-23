@@ -1,5 +1,29 @@
 import styled from "styled-components";
 
+export const NavigationBarDivContainer = styled.div`
+  .navbar {
+    background-color: var(--mainRed);
+  }
+  a,
+  .navbar-nav,
+  .navbar-light .nav-link {
+    color: var(--mainBlack);
+    font-size: 1.2rem;
+    margin: 0.2rem 0.5rem 0.2rem 0;
+    font-weight: bold;
+    &:hover {
+      color: white;
+    }
+  }
+  .navbar-brand {
+    font-size: 1.4em;
+    color: var(--mainBlack);
+    &:hover {
+      color: white;
+    }
+  }
+`;
+
 export const ButtonContainer = styled.button`
   text-transform: capitalize;
   font-size: 1.4rem;
@@ -114,4 +138,9 @@ export const TextAreaContainer = styled.textarea`
   margin: 0.1rem;
   padding: 0.1rem;
   color: var(--mainBlack);
+`;
+
+export const ImageContainer = styled.img`
+  width: 10vw;
+  height: 20vh;
 `;

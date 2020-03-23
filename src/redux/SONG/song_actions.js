@@ -51,8 +51,9 @@ export const save_song_action = payload => {
         sinhalaTitle: payload.sinhalaTitle,
         singlishTitle: payload.singlishTitle,
         artistId: payload.artistId,
+        artistName: payload.artistName,
         categories: payload.categories,
-        song: payload.song,
+        song: payload.song
       },
       headers: { api_key: process.env.REACT_APP_API_KEY }
     })

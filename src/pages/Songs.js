@@ -12,7 +12,6 @@ import {
   EditIconButtonContainer,
   ViewIconButtonContainer
 } from "../components/Customs";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   get_all_songs_action,
@@ -45,6 +44,7 @@ function Songs() {
     sinhalaTitle: sinhalaTitle,
     singlishTitle: singlishTitle,
     artistId: artistId,
+    artistName: "aa", //temporary
     categories: category,
     song: song
   };
@@ -55,18 +55,21 @@ function Songs() {
     dispatch(get_all_songs_action());
   }, []);
 
+  //artist dropdown array creation
   const artist_dropdown = [];
   artists.map(data => {
     const object = { label: data.singlishName, value: data._id };
     artist_dropdown.push(object);
   });
 
+  //category dropdown array creation
   const category_dropdown = [];
   categories.map(data => {
     const object = { label: data.name, value: data.name };
     category_dropdown.push(object);
   });
 
+  //filling data for update
   const updateSong = song => {
     setIsUpdateSong(true);
     setSongId(song._id);
@@ -89,7 +92,7 @@ function Songs() {
                 <TopicContainer>Songs</TopicContainer>
               </div>
               <div className="songsTable">
-                <table class="table table-hover table-dark">
+                <table className="table table-hover table-dark">
                   <thead>
                     <tr className="thead-dark">
                       <th align="center">Song Title (Sinhala)</th>
@@ -108,17 +111,17 @@ function Songs() {
                         <td>{i.categories}</td>
                         <td className="direction center">
                           <ViewIconButtonContainer>
-                            <i class="fas fa-eye"></i>
+                            <i className="fas fa-eye"></i>
                           </ViewIconButtonContainer>
                           <EditIconButtonContainer
                             onClick={() => updateSong(i)}
                           >
-                            <i class="fas fa-edit"></i>
+                            <i className="fas fa-edit"></i>
                           </EditIconButtonContainer>
                           <DeleteIconButtonContainer
                             onClick={() => dispatch(delete_song_action(i._id))}
                           >
-                            <i class="fas fa-trash"></i>
+                            <i className="fas fa-trash"></i>
                           </DeleteIconButtonContainer>
                         </td>
                       </tr>
@@ -142,7 +145,6 @@ function Songs() {
                     </div>
                   </div>
                 )}
-
                 <div className="form-group center">
                   <InputContainer
                     type="text"
@@ -165,7 +167,6 @@ function Songs() {
                     onChange={e => setSinglishTitle(e.target.value)}
                   ></InputContainer>
                 </div>
-
                 <div className="form-group center">
                   <Dropdown
                     className="dropdown"
@@ -202,7 +203,6 @@ function Songs() {
                     placeholder="Choose Categories"
                   />
                 </div>
-
                 <div className="center">
                   <div className="form-group">
                     <TextAreaContainer

@@ -61,9 +61,6 @@ function Login() {
             </div>
           )}
           <div className="center">
-            {/* <Link to="/mainPage">
-              <ButtonContainer onClick={() => dispatch(signin_action(payload))}>Login</ButtonContainer>
-            </Link> */}
             <ButtonContainer onClick={() => dispatch(signin_action(payload))}>
               Login
             </ButtonContainer>
