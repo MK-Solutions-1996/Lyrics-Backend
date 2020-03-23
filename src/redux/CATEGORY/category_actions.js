@@ -1,42 +1,42 @@
 import Axios from "axios";
 import {
-  FETCH_LOADING,
-  FETCH_MESSAGE,
-  FETCH_ALL,
-  FETCH_SINGLE,
-  FETCH_ERROR
+  CATEGORY_FETCH_LOADING,
+  CATEGORY_FETCH_MESSAGE,
+  CATEGORY_FETCH_ALL,
+  CATEGORY_FETCH_SINGLE,
+  CATEGORY_FETCH_ERROR
 } from "./category_types";
 
 const fetchLoading = () => {
   return {
-    type: FETCH_LOADING
+    type: CATEGORY_FETCH_LOADING
   };
 };
 
 const fetchMessage = message => {
   return {
-    type: FETCH_MESSAGE,
+    type: CATEGORY_FETCH_MESSAGE,
     payload: message
   };
 };
 
 const fetchALL = categories => {
   return {
-    type: FETCH_ALL,
+    type: CATEGORY_FETCH_ALL,
     payload: categories
   };
 };
 
 const fetchSingle = category => {
   return {
-    type: FETCH_ALL,
+    type: CATEGORY_FETCH_SINGLE,
     payload: category
   };
 };
 
 const fetchError = error => {
   return {
-    type: FETCH_ERROR,
+    type: CATEGORY_FETCH_ERROR,
     payload: error
   };
 };

@@ -38,14 +38,14 @@ function Songs() {
   // ]);
 
   //sample data
-  const [artists] = useState([
-    { label: "50", value: "50" },
-    { label: "51", value: "51" }
-  ]);
-  const [categories] = useState([
-    { label: "Sinhala", value: "Sinhala" },
-    { label: "Love", value: "Love" }
-  ]);
+  // const [artists] = useState([
+  //   { label: "50", value: "50", id: "123" },
+  //   { label: "51", value: "51", id: "113" }
+  // ]);
+  // const [categories] = useState([
+  //   { label: "Sinhala", value: "Sinhala" },
+  //   { label: "Love", value: "Love" }
+  // ]);
 
   const [isUpdateSong, setIsUpdateSong] = useState(false);
 
@@ -55,26 +55,18 @@ function Songs() {
   const [artistId, setArtistId] = useState("");
   const [category, setCategory] = useState([]);
   const [song, setSong] = useState("");
-  const [likes, setLikes] = useState(0);
+  //const [likes, setLikes] = useState(0);
 
-  const updateSong = song => {
-    setIsUpdateSong(true);
-    setSongId(song._id);
-    setSinhalaTitle(song.sinhalaTitle);
-    setSinglishTitle(song.singlishTitle);
-    setArtistId(song.artistId);
-    setCategory(song.categories);
-    setSong(song.song);
-    setLikes(song.likes);
-  };
+
 
   const song_state = useSelector(state => state.song);
+  const artist_state = useSelector(state => state.artist);
+  const category_state = useSelector(state => state.category);
   const dispatch = useDispatch();
-  const { loading, songs, error } = song_state;
+  const { songs } = song_state;
+  const { artists } = artist_state;
+  const { categories } = category_state;
 
-  useEffect(() => {
-    dispatch(get_all_songs_action());
-  }, []);
 
   const payload = {
     sinhalaTitle: sinhalaTitle,
@@ -82,8 +74,57 @@ function Songs() {
     artistId: artistId,
     categories: category,
     song: song,
-    likes: likes
+    //likes: likes
   };
+
+
+  useEffect(() => {
+    dispatch(get_all_artists_action());
+    dispatch(get_all_categories_action());
+    dispatch(get_all_songs_action());
+  }, []);
+
+  const artist_dropdown = [];
+  artists.map(data => {
+    const object = { label: data.singlishName, value: data._id };
+    artist_dropdown.push(object);
+  });
+
+  console.log('artist:', artistId);
+
+  const category_dropdown = [];
+  categories.map(data => {
+    const object = { label: data.name, value: data.name };
+    category_dropdown.push(object);
+  });
+
+
+
+  const updateSong = song => {
+    setIsUpdateSong(true);
+    setSongId(song._id);
+    setSinhalaTitle(song.sinhalaTitle);
+    setSinglishTitle(song.singlishTitle);
+
+    // const artist_id = song.artistId;
+    // let artistName = '';
+    // artists.map(data => {
+    //   if (data._id === artist_id) {
+    //     artistName = data.singlishName;
+    //   }
+    // });
+
+    //setArtistId(artistName);
+    setCategory(song.categories);
+    setSong(song.song);
+    //setLikes(song.likes);
+  };
+
+
+
+  console.log('payload:', payload);
+
+
   return (
     <div className="background">
       <NavigationBar />
@@ -165,7 +206,7 @@ function Songs() {
                   <Dropdown
                     className="dropdown"
                     value={artistId}
-                    options={artists}
+                    options={artist_dropdown}
                     ariaLabel="Test"
                     onChange={e => setArtistId(e.value)}
                     placeholder="Choose Artist Id"
@@ -176,13 +217,21 @@ function Songs() {
                       borderRadius: "0.4rem",
                       margin: "0.3rem"
                     }}
+                    filter={true}
+                    filterPlaceholder="Search"
                   />
+                  {/* <select value={artistId}
+                    onChange={(e) => setArtistId({ artistId: e.target.value })}>
+                    {artists.map((data) => <option key={data._id} value={data._id}>{data.sinhalaName}</option>)}
+                  </select> */}
+
+
                 </div>
                 <div className="form-group center">
                   <MultiSelect
                     className="dropdown"
                     value={category}
-                    options={categories}
+                    options={category_dropdown}
                     onChange={e => setCategory(e.value)}
                     style={{
                       width: "20vw",
@@ -196,7 +245,7 @@ function Songs() {
                   />
                 </div>
               </div>
-              <div className="form-group center">
+              {/* <div className="form-group center">
                 <InputContainer
                   type="number"
                   className="form-control"
@@ -206,7 +255,7 @@ function Songs() {
                   value={likes}
                   onChange={e => setLikes(e.target.value)}
                 ></InputContainer>
-              </div>
+              </div> */}
               <div className="center">
                 <div className="form-group">
                   <TextAreaContainer
@@ -231,14 +280,14 @@ function Songs() {
                   </SubButtonContainer>
                 </div>
               ) : (
-                <div className="center">
-                  <SubButtonContainer
-                    onClick={() => dispatch(save_song_action(payload))}
-                  >
-                    Add
+                  <div className="center">
+                    <SubButtonContainer
+                      onClick={() => dispatch(save_song_action(payload))}
+                    >
+                      Add
                   </SubButtonContainer>
-                </div>
-              )}
+                  </div>
+                )}
             </div>
           </div>
         </div>

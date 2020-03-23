@@ -1,9 +1,9 @@
 import {
-  FETCH_LOADING,
-  FETCH_MESSAGE,
-  FETCH_ALL,
-  FETCH_SINGLE,
-  FETCH_ERROR
+  SONG_FETCH_LOADING,
+  SONG_FETCH_MESSAGE,
+  SONG_FETCH_ALL,
+  SONG_FETCH_SINGLE,
+  SONG_FETCH_ERROR
 } from "./song_types";
 
 const initial_state = {
@@ -16,33 +16,33 @@ const initial_state = {
 
 const song_reducer = (state = initial_state, action) => {
   switch (action.type) {
-    case FETCH_LOADING:
+    case SONG_FETCH_LOADING:
       return {
         ...state,
         loading: true
       };
-    case FETCH_MESSAGE:
+    case SONG_FETCH_MESSAGE:
       return {
         ...state,
         loading: false,
         message: action.payload,
         error: ""
       };
-    case FETCH_ALL:
+    case SONG_FETCH_ALL:
       return {
         ...state,
         loading: false,
         songs: action.payload,
         error: ""
       };
-    case FETCH_SINGLE:
+    case SONG_FETCH_SINGLE:
       return {
         ...state,
         loading: false,
         singleSong: action.payload,
         error: ""
       };
-    case FETCH_ERROR:
+    case SONG_FETCH_ERROR:
       return {
         ...state,
         loading: false,

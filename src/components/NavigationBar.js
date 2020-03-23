@@ -41,7 +41,7 @@ export const NavigationBar = () => (
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          <Nav.Item>
+          {/* <Nav.Item>
             <Nav.Link href="/Artists">Artist</Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -49,7 +49,16 @@ export const NavigationBar = () => (
           </Nav.Item>
           <Nav.Item>
             <Nav.Link href="/Categories">Category</Nav.Link>
-          </Nav.Item>
+          </Nav.Item> */}
+          <Link to="/Artists" className="ml-auto">
+            <ButtonContainer>Artist</ButtonContainer>
+          </Link>
+          <Link to="/Songs" className="ml-auto">
+            <ButtonContainer>Song</ButtonContainer>
+          </Link>
+          <Link to="/Categories" className="ml-auto">
+            <ButtonContainer>Category</ButtonContainer>
+          </Link>
           <Link to="/" className="ml-auto">
             <ButtonContainer>Log Out</ButtonContainer>
           </Link>

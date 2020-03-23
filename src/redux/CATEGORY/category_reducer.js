@@ -1,9 +1,9 @@
 import {
-  FETCH_LOADING,
-  FETCH_MESSAGE,
-  FETCH_ALL,
-  FETCH_SINGLE,
-  FETCH_ERROR
+  CATEGORY_FETCH_LOADING,
+  CATEGORY_FETCH_MESSAGE,
+  CATEGORY_FETCH_ALL,
+  CATEGORY_FETCH_SINGLE,
+  CATEGORY_FETCH_ERROR
 } from "./category_types";
 
 const initial_state = {
@@ -16,33 +16,33 @@ const initial_state = {
 
 const category_reducer = (state = initial_state, action) => {
   switch (action.type) {
-    case FETCH_LOADING:
+    case CATEGORY_FETCH_LOADING:
       return {
         ...state,
         loading: true
       };
-    case FETCH_MESSAGE:
+    case CATEGORY_FETCH_MESSAGE:
       return {
         ...state,
         loading: false,
         message: action.payload,
         error: ""
       };
-    case FETCH_ALL:
+    case CATEGORY_FETCH_ALL:
       return {
         ...state,
         loading: false,
         categories: action.payload,
         error: ""
       };
-    case FETCH_SINGLE:
+    case CATEGORY_FETCH_SINGLE:
       return {
         ...state,
         loading: false,
         singleCategory: action.payload,
         error: ""
       };
-    case FETCH_ERROR:
+    case CATEGORY_FETCH_ERROR:
       return {
         ...state,
         loading: false,

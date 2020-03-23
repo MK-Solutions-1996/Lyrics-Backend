@@ -1,42 +1,42 @@
 import Axios from "axios";
 import {
-  FETCH_LOADING,
-  FETCH_MESSAGE,
-  FETCH_ALL,
-  FETCH_SINGLE,
-  FETCH_ERROR
+  SONG_FETCH_LOADING,
+  SONG_FETCH_MESSAGE,
+  SONG_FETCH_ALL,
+  SONG_FETCH_SINGLE,
+  SONG_FETCH_ERROR
 } from "./song_types";
 
 const fetchLoading = () => {
   return {
-    type: FETCH_LOADING
+    type: SONG_FETCH_LOADING
   };
 };
 
 const fetchMessage = message => {
   return {
-    type: FETCH_MESSAGE,
+    type: SONG_FETCH_MESSAGE,
     payload: message
   };
 };
 
 const fetchALL = songs => {
   return {
-    type: FETCH_ALL,
+    type: SONG_FETCH_ALL,
     payload: songs
   };
 };
 
 const fetchSingle = song => {
   return {
-    type: FETCH_ALL,
+    type: SONG_FETCH_SINGLE,
     payload: song
   };
 };
 
 const fetchError = error => {
   return {
-    type: FETCH_ERROR,
+    type: SONG_FETCH_ERROR,
     payload: error
   };
 };
