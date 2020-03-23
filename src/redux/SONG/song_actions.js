@@ -53,7 +53,6 @@ export const save_song_action = payload => {
         artistId: payload.artistId,
         categories: payload.categories,
         song: payload.song,
-        likes: payload.likes
       },
       headers: { api_key: process.env.REACT_APP_API_KEY }
     })
