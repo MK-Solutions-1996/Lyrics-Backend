@@ -136,12 +136,12 @@ function Songs() {
                     </div>
                   </div>
                 ) : (
-                  <div className="center">
                     <div className="center">
-                      <SubTopicContainer>Add Song</SubTopicContainer>
+                      <div className="center">
+                        <SubTopicContainer>Add Song</SubTopicContainer>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 <div className="form-group center">
                   <InputContainer
@@ -227,14 +227,14 @@ function Songs() {
                     </SubButtonContainer>
                   </div>
                 ) : (
-                  <div className="center">
-                    <SubButtonContainer
-                      onClick={() => dispatch(save_song_action(payload))}
-                    >
-                      Add
+                    <div className="center">
+                      <SubButtonContainer
+                        onClick={() => dispatch(save_song_action(payload))}
+                      >
+                        Add
                     </SubButtonContainer>
-                  </div>
-                )}
+                    </div>
+                  )}
               </div>
             </div>
           </div>
