@@ -37,11 +37,12 @@
 
 .card {
   padding: 2vh 2vw;
-  margin: 10vh 5vw;
+  margin: 5vh 5vw;
   width: auto;
   height: auto;
   border-radius: 0.5rem;
   background-color: rgba(248, 65, 48, 0.7) !important;
+  box-shadow: 5px 5px 10px 10px var(--mainGrey);
 }
 
 .dialog {
@@ -58,33 +59,43 @@
   flex-direction: row;
 }
 
-.my-custom-scrollbar {
+.songsTable {
   position: relative;
   height: 60vh;
   width: 60vw;
   overflow: auto;
   display: block;
-  margin: 1rem;
+  margin: 0.5rem;
 }
-.my-custom-scrollbar2 {
+.categoriesTable {
   position: relative;
-  height: 60vh;
+  height: 50vh;
   width: 40vw;
   overflow: auto;
   display: block;
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
-.my-custom-scrollbar3 {
+.artistsTable {
   position: relative;
-  height: 60vh;
-  width: 40vw;
+  height: 50vh;
+  width: 50vw;
   overflow: auto;
   display: block;
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 .table td,
 th {
   text-align: center;
+  font-size: 0.9rem;
+}
+
+.miniCard {
+  /* border: 0.2rem solid var(--darkRed); */
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 10px 10px var(--darkRed);
+  height: auto;
+  /* display: flex;
+  align-items: center; */
 }

@@ -18,17 +18,12 @@ import {
 } from "../redux";
 
 function Artists() {
-  // const [artists] = useState([
-  //   { sinhalaName: "සනුක", singlishName: "Sanuka", period: "21" },
-  //   { sinhalaName: "උමාරියා", singlishName: "Umaria", period: "21" },
-  //   { sinhalaName: "ලහිරු", singlishName: "Lahiru", period: "21" }
-  // ]);
-
   const [artistId, setArtistId] = useState("");
   const [sinhalaName, setSinhalaName] = useState("");
   const [singlishName, setSinglisName] = useState("");
   const [period, setPeriod] = useState("");
   const [isUpdateArtist, setIsUpdateArtist] = useState(false);
+
   const updateArtist = artist => {
     setIsUpdateArtist(true);
     setArtistId(artist._id);
@@ -56,12 +51,12 @@ function Artists() {
       <NavigationBar />
       <div className="center">
         <div className="card">
-          <div>
-            <div className="center">
-              <TopicContainer>View All Artists</TopicContainer>
-            </div>
-            <div className="direction">
-              <div className="my-custom-scrollbar3">
+          <div className="direction">
+            <div>
+              <div className="center">
+                <TopicContainer>Artists</TopicContainer>
+              </div>
+              <div className="artistsTable">
                 <table class="table table-hover table-dark">
                   <thead>
                     <tr className="thead-dark">
@@ -96,10 +91,19 @@ function Artists() {
                   </tbody>
                 </table>
               </div>
-              <div>
-                <div className="center">
-                  <SubTopicContainer>Add Artist</SubTopicContainer>
-                </div>
+            </div>
+            <div className="center">
+              <div className="miniCard">
+                {isUpdateArtist === true ? (
+                  <div className="center">
+                    <SubTopicContainer>Update Artist</SubTopicContainer>
+                  </div>
+                ) : (
+                  <div className="center">
+                    <SubTopicContainer>Add Artist</SubTopicContainer>
+                  </div>
+                )}
+
                 <div className="form-group center">
                   <InputContainer
                     type="text"

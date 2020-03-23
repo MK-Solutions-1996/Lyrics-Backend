@@ -33,7 +33,7 @@ export const SubButtonContainer = styled.button`
   color: var(--mainGrey) !important;
   padding: 0.2rem 0.5rem;
   cursor: pointer;
-  margin: 0.2rem 0.5rem 0.2rem 0;
+  margin: 0rem 0.5rem 0.5rem 0;
   transition: all 0.5s ease-in-out;
   &:hover {
     background: var(--mainGrey) !important;
@@ -110,7 +110,7 @@ export const LongLabelContainer = styled.label`
 export const TextAreaContainer = styled.textarea`
   font-size: 1rem;
   height: auto;
-  width: 40vw;
+  width: 20vw;
   margin: 0.1rem;
   padding: 0.1rem;
   color: var(--mainBlack);

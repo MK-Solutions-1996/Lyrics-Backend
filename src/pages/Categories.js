@@ -15,13 +15,6 @@ import {
 } from "../redux";
 
 function Categories() {
-  //sample data
-  // const [categories] = useState([
-  //   { name: "John" },
-  //   { name: "Mary" },
-  //   { name: "July" }
-  // ]);
-
   const [name, setName] = useState("");
 
   const category_state = useSelector(state => state.category);
@@ -41,12 +34,12 @@ function Categories() {
       <NavigationBar />
       <div className="center">
         <div className="card">
-          <div>
-            <div className="center">
-              <TopicContainer>View All Categories</TopicContainer>
-            </div>
-            <div className="direction">
-              <div className="my-custom-scrollbar2">
+          <div className="direction">
+            <div>
+              <div className="center">
+                <TopicContainer>Categories</TopicContainer>
+              </div>
+              <div className="categoriesTable">
                 <table class="table table-hover table-dark">
                   <thead>
                     <tr className="thead-dark">
@@ -59,11 +52,6 @@ function Categories() {
                       <tr className="table-light text-dark">
                         <td>{i.name}</td>
                         <td className="direction center">
-                          {/* <EditIconButtonContainer
-                            onClick={() => updateCategory(i)}
-                          >
-                            <i class="fas fa-edit"></i>
-                          </EditIconButtonContainer> */}
                           <DeleteIconButtonContainer
                             onClick={() =>
                               dispatch(delete_category_action(i._id))
@@ -77,7 +65,9 @@ function Categories() {
                   </tbody>
                 </table>
               </div>
-              <div>
+            </div>
+            <div className="center">
+              <div className="miniCard">
                 <div className="center">
                   <SubTopicContainer>Add Category</SubTopicContainer>
                 </div>
@@ -92,11 +82,6 @@ function Categories() {
                     onChange={e => setName(e.target.value)}
                   ></InputContainer>
                 </div>
-                {/* {isUpdateCategory === true ? (
-                  <div className="center">
-                    <SubButtonContainer>Update</SubButtonContainer>
-                  </div>
-                ) : ( */}
                 <div className="center">
                   <SubButtonContainer
                     onClick={() => dispatch(save_category_action(payload))}
@@ -104,7 +89,6 @@ function Categories() {
                     Add
                   </SubButtonContainer>
                 </div>
-                {/* )} */}
               </div>
             </div>
           </div>
