@@ -36,6 +36,7 @@ function Artists() {
     setSinhalaName(artist.sinhalaName);
     setSinglisName(artist.singlishName);
     setPeriod(artist.period);
+    setImagePreviewUrl(artist.image);
   };
 
   const artist_state = useSelector(state => state.artist);
