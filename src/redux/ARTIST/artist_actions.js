@@ -87,22 +87,20 @@ export const get_all_artists_action = () => {
   };
 };
 
-export const update_artist_action = (artistId, payload) => {
-  const update_payload = [
-    { key: "sinhalaName", value: payload.sinhalaName },
-    { key: "singlishName", value: payload.singlishName },
-    { key: "period", value: payload.period }
-  ];
+export const update_artist_action = (artistId, formData) => {
+  // const update_payload = [
+  //   { key: "sinhalaName", value: payload.sinhalaName },
+  //   { key: "singlishName", value: payload.singlishName },
+  //   { key: "period", value: payload.period }
+  // ];
 
-  console.log("update_payload:", update_payload);
-  console.log("artistId:", artistId);
 
   return dispatch => {
     dispatch(fetchLoading());
     Axios({
       method: "PATCH",
       url: process.env.REACT_APP_BASE_URL + "/artist/" + artistId,
-      data: update_payload,
+      data: formData,
       headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {

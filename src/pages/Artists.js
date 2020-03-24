@@ -200,7 +200,7 @@ function Artists() {
                   <div className="center">
                     <SubButtonContainer
                       onClick={() =>
-                        dispatch(update_artist_action(artistId, payload))
+                        dispatch(update_artist_action(artistId, formData))
                       }
                     >
                       Update
