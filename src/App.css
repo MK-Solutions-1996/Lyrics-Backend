@@ -78,7 +78,7 @@
 .categoriesTable {
   position: relative;
   height: 60vh;
-  width: 30vw;
+  width: 35vw;
   overflow: auto;
   display: block;
   margin: 0.5rem;
@@ -87,8 +87,8 @@
 /* artists table */
 .artistsTable {
   position: relative;
-  height: 50vh;
-  width: 50vw;
+  height: 60vh;
+  width: 65vw;
   overflow: auto;
   display: block;
   margin: 0.5rem;
@@ -101,8 +101,8 @@ th {
   font-size: 0.8rem;
 }
 
-.column {
-  background-color: var(--darkRed);
+.tableBody {
+  font-size: 0.75rem;
 }
 
 /* add/update card */

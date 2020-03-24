@@ -68,17 +68,17 @@ export const SubButtonContainer = styled.button`
   }
 `;
 
-export const DeleteIconButtonContainer = styled.button`
+export const DeleteIconContainer = styled.i`
   color: var(--mainRed);
-  padding: 0.2rem 0.5rem;
+  padding: 0.1rem 0.2rem;
   cursor: pointer;
-  margin: 0.01rem 0.5rem 0.01rem 0;
+  margin: 0.01rem 0.02rem;
   &:hover {
     color: var(--mainBlack) !important;
   }
 `;
 
-export const EditIconButtonContainer = styled.button`
+export const EditIconContainer = styled.i`
   color: var(--mainYellow);
   padding: 0.2rem 0.5rem;
   cursor: pointer;
@@ -88,7 +88,7 @@ export const EditIconButtonContainer = styled.button`
   }
 `;
 
-export const ViewIconButtonContainer = styled.button`
+export const ViewIconContainer = styled.i`
   color: var(--mainBlue);
   padding: 0.2rem 0.5rem;
   cursor: pointer;
@@ -98,12 +98,18 @@ export const ViewIconButtonContainer = styled.button`
   }
 `;
 
+export const SpanContainer = styled.span`
+            vertical-align: middle,
+            margin-left: 0.2em,
+            font-size: 0.5rem
+`;
+
 export const TopicContainer = styled.label`
   text-align: center;
   font-size: 2.1rem;
   font-weight: bolder;
   color: var(--mainBlack);
-  margin: 0.5rem;
+  margin: 0.2rem;
 `;
 
 export const SubTopicContainer = styled.label`

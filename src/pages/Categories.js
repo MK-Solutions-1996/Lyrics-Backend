@@ -4,8 +4,9 @@ import {
   TopicContainer,
   SubTopicContainer,
   SubButtonContainer,
-  DeleteIconButtonContainer,
-  InputContainer
+  InputContainer,
+  SpanContainer,
+  DeleteIconContainer
 } from "../components/Customs";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -15,8 +16,6 @@ import {
 } from "../redux";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
 
 function Categories() {
   const [name, setName] = useState("");
@@ -34,32 +33,10 @@ function Categories() {
     name: name
   };
 
-  // const [globalFilter, setGlobalFilter] = useState(null);
-
-  // let header = (
-  //   <div style={{ textAlign: "left" }}>
-  //     <i className="pi pi-search" style={{ margin: "4px 4px 0 0" }}></i>
-  //     <InputText
-  //       type="search"
-  //       onInput={e => setGlobalFilter(e.target.value)}
-  //       placeholder="Global Search"
-  //       size="50"
-  //     />
-  //   </div>
-  // );
-
   const category_name_template = rowData => {
     return (
-      <div className="center">
-        <span
-          style={{
-            verticalAlign: "middle",
-            marginLeft: ".5em",
-            fontSize: "0.8rem"
-          }}
-        >
-          {rowData.name}
-        </span>
+      <div className="center tableBody">
+        <SpanContainer>{rowData.name}</SpanContainer>
       </div>
     );
   };
@@ -67,11 +44,10 @@ function Categories() {
   const delete_btn_template = rowData => {
     return (
       <div className="center">
-        <DeleteIconButtonContainer
+        <DeleteIconContainer
+          className="fas fa-trash"
           onClick={() => dispatch(delete_category_action(rowData._id))}
-        >
-          <i className="fas fa-trash"></i>
-        </DeleteIconButtonContainer>
+        />
       </div>
     );
   };
@@ -91,14 +67,12 @@ function Categories() {
                   value={categories}
                   responsive
                   paginator={true}
-                  rows={5}
+                  rows={10}
                   rowHover
-                  rowsPerPageOptions={[5, 10, 15, 20, 25, 50]}
+                  rowsPerPageOptions={[5, 10, 25, 50]}
                   emptyMessage="No categories found"
                   currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                  // header={header}
-                  // globalFilter={globalFilter}
                 >
                   <Column
                     field="categoryName"
@@ -112,32 +86,6 @@ function Categories() {
                   />
                 </DataTable>
               </div>
-              {/* <div className="categoriesTable">
-                <table className="table table-hover table-dark">
-                  <thead>
-                    <tr className="thead-dark">
-                      <th align="center">Category Name</th>
-                      <th align="center">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {categories.map(i => (
-                      <tr className="table-light text-dark">
-                        <td>{i.name}</td>
-                        <td className="direction center">
-                          <DeleteIconButtonContainer
-                            onClick={() =>
-                              dispatch(delete_category_action(i._id))
-                            }
-                          >
-                            <i className="fas fa-trash"></i>
-                          </DeleteIconButtonContainer>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div> */}
             </div>
             <div className="center">
               <div className="miniCard">

@@ -5,11 +5,12 @@ import {
   SubTopicContainer,
   InputContainer,
   SubButtonContainer,
-  DeleteIconButtonContainer,
-  EditIconButtonContainer,
   ImageContainer,
   RadioButtonContainer,
-  LongLabelContainer
+  LongLabelContainer,
+  SpanContainer,
+  DeleteIconContainer,
+  EditIconContainer
 } from "../components/Customs";
 import { default_image_icon } from "../constants/imports";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,6 +20,8 @@ import {
   delete_artist_action,
   update_artist_action
 } from "../redux";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 
 function Artists() {
   const [isUpdateArtist, setIsUpdateArtist] = useState(false);
@@ -48,12 +51,6 @@ function Artists() {
     dispatch(get_all_artists_action());
   }, []);
 
-  const payload = {
-    sinhalaName: sinhalaName,
-    singlishName: singlishName,
-    period: period
-  };
-
   var formData = new FormData();
   formData.append("sinhalaName", sinhalaName);
   formData.append("singlishName", singlishName);
@@ -72,6 +69,53 @@ function Artists() {
     reader.readAsDataURL(event.target.files[0]);
   };
 
+  const artist_name_sinhala_template = rowData => {
+    return (
+      <div className="center tableBody">
+        <SpanContainer>{rowData.sinhalaName}</SpanContainer>
+      </div>
+    );
+  };
+
+  const artist_name_singlish_template = rowData => {
+    return (
+      <div className="center tableBody">
+        <SpanContainer>{rowData.singlishName}</SpanContainer>
+      </div>
+    );
+  };
+
+  const image_template = rowData => {
+    return (
+      <div className="center tableBody">
+        <img src={rowData.image} alt="loading..." width="40" height="40" />
+      </div>
+    );
+  };
+
+  const period_template = rowData => {
+    return (
+      <div className="center tableBody">
+        <SpanContainer>{rowData.period}</SpanContainer>
+      </div>
+    );
+  };
+
+  const delete_edit_btns_template = rowData => {
+    return (
+      <div className="center direction">
+        <EditIconContainer
+          className="fas fa-edit"
+          onClick={() => updateArtist(rowData)}
+        />
+        <DeleteIconContainer
+          className="fas fa-trash"
+          onClick={() => dispatch(delete_artist_action(rowData._id))}
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="background">
       <NavigationBar />
@@ -83,48 +127,39 @@ function Artists() {
                 <TopicContainer>Artists</TopicContainer>
               </div>
               <div className="artistsTable">
-                <table className="table table-hover table-dark">
-                  <thead>
-                    <tr className="thead-dark">
-                      <th align="center">Artist Name (Sinhala)</th>
-                      <th align="center">Artist Name (Singlish)</th>
-                      <th align="center">Image</th>
-                      <th align="center">Period</th>
-                      <th align="center">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {artists.map(i => (
-                      <tr className="table-light text-dark">
-                        <td>{i.sinhalaName}</td>
-                        <td>{i.singlishName}</td>
-                        <td>
-                          <img
-                            src={i.image}
-                            alt="loading..."
-                            width="50"
-                            height="50"
-                          />
-                        </td>
-                        <td>{i.period}</td>
-                        <td className="direction center">
-                          <EditIconButtonContainer
-                            onClick={() => updateArtist(i)}
-                          >
-                            <i className="fas fa-edit"></i>
-                          </EditIconButtonContainer>
-                          <DeleteIconButtonContainer
-                            onClick={() =>
-                              dispatch(delete_artist_action(i._id))
-                            }
-                          >
-                            <i className="fas fa-trash"></i>
-                          </DeleteIconButtonContainer>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <DataTable
+                  value={artists}
+                  responsive
+                  paginator={true}
+                  rows={5}
+                  rowHover
+                  rowsPerPageOptions={[5, 10, 25, 50]}
+                  emptyMessage="No artists found"
+                  currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                >
+                  <Column
+                    field="artistNameSinhala"
+                    header="Artist Name (Sinhala)"
+                    body={artist_name_sinhala_template}
+                  />
+                  <Column
+                    field="artistNameSinglish"
+                    header="Artist Name (Singlish)"
+                    body={artist_name_singlish_template}
+                  />
+                  <Column field="image" header="Image" body={image_template} />
+                  <Column
+                    field="period"
+                    header="Period"
+                    body={period_template}
+                  />
+                  <Column
+                    field="action"
+                    header="Action"
+                    body={delete_edit_btns_template}
+                  />
+                </DataTable>
               </div>
             </div>
             <div className="center">
