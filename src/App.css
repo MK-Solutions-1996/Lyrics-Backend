@@ -77,8 +77,8 @@
 /* categories table */
 .categoriesTable {
   position: relative;
-  height: 50vh;
-  width: 40vw;
+  height: 60vh;
+  width: 30vw;
   overflow: auto;
   display: block;
   margin: 0.5rem;
@@ -99,6 +99,10 @@
 th {
   text-align: center;
   font-size: 0.8rem;
+}
+
+.column {
+  background-color: var(--darkRed);
 }
 
 /* add/update card */
