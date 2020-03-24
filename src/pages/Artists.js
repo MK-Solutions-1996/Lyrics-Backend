@@ -7,7 +7,9 @@ import {
   SubButtonContainer,
   DeleteIconButtonContainer,
   EditIconButtonContainer,
-  ImageContainer
+  ImageContainer,
+  RadioButtonContainer,
+  LongLabelContainer
 } from "../components/Customs";
 import { default_image_icon } from "../constants/imports";
 import { useSelector, useDispatch } from "react-redux";
@@ -49,6 +51,12 @@ function Artists() {
     singlishName: singlishName,
     period: period
   };
+
+  var formData = new FormData();
+  formData.append("sinhalaName", sinhalaName);
+  formData.append("singlishName", singlishName);
+  formData.append("period", period);
+  formData.append("image", selectedFile);
 
   //artist image preview function
   const fileChangedHandler = event => {
@@ -167,15 +175,22 @@ function Artists() {
                   ></InputContainer>
                 </div>
                 <div className="form-group center">
-                  <InputContainer
-                    type="text"
-                    className="form-control"
-                    id="period"
-                    name="period"
-                    placeholder="Period"
-                    value={period}
+                  {/* <fieldset id="group1"> */}
+                  <RadioButtonContainer
+                    type="radio"
+                    value="Old"
+                    name="group1"
                     onChange={e => setPeriod(e.target.value)}
-                  ></InputContainer>
+                  />
+                  <LongLabelContainer for="Old">Old</LongLabelContainer>
+                  <RadioButtonContainer
+                    type="radio"
+                    type="radio"
+                    value="New"
+                    name="group1"
+                    onChange={e => setPeriod(e.target.value)}
+                  />
+                  <LongLabelContainer for="New">New</LongLabelContainer>
                 </div>
                 {isUpdateArtist === true ? (
                   <div className="center">
@@ -190,7 +205,7 @@ function Artists() {
                 ) : (
                   <div className="center">
                     <SubButtonContainer
-                      onClick={() => dispatch(save_artist_action(payload))}
+                      onClick={() => dispatch(save_artist_action(formData))}
                     >
                       Add
                     </SubButtonContainer>

@@ -72,7 +72,7 @@ export const DeleteIconButtonContainer = styled.button`
   color: var(--mainRed);
   padding: 0.2rem 0.5rem;
   cursor: pointer;
-  margin: 0.2rem 0.5rem 0.2rem 0;
+  margin: 0.05rem 0.5rem 0.05rem 0;
   &:hover {
     color: var(--mainBlack) !important;
   }
@@ -82,7 +82,7 @@ export const EditIconButtonContainer = styled.button`
   color: var(--mainYellow);
   padding: 0.2rem 0.5rem;
   cursor: pointer;
-  margin: 0.2rem 0.5rem 0.2rem 0;
+  margin: 0.05rem 0.5rem 0.05rem 0;
   &:hover {
     color: var(--mainBlack) !important;
   }
@@ -120,6 +120,13 @@ export const InputContainer = styled.input`
   padding: 0.2rem;
   height: 2rem;
   border-radius: 0.3rem;
+`;
+
+export const RadioButtonContainer = styled.input`
+  width: 1rem;
+  margin: 0.1rem 0.3rem;
+  padding: 0.1rem;
+  height: 1rem;
 `;
 
 export const LongLabelContainer = styled.label`

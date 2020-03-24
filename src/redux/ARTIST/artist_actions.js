@@ -9,7 +9,7 @@ import {
 
 const fetchLoading = () => {
   return {
-    type: ARTIST_FETCH_LOADING,
+    type: ARTIST_FETCH_LOADING
   };
 };
 
@@ -41,17 +41,18 @@ const fetchError = error => {
   };
 };
 
-export const save_artist_action = payload => {
+export const save_artist_action = formData => {
   return dispatch => {
     dispatch(fetchLoading());
     Axios({
       method: "POST",
       url: process.env.REACT_APP_BASE_URL + "/artist",
-      data: {
-        sinhalaName: payload.sinhalaName,
-        singlishName: payload.singlishName,
-        period: payload.period
-      },
+      data: formData,
+      // {
+      //   sinhalaName: payload.sinhalaName,
+      //   singlishName: payload.singlishName,
+      //   period: payload.period
+      // },
       headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
