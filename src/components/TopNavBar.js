@@ -3,32 +3,10 @@ import { Link } from "react-router-dom";
 import { ButtonContainer } from "../components/Customs";
 import { Nav, Navbar } from "react-bootstrap";
 import { logo_icon } from "../constants/imports";
-import styled from "styled-components";
-const Styles = styled.div`
-  .navbar {
-    background-color: var(--mainRed);
-  }
-  a,
-  .navbar-nav,
-  .navbar-light .nav-link {
-    color: var(--mainBlack);
-    font-size: 1.2rem;
-    margin: 0.2rem 0.5rem 0.2rem 0;
-    font-weight: bold;
-    &:hover {
-      color: white;
-    }
-  }
-  .navbar-brand {
-    font-size: 1.4em;
-    color: var(--mainBlack);
-    &:hover {
-      color: white;
-    }
-  }
-`;
+import { NavigationBarDivContainer } from "../components/Customs";
+
 export const TopNavBar = () => (
-  <Styles>
+  <NavigationBarDivContainer>
     <Navbar expand="lg">
       <Navbar.Brand href="/">
         <img src={logo_icon} alt="logo" className="navbar-brand logo" />
@@ -47,5 +25,5 @@ export const TopNavBar = () => (
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-  </Styles>
+  </NavigationBarDivContainer>
 );

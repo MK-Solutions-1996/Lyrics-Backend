@@ -59,6 +59,12 @@
   flex-direction: row;
 }
 
+.oppositedirection {
+  display: flex;
+  flex-direction: column;
+}
+
+/* songs table */
 .songsTable {
   position: relative;
   height: 60vh;
@@ -67,6 +73,8 @@
   display: block;
   margin: 0.5rem;
 }
+
+/* categories table */
 .categoriesTable {
   position: relative;
   height: 50vh;
@@ -76,6 +84,7 @@
   margin: 0.5rem;
 }
 
+/* artists table */
 .artistsTable {
   position: relative;
   height: 50vh;
@@ -85,17 +94,16 @@
   margin: 0.5rem;
 }
 
+/* all tables */
 .table td,
 th {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
+/* add/update card */
 .miniCard {
-  /* border: 0.2rem solid var(--darkRed); */
   border-radius: 0.5rem;
   box-shadow: 5px 5px 10px 10px var(--darkRed);
   height: auto;
-  /* display: flex;
-  align-items: center; */
 }

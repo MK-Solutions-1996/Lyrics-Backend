@@ -25,6 +25,7 @@ function Categories() {
     dispatch(get_all_categories_action());
   }, []);
 
+  //temporary
   const payload = {
     name: name
   };
@@ -40,7 +41,7 @@ function Categories() {
                 <TopicContainer>Categories</TopicContainer>
               </div>
               <div className="categoriesTable">
-                <table class="table table-hover table-dark">
+                <table className="table table-hover table-dark">
                   <thead>
                     <tr className="thead-dark">
                       <th align="center">Category Name</th>
@@ -57,7 +58,7 @@ function Categories() {
                               dispatch(delete_category_action(i._id))
                             }
                           >
-                            <i class="fas fa-trash"></i>
+                            <i className="fas fa-trash"></i>
                           </DeleteIconButtonContainer>
                         </td>
                       </tr>
@@ -78,7 +79,6 @@ function Categories() {
                     id="category_name"
                     name="category_name"
                     placeholder="Category Name"
-                    // value={name}
                     onChange={e => setName(e.target.value)}
                   ></InputContainer>
                 </div>
