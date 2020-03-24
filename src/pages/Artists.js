@@ -134,10 +134,10 @@ function Artists() {
                     <SubTopicContainer>Update Artist</SubTopicContainer>
                   </div>
                 ) : (
-                  <div className="center">
-                    <SubTopicContainer>Add Artist</SubTopicContainer>
-                  </div>
-                )}
+                    <div className="center">
+                      <SubTopicContainer>Add Artist</SubTopicContainer>
+                    </div>
+                  )}
                 {imagePreviewUrl ? (
                   <div className="center oppositedirection">
                     <InputContainer
@@ -151,18 +151,24 @@ function Artists() {
                     ></ImageContainer>
                   </div>
                 ) : (
-                  <div className="center oppositedirection">
-                    <InputContainer
-                      type="file"
-                      name="avatar"
-                      onChange={fileChangedHandler}
-                    ></InputContainer>
-                    <ImageContainer
-                      src={default_image_icon}
-                      alt="icon"
-                    ></ImageContainer>
+                    <div className="center oppositedirection">
+                      <InputContainer
+                        type="file"
+                        name="avatar"
+                        onChange={fileChangedHandler}
+                      ></InputContainer>
+                      <ImageContainer
+                        src={default_image_icon}
+                        alt="icon"
+                      ></ImageContainer>
+                    </div>
+                  )}
+                {
+                  error && error.data.image &&
+                  <div className="form-group center">
+                    {error.data.image.message}
                   </div>
-                )}
+                }
                 <div className="form-group center">
                   <InputContainer
                     type="text"
@@ -174,6 +180,12 @@ function Artists() {
                     onChange={e => setSinhalaName(e.target.value)}
                   ></InputContainer>
                 </div>
+                {
+                  error && error.data.sinhalaName &&
+                  <div className="form-group center">
+                    {error.data.sinhalaName.message}
+                  </div>
+                }
                 <div className="form-group center">
                   <InputContainer
                     type="text"
@@ -185,6 +197,13 @@ function Artists() {
                     onChange={e => setSinglisName(e.target.value)}
                   ></InputContainer>
                 </div>
+                {
+                  error && error.data.singlishName &&
+                  <div className="form-group center">
+                    {error.data.singlishName.message}
+                  </div>
+                }
+
                 <div className="form-group center">
                   {/* <fieldset id="group1"> */}
                   <RadioButtonContainer
@@ -201,6 +220,12 @@ function Artists() {
                     name="group1"
                     onChange={e => setPeriod(e.target.value)}
                   />
+                  {
+                    error && error.data.period &&
+                    <div className="form-group center">
+                      {error.data.period.message}
+                    </div>
+                  }
                   <LongLabelContainer for="New">New</LongLabelContainer>
                 </div>
                 {isUpdateArtist === true ? (
@@ -214,14 +239,14 @@ function Artists() {
                     </SubButtonContainer>
                   </div>
                 ) : (
-                  <div className="center">
-                    <SubButtonContainer
-                      onClick={() => dispatch(save_artist_action(formData))}
-                    >
-                      Add
+                    <div className="center">
+                      <SubButtonContainer
+                        onClick={() => dispatch(save_artist_action(formData))}
+                      >
+                        Add
                     </SubButtonContainer>
-                  </div>
-                )}
+                    </div>
+                  )}
               </div>
             </div>
           </div>
