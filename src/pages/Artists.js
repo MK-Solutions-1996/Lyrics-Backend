@@ -37,6 +37,7 @@ function Artists() {
     setSinglisName(artist.singlishName);
     setPeriod(artist.period);
     setImagePreviewUrl(artist.image);
+    setSelectedFile(artist.image);
   };
 
   const artist_state = useSelector(state => state.artist);
@@ -98,7 +99,12 @@ function Artists() {
                         <td>{i.sinhalaName}</td>
                         <td>{i.singlishName}</td>
                         <td>
-                          <img src={i.image} alt="loading..." width="50" height="50" />
+                          <img
+                            src={i.image}
+                            alt="loading..."
+                            width="50"
+                            height="50"
+                          />
                         </td>
                         <td>{i.period}</td>
                         <td className="direction center">
@@ -128,10 +134,10 @@ function Artists() {
                     <SubTopicContainer>Update Artist</SubTopicContainer>
                   </div>
                 ) : (
-                    <div className="center">
-                      <SubTopicContainer>Add Artist</SubTopicContainer>
-                    </div>
-                  )}
+                  <div className="center">
+                    <SubTopicContainer>Add Artist</SubTopicContainer>
+                  </div>
+                )}
                 {imagePreviewUrl ? (
                   <div className="center oppositedirection">
                     <InputContainer
@@ -145,18 +151,18 @@ function Artists() {
                     ></ImageContainer>
                   </div>
                 ) : (
-                    <div className="center oppositedirection">
-                      <InputContainer
-                        type="file"
-                        name="avatar"
-                        onChange={fileChangedHandler}
-                      ></InputContainer>
-                      <ImageContainer
-                        src={default_image_icon}
-                        alt="icon"
-                      ></ImageContainer>
-                    </div>
-                  )}
+                  <div className="center oppositedirection">
+                    <InputContainer
+                      type="file"
+                      name="avatar"
+                      onChange={fileChangedHandler}
+                    ></InputContainer>
+                    <ImageContainer
+                      src={default_image_icon}
+                      alt="icon"
+                    ></ImageContainer>
+                  </div>
+                )}
                 <div className="form-group center">
                   <InputContainer
                     type="text"
@@ -208,14 +214,14 @@ function Artists() {
                     </SubButtonContainer>
                   </div>
                 ) : (
-                    <div className="center">
-                      <SubButtonContainer
-                        onClick={() => dispatch(save_artist_action(formData))}
-                      >
-                        Add
+                  <div className="center">
+                    <SubButtonContainer
+                      onClick={() => dispatch(save_artist_action(formData))}
+                    >
+                      Add
                     </SubButtonContainer>
-                    </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
