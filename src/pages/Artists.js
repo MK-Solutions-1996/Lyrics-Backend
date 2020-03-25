@@ -6,6 +6,7 @@ import {
   InputContainer,
   SubButtonContainer,
   ImageContainer,
+  RefreshIconContainer,
   RadioButtonContainer,
   LongLabelContainer,
   SpanContainer,
@@ -22,6 +23,7 @@ import {
 } from "../redux";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { RadioButton } from "primereact/radiobutton";
 
 function Artists() {
   const [isUpdateArtist, setIsUpdateArtist] = useState(false);
@@ -32,8 +34,28 @@ function Artists() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
+  const refresh = () => {
+    setIsUpdateArtist(false);
+    setArtistId("");
+    setSinhalaName("");
+    setSinglisName("");
+    setPeriod("");
+    setImagePreviewUrl(null);
+    setSelectedFile(null);
+  };
+
+  const updateArtist = () => {
+    dispatch(update_artist_action(artistId, formData));
+    refresh();
+  };
+
+  const addArtist = () => {
+    dispatch(save_artist_action(formData));
+    refresh();
+  };
+
   //filling data for update
-  const updateArtist = artist => {
+  const updateArtistTemplate = artist => {
     setIsUpdateArtist(true);
     setArtistId(artist._id);
     setSinhalaName(artist.sinhalaName);
@@ -106,7 +128,7 @@ function Artists() {
       <div className="center direction">
         <EditIconContainer
           className="fas fa-edit"
-          onClick={() => updateArtist(rowData)}
+          onClick={() => updateArtistTemplate(rowData)}
         />
         <DeleteIconContainer
           className="fas fa-trash"
@@ -126,6 +148,10 @@ function Artists() {
               <div className="center">
                 <TopicContainer>Artists</TopicContainer>
               </div>
+              <RefreshIconContainer
+                onClick={() => dispatch(get_all_artists_action())}
+                className="fas fa-sync-alt"
+              ></RefreshIconContainer>
               <div className="artistsTable">
                 <DataTable
                   value={artists}
@@ -235,45 +261,61 @@ function Artists() {
                     {error.data.singlishName.message}
                   </div>
                 )}
-
                 <div className="form-group center">
-                  {/* <fieldset id="group1"> */}
-                  <RadioButtonContainer
-                    type="radio"
-                    value="Old"
-                    name="group1"
-                    onChange={e => setPeriod(e.target.value)}
-                  />
-                  <LongLabelContainer for="Old">Old</LongLabelContainer>
-                  <RadioButtonContainer
-                    type="radio"
-                    type="radio"
-                    value="New"
-                    name="group1"
-                    onChange={e => setPeriod(e.target.value)}
-                  />
+                  <div className="p-col-12">
+                    <RadioButton
+                      inputId="rb1"
+                      name="period"
+                      value="Old"
+                      onChange={e => setPeriod(e.value)}
+                      checked={period === "Old"}
+                      style={{
+                        margin: "0.2rem"
+                      }}
+                    />
+                    <LongLabelContainer
+                      htmlFor="rb1"
+                      className="p-radiobutton-label"
+                    >
+                      Old
+                    </LongLabelContainer>
+                  </div>
+                  <div className="p-col-12">
+                    <RadioButton
+                      inputId="rb2"
+                      name="period"
+                      value="New"
+                      onChange={e => setPeriod(e.value)}
+                      checked={period === "New"}
+                      style={{
+                        margin: "0.2rem"
+                      }}
+                    />
+                    <LongLabelContainer
+                      htmlFor="rb1"
+                      className="p-radiobutton-label"
+                    >
+                      New
+                    </LongLabelContainer>
+                  </div>
                   {error && error.data.period && (
                     <div className="form-group center">
                       {error.data.period.message}
                     </div>
                   )}
-                  <LongLabelContainer for="New">New</LongLabelContainer>
                 </div>
                 {isUpdateArtist === true ? (
                   <div className="center">
-                    <SubButtonContainer
-                      onClick={() =>
-                        dispatch(update_artist_action(artistId, formData))
-                      }
-                    >
+                    <SubButtonContainer onClick={updateArtist}>
                       Update
+                    </SubButtonContainer>
+                    <SubButtonContainer onClick={refresh}>
+                      Cancel
                     </SubButtonContainer>
                   </div>
                 ) : (
                   <div className="center">
-                    <SubButtonContainer
-                      onClick={() => dispatch(save_artist_action(formData))}
-                    >
+                    <SubButtonContainer onClick={addArtist}>
                       Add
                     </SubButtonContainer>
                   </div>

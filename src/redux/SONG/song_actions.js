@@ -50,6 +50,7 @@ export const save_song_action = payload => {
       data: {
         sinhalaTitle: payload.sinhalaTitle,
         singlishTitle: payload.singlishTitle,
+        type: payload.type,
         artistId: payload.artistId,
         artistName: payload.artistName,
         categories: payload.categories,

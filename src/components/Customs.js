@@ -98,9 +98,18 @@ export const ViewIconContainer = styled.i`
   }
 `;
 
+export const RefreshIconContainer = styled.i`
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  margin: 0.01rem 0.5rem 0.01rem 0;
+  &:hover {
+    color: var(--mainBlack) !important;
+  }
+`;
+
 export const SpanContainer = styled.span`
             vertical-align: middle,
-            margin-left: 0.2em,
+            margin: 0.2rem,
             font-size: 0.5rem
 `;
 

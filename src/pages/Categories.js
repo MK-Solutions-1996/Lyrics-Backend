@@ -6,7 +6,8 @@ import {
   SubButtonContainer,
   InputContainer,
   SpanContainer,
-  DeleteIconContainer
+  DeleteIconContainer,
+  RefreshIconContainer
 } from "../components/Customs";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -62,6 +63,10 @@ function Categories() {
               <div className="center">
                 <TopicContainer>Categories</TopicContainer>
               </div>
+              <RefreshIconContainer
+                onClick={() => dispatch(get_all_categories_action())}
+                className="fas fa-sync-alt"
+              ></RefreshIconContainer>
               <div className="categoriesTable">
                 <DataTable
                   value={categories}

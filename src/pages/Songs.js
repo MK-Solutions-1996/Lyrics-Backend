@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { NavigationBar } from "../components/NavigationBar";
 import { Dropdown } from "primereact/dropdown";
 import { MultiSelect } from "primereact/multiselect";
+import { RadioButton } from "primereact/radiobutton";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -11,7 +14,10 @@ import {
   DeleteIconContainer,
   EditIconContainer,
   ViewIconContainer,
-  SpanContainer
+  SpanContainer,
+  RefreshIconContainer,
+  RadioButtonContainer,
+  LongLabelContainer
 } from "../components/Customs";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -23,8 +29,6 @@ import {
   get_all_artists_action,
   get_all_categories_action
 } from "../redux";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 
 function Songs() {
   const [isUpdateSong, setIsUpdateSong] = useState(false);
@@ -32,7 +36,9 @@ function Songs() {
   const [songId, setSongId] = useState("");
   const [sinhalaTitle, setSinhalaTitle] = useState("");
   const [singlishTitle, setSinglishTitle] = useState("");
-  const [artistId, setArtistId] = useState("");
+  const [songType, setSongType] = useState("");
+  const [artistId, setArtistId] = useState([]);
+  const [artistName, setArtistName] = useState([]);
   const [category, setCategory] = useState([]);
   const [song, setSong] = useState("");
 
@@ -44,10 +50,26 @@ function Songs() {
   const { artists } = artist_state;
   const { categories } = category_state;
 
+  const artists_fetch_and_set_func = artistId => {
+    console.log("ArtistId:", artistId);
+    setArtistId(artistId);
+    const artistNameArr = [];
+    artists.map(artist => {
+      artistId.forEach(id => {
+        if (artist._id === id) {
+          artistNameArr.push(artist.singlishName);
+        }
+      });
+    });
+    setArtistName(artistNameArr);
+  };
+
   const payload = {
     sinhalaTitle: sinhalaTitle,
     singlishTitle: singlishTitle,
+    type: songType,
     artistId: artistId,
+    artistName: artistName,
     categories: category,
     song: song
   };
@@ -70,11 +92,36 @@ function Songs() {
     category_dropdown.push(object);
   });
 
-  const updateSong = song => {
+  const refresh = () => {
+    setIsUpdateSong(false);
+    setSongId("");
+    setSinhalaTitle("");
+    setSinglishTitle("");
+    setSongType("");
+    setArtistId([]);
+    setArtistName([]);
+    setCategory([]);
+    setSong("");
+  };
+
+  const updateSong = () => {
+    dispatch(update_song_action(songId, payload));
+    refresh();
+  };
+
+  const addSong = () => {
+    dispatch(save_song_action(payload));
+    refresh();
+  };
+
+  const updateSongTemplate = song => {
+    artists_fetch_and_set_func(song.artistId);
     setIsUpdateSong(true);
     setSongId(song._id);
     setSinhalaTitle(song.sinhalaTitle);
     setSinglishTitle(song.singlishTitle);
+    setSongType(song.type);
+    setArtistName(song.artistName);
     setCategory(song.categories);
     setSong(song.song);
   };
@@ -98,17 +145,22 @@ function Songs() {
   };
 
   const artists_template = rowData => {
+    console.log("Art:", rowData.artistName);
     return (
-      <div className="center tableBody">
-        <SpanContainer>{rowData.artistId}</SpanContainer>
+      <div className="center tableBody oppositedirection">
+        {rowData.artistName.map(name => (
+          <SpanContainer>{name}</SpanContainer>
+        ))}
       </div>
     );
   };
 
   const categories_template = rowData => {
     return (
-      <div className="center tableBody">
-        <SpanContainer>{rowData.categories}</SpanContainer>
+      <div className="center tableBody oppositedirection">
+        {rowData.categories.map(category => (
+          <SpanContainer>{category}</SpanContainer>
+        ))}
       </div>
     );
   };
@@ -116,10 +168,10 @@ function Songs() {
   const delete_edit_view_btns_template = rowData => {
     return (
       <div className="center direction">
-        <ViewIconContainer class="fas fa-eye" />
+        <ViewIconContainer className="fas fa-eye" />
         <EditIconContainer
           className="fas fa-edit"
-          onClick={() => updateSong(rowData)}
+          onClick={() => updateSongTemplate(rowData)}
         />
         <DeleteIconContainer
           className="fas fa-trash"
@@ -139,6 +191,10 @@ function Songs() {
               <div className="center">
                 <TopicContainer>Songs</TopicContainer>
               </div>
+              <RefreshIconContainer
+                onClick={() => dispatch(get_all_songs_action())}
+                className="fas fa-sync-alt"
+              ></RefreshIconContainer>
               <div className="songsTable">
                 <DataTable
                   value={songs}
@@ -217,14 +273,67 @@ function Songs() {
                   ></InputContainer>
                 </div>
                 <div className="form-group center">
-                  <Dropdown
+                  <div className="p-col-12">
+                    <RadioButton
+                      inputId="rb1"
+                      name="type"
+                      value="Solo"
+                      onChange={e => setSongType(e.value)}
+                      checked={songType === "Solo"}
+                      style={{
+                        margin: "0.2rem"
+                      }}
+                    />
+                    <LongLabelContainer
+                      htmlFor="rb1"
+                      className="p-radiobutton-label"
+                    >
+                      Solo
+                    </LongLabelContainer>
+                  </div>
+                  <div className="p-col-12">
+                    <RadioButton
+                      inputId="rb2"
+                      name="type"
+                      value="Duet"
+                      onChange={e => setSongType(e.value)}
+                      checked={songType === "Duet"}
+                      style={{
+                        margin: "0.2rem"
+                      }}
+                    />
+                    <LongLabelContainer
+                      htmlFor="rb2"
+                      className="p-radiobutton-label"
+                    >
+                      Duet
+                    </LongLabelContainer>
+                  </div>
+                  <div className="p-col-12">
+                    <RadioButton
+                      inputId="rb3"
+                      name="type"
+                      value="Group"
+                      onChange={e => setSongType(e.value)}
+                      checked={songType === "Group"}
+                      style={{
+                        marginLeft: "0.2rem"
+                      }}
+                    />
+                    <LongLabelContainer
+                      htmlFor="rb3"
+                      className="p-radiobutton-label"
+                    >
+                      Group
+                    </LongLabelContainer>
+                  </div>
+                </div>
+                <div className="form-group center">
+                  <MultiSelect
                     className="dropdown"
                     value={artistId}
                     options={artist_dropdown}
-                    ariaLabel="Test"
-                    onChange={e => setArtistId(e.value)}
-                    placeholder="Choose Artist Id"
-                    optionLabel="label"
+                    onChange={e => artists_fetch_and_set_func(e.value)}
                     style={{
                       width: "20vw",
                       height: "2rem",
@@ -233,6 +342,7 @@ function Songs() {
                     }}
                     filter={true}
                     filterPlaceholder="Search"
+                    placeholder="Choose Artists"
                   />
                 </div>
                 <div className="form-group center">
@@ -267,19 +377,16 @@ function Songs() {
                 </div>
                 {isUpdateSong === true ? (
                   <div className="center">
-                    <SubButtonContainer
-                      onClick={() =>
-                        dispatch(update_song_action(songId, payload))
-                      }
-                    >
+                    <SubButtonContainer onClick={updateSong}>
                       Update
+                    </SubButtonContainer>
+                    <SubButtonContainer onClick={refresh}>
+                      Cancel
                     </SubButtonContainer>
                   </div>
                 ) : (
                   <div className="center">
-                    <SubButtonContainer
-                      onClick={() => dispatch(save_song_action(payload))}
-                    >
+                    <SubButtonContainer onClick={addSong}>
                       Add
                     </SubButtonContainer>
                   </div>
