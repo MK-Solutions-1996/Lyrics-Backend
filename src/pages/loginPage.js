@@ -5,9 +5,10 @@ import {
   ButtonContainer,
   TopicContainer,
   InputContainer,
-  LongLabelContainer
+  LongLabelContainer,
+  MessageContainer
 } from "../components/Customs";
-
+import { Message } from "primereact/message";
 import { useSelector, useDispatch } from "react-redux";
 import { signin_action } from "../redux";
 
@@ -56,9 +57,11 @@ function Login() {
             ></InputContainer>
           </div>
           {error.data && (
-            <div className="center">
-              <p>{error.data}</p>
-            </div>
+            <Message
+              severity="error"
+              style={MessageContainer}
+              text={error.data}
+            />
           )}
           <div className="center">
             <ButtonContainer onClick={() => dispatch(signin_action(payload))}>

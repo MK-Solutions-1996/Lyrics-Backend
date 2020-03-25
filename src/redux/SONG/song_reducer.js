@@ -11,7 +11,7 @@ const initial_state = {
   message: "",
   songs: [],
   singleSong: {},
-  error: ""
+  song_error: ""
 };
 
 const song_reducer = (state = initial_state, action) => {
@@ -26,27 +26,27 @@ const song_reducer = (state = initial_state, action) => {
         ...state,
         loading: false,
         message: action.payload,
-        error: ""
+        song_error: ""
       };
     case SONG_FETCH_ALL:
       return {
         ...state,
         loading: false,
         songs: action.payload,
-        error: ""
+        song_error: ""
       };
     case SONG_FETCH_SINGLE:
       return {
         ...state,
         loading: false,
         singleSong: action.payload,
-        error: ""
+        song_error: ""
       };
     case SONG_FETCH_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        song_error: action.payload
       };
     default:
       return state;

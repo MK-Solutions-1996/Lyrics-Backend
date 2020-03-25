@@ -7,7 +7,8 @@ import {
   InputContainer,
   SpanContainer,
   DeleteIconContainer,
-  RefreshIconContainer
+  RefreshIconContainer,
+  MessageContainer
 } from "../components/Customs";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -17,13 +18,14 @@ import {
 } from "../redux";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Message } from "primereact/message";
 
 function Categories() {
   const [name, setName] = useState("");
 
   const category_state = useSelector(state => state.category);
   const dispatch = useDispatch();
-  const { loading, categories, error } = category_state;
+  const { loading, categories, message, category_error } = category_state;
 
   useEffect(() => {
     dispatch(get_all_categories_action());
@@ -97,7 +99,7 @@ function Categories() {
                 <div className="center">
                   <SubTopicContainer>Add Category</SubTopicContainer>
                 </div>
-                <div className="form-group center">
+                <div className="form-group center oppositedirection">
                   <InputContainer
                     type="text"
                     className="form-control"
@@ -106,6 +108,13 @@ function Categories() {
                     placeholder="Category Name"
                     onChange={e => setName(e.target.value)}
                   ></InputContainer>
+                  {category_error && category_error.data.name && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={category_error.data.name.message}
+                    />
+                  )}
                 </div>
                 <div className="center">
                   <SubButtonContainer
@@ -113,6 +122,13 @@ function Categories() {
                   >
                     Add
                   </SubButtonContainer>
+                  {message && (
+                    <Message
+                      severity="success"
+                      style={MessageContainer}
+                      text={message}
+                    />
+                  )}
                 </div>
               </div>
             </div>

@@ -88,7 +88,7 @@
 .artistsTable {
   position: relative;
   height: 60vh;
-  width: 65vw;
+  width: 60vw;
   overflow: auto;
   display: block;
   margin: 0.5rem;

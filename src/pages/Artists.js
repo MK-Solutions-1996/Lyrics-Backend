@@ -7,11 +7,11 @@ import {
   SubButtonContainer,
   ImageContainer,
   RefreshIconContainer,
-  RadioButtonContainer,
   LongLabelContainer,
   SpanContainer,
   DeleteIconContainer,
-  EditIconContainer
+  EditIconContainer,
+  MessageContainer
 } from "../components/Customs";
 import { default_image_icon } from "../constants/imports";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,6 +24,7 @@ import {
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { RadioButton } from "primereact/radiobutton";
+import { Message } from "primereact/message";
 
 function Artists() {
   const [isUpdateArtist, setIsUpdateArtist] = useState(false);
@@ -67,7 +68,7 @@ function Artists() {
 
   const artist_state = useSelector(state => state.artist);
   const dispatch = useDispatch();
-  const { loading, artists, error } = artist_state;
+  const { loading, artists, message, artist_error } = artist_state;
 
   useEffect(() => {
     dispatch(get_all_artists_action());
@@ -224,12 +225,16 @@ function Artists() {
                     ></ImageContainer>
                   </div>
                 )}
-                {error && error.data.image && (
-                  <div className="form-group center">
-                    {error.data.image.message}
+                {artist_error && artist_error.data.image && (
+                  <div className="center">
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={artist_error.data.image.message}
+                    />
                   </div>
                 )}
-                <div className="form-group center">
+                <div className="form-group center oppositedirection">
                   <InputContainer
                     type="text"
                     className="form-control"
@@ -239,13 +244,18 @@ function Artists() {
                     value={sinhalaName}
                     onChange={e => setSinhalaName(e.target.value)}
                   ></InputContainer>
+                  {artist_error && artist_error.data.sinhalaName && (
+                    <div className="center">
+                      <Message
+                        severity="error"
+                        style={MessageContainer}
+                        text={artist_error.data.sinhalaName.message}
+                      />
+                    </div>
+                  )}
                 </div>
-                {error && error.data.sinhalaName && (
-                  <div className="form-group center">
-                    {error.data.sinhalaName.message}
-                  </div>
-                )}
-                <div className="form-group center">
+
+                <div className="form-group center oppositedirection">
                   <InputContainer
                     type="text"
                     className="form-control"
@@ -255,53 +265,60 @@ function Artists() {
                     value={singlishName}
                     onChange={e => setSinglisName(e.target.value)}
                   ></InputContainer>
+                  {artist_error && artist_error.data.singlishName && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={artist_error.data.singlishName.message}
+                    />
+                  )}
                 </div>
-                {error && error.data.singlishName && (
-                  <div className="form-group center">
-                    {error.data.singlishName.message}
-                  </div>
-                )}
-                <div className="form-group center">
-                  <div className="p-col-12">
-                    <RadioButton
-                      inputId="rb1"
-                      name="period"
-                      value="Old"
-                      onChange={e => setPeriod(e.value)}
-                      checked={period === "Old"}
-                      style={{
-                        margin: "0.2rem"
-                      }}
-                    />
-                    <LongLabelContainer
-                      htmlFor="rb1"
-                      className="p-radiobutton-label"
-                    >
-                      Old
-                    </LongLabelContainer>
-                  </div>
-                  <div className="p-col-12">
-                    <RadioButton
-                      inputId="rb2"
-                      name="period"
-                      value="New"
-                      onChange={e => setPeriod(e.value)}
-                      checked={period === "New"}
-                      style={{
-                        margin: "0.2rem"
-                      }}
-                    />
-                    <LongLabelContainer
-                      htmlFor="rb1"
-                      className="p-radiobutton-label"
-                    >
-                      New
-                    </LongLabelContainer>
-                  </div>
-                  {error && error.data.period && (
-                    <div className="form-group center">
-                      {error.data.period.message}
+
+                <div className="form-group center oppositedirection">
+                  <div className="direction">
+                    <div className="p-col-12">
+                      <RadioButton
+                        inputId="rb1"
+                        name="period"
+                        value="Old"
+                        onChange={e => setPeriod(e.value)}
+                        checked={period === "Old"}
+                        style={{
+                          margin: "0.2rem"
+                        }}
+                      />
+                      <LongLabelContainer
+                        htmlFor="rb1"
+                        className="p-radiobutton-label"
+                      >
+                        Old
+                      </LongLabelContainer>
                     </div>
+                    <div className="p-col-12">
+                      <RadioButton
+                        inputId="rb2"
+                        name="period"
+                        value="New"
+                        onChange={e => setPeriod(e.value)}
+                        checked={period === "New"}
+                        style={{
+                          margin: "0.2rem"
+                        }}
+                      />
+                      <LongLabelContainer
+                        htmlFor="rb1"
+                        className="p-radiobutton-label"
+                      >
+                        New
+                      </LongLabelContainer>
+                    </div>
+                  </div>
+                  {artist_error && artist_error.data.period && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={artist_error.data.period.message}
+                    />
                   )}
                 </div>
                 {isUpdateArtist === true ? (
@@ -318,6 +335,13 @@ function Artists() {
                     <SubButtonContainer onClick={addArtist}>
                       Add
                     </SubButtonContainer>
+                    {message && (
+                      <Message
+                        severity="success"
+                        style={MessageContainer}
+                        text={message}
+                      />
+                    )}
                   </div>
                 )}
               </div>

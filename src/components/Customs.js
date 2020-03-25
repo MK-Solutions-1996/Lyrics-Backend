@@ -111,6 +111,7 @@ export const SpanContainer = styled.span`
             vertical-align: middle,
             margin: 0.2rem,
             font-size: 0.5rem
+            font-family: "Abhaya Libre", serif;
 `;
 
 export const TopicContainer = styled.label`
@@ -130,11 +131,13 @@ export const SubTopicContainer = styled.label`
 `;
 
 export const InputContainer = styled.input`
+  font-size: 0.8rem;
   width: 20vw;
-  margin: 0.3rem;
+  margin: 0 0.3rem 0rem 0.3rem;
   padding: 0.2rem;
-  height: 2rem;
+  height: 1.7rem;
   border-radius: 0.3rem;
+  font-family: "Abhaya Libre", serif;
 `;
 
 export const RadioButtonContainer = styled.input`
@@ -145,19 +148,21 @@ export const RadioButtonContainer = styled.input`
 `;
 
 export const LongLabelContainer = styled.label`
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin: 0.1rem;
   padding: 0.1rem;
   height: auto;
   width: auto;
   color: var(--mainBlack);
+  font-family: "Abhaya Libre", serif;
 `;
 
 export const TextAreaContainer = styled.textarea`
-  font-size: 1rem;
+  font-size: 0.8rem;
+  font-family: "Abhaya Libre", serif;
   height: auto;
   width: 20vw;
-  margin: 0.1rem;
+  margin: 0 0.3rem 0rem 0.3rem;
   padding: 0.1rem;
   color: var(--mainBlack);
 `;
@@ -165,4 +170,16 @@ export const TextAreaContainer = styled.textarea`
 export const ImageContainer = styled.img`
   width: 10vw;
   height: 20vh;
+  margin: 0.5rem;
 `;
+
+export const MultiSelectContainer = {
+  width: "20vw",
+  height: "2rem",
+  borderRadius: "0.4rem",
+  margin: "0 0.3rem 0rem 0.3rem",
+  fontSize: "0.8rem",
+  fontFamily: "serif"
+};
+
+export const MessageContainer = { fontSize: "0.6rem", margin: "0.3rem" };

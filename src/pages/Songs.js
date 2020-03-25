@@ -5,6 +5,7 @@ import { MultiSelect } from "primereact/multiselect";
 import { RadioButton } from "primereact/radiobutton";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Message } from "primereact/message";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -16,8 +17,9 @@ import {
   ViewIconContainer,
   SpanContainer,
   RefreshIconContainer,
-  RadioButtonContainer,
-  LongLabelContainer
+  LongLabelContainer,
+  MultiSelectContainer,
+  MessageContainer
 } from "../components/Customs";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -46,9 +48,9 @@ function Songs() {
   const artist_state = useSelector(state => state.artist);
   const category_state = useSelector(state => state.category);
   const dispatch = useDispatch();
-  const { songs } = song_state;
-  const { artists } = artist_state;
-  const { categories } = category_state;
+  const { loading, songs, message, song_error } = song_state;
+  const { artists, artist_error } = artist_state;
+  const { categories, category_error } = category_state;
 
   const artists_fetch_and_set_func = artistId => {
     console.log("ArtistId:", artistId);
@@ -145,7 +147,6 @@ function Songs() {
   };
 
   const artists_template = rowData => {
-    console.log("Art:", rowData.artistName);
     return (
       <div className="center tableBody oppositedirection">
         {rowData.artistName.map(name => (
@@ -250,7 +251,7 @@ function Songs() {
                     </div>
                   </div>
                 )}
-                <div className="form-group center">
+                <div className="form-group center oppositedirection">
                   <InputContainer
                     type="text"
                     className="form-control"
@@ -260,8 +261,15 @@ function Songs() {
                     value={sinhalaTitle}
                     onChange={e => setSinhalaTitle(e.target.value)}
                   ></InputContainer>
+                  {song_error && song_error.data.sinhalaTitle && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={song_error.data.sinhalaTitle.message}
+                    />
+                  )}
                 </div>
-                <div className="form-group center">
+                <div className="form-group center oppositedirection">
                   <InputContainer
                     type="text"
                     className="form-control"
@@ -271,98 +279,118 @@ function Songs() {
                     value={singlishTitle}
                     onChange={e => setSinglishTitle(e.target.value)}
                   ></InputContainer>
+                  {song_error && song_error.data.singlishTitle && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={song_error.data.singlishTitle.message}
+                    />
+                  )}
                 </div>
-                <div className="form-group center">
-                  <div className="p-col-12">
-                    <RadioButton
-                      inputId="rb1"
-                      name="type"
-                      value="Solo"
-                      onChange={e => setSongType(e.value)}
-                      checked={songType === "Solo"}
-                      style={{
-                        margin: "0.2rem"
-                      }}
-                    />
-                    <LongLabelContainer
-                      htmlFor="rb1"
-                      className="p-radiobutton-label"
-                    >
-                      Solo
-                    </LongLabelContainer>
+                <div className="form-group center oppositedirection">
+                  <div>
+                    <div className="p-col-12">
+                      <RadioButton
+                        inputId="rb1"
+                        name="type"
+                        value="Solo"
+                        onChange={e => setSongType(e.value)}
+                        checked={songType === "Solo"}
+                        style={{
+                          margin: "0.2rem"
+                        }}
+                      />
+                      <LongLabelContainer
+                        htmlFor="rb1"
+                        className="p-radiobutton-label"
+                      >
+                        Solo
+                      </LongLabelContainer>
+                    </div>
+                    <div className="p-col-12">
+                      <RadioButton
+                        inputId="rb2"
+                        name="type"
+                        value="Duet"
+                        onChange={e => setSongType(e.value)}
+                        checked={songType === "Duet"}
+                        style={{
+                          margin: "0.2rem"
+                        }}
+                      />
+                      <LongLabelContainer
+                        htmlFor="rb2"
+                        className="p-radiobutton-label"
+                      >
+                        Duet
+                      </LongLabelContainer>
+                    </div>
+                    <div className="p-col-12">
+                      <RadioButton
+                        inputId="rb3"
+                        name="type"
+                        value="Group"
+                        onChange={e => setSongType(e.value)}
+                        checked={songType === "Group"}
+                        style={{
+                          marginLeft: "0.2rem"
+                        }}
+                      />
+                      <LongLabelContainer
+                        htmlFor="rb3"
+                        className="p-radiobutton-label"
+                      >
+                        Group
+                      </LongLabelContainer>
+                    </div>
                   </div>
-                  <div className="p-col-12">
-                    <RadioButton
-                      inputId="rb2"
-                      name="type"
-                      value="Duet"
-                      onChange={e => setSongType(e.value)}
-                      checked={songType === "Duet"}
-                      style={{
-                        margin: "0.2rem"
-                      }}
+                  {song_error && song_error.data.type && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={song_error.data.type.message}
                     />
-                    <LongLabelContainer
-                      htmlFor="rb2"
-                      className="p-radiobutton-label"
-                    >
-                      Duet
-                    </LongLabelContainer>
-                  </div>
-                  <div className="p-col-12">
-                    <RadioButton
-                      inputId="rb3"
-                      name="type"
-                      value="Group"
-                      onChange={e => setSongType(e.value)}
-                      checked={songType === "Group"}
-                      style={{
-                        marginLeft: "0.2rem"
-                      }}
-                    />
-                    <LongLabelContainer
-                      htmlFor="rb3"
-                      className="p-radiobutton-label"
-                    >
-                      Group
-                    </LongLabelContainer>
-                  </div>
+                  )}
                 </div>
-                <div className="form-group center">
+                <div className="form-group center oppositedirection">
                   <MultiSelect
                     className="dropdown"
                     value={artistId}
                     options={artist_dropdown}
                     onChange={e => artists_fetch_and_set_func(e.value)}
-                    style={{
-                      width: "20vw",
-                      height: "2rem",
-                      borderRadius: "0.4rem",
-                      margin: "0.3rem"
-                    }}
+                    style={MultiSelectContainer}
                     filter={true}
                     filterPlaceholder="Search"
                     placeholder="Choose Artists"
                   />
+                  {artist_error && artist_error.data.artistId && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={artist_error.data.artistId.message}
+                    />
+                  )}
                 </div>
-                <div className="form-group center">
+                <div className="form-group center oppositedirection">
                   <MultiSelect
                     className="dropdown"
                     value={category}
                     options={category_dropdown}
                     onChange={e => setCategory(e.value)}
-                    style={{
-                      width: "20vw",
-                      height: "2rem",
-                      borderRadius: "0.4rem",
-                      margin: "0.3rem"
-                    }}
+                    style={MultiSelectContainer}
                     filter={true}
                     filterPlaceholder="Search"
                     placeholder="Choose Categories"
                   />
+                  {category_error && category_error.data.category && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={category_error.data.category.message}
+                    />
+                  )}
                 </div>
-                <div className="center">
+                <div className="center oppositedirection">
                   <div className="form-group">
                     <TextAreaContainer
                       rows="5"
@@ -374,6 +402,13 @@ function Songs() {
                       onChange={e => setSong(e.target.value)}
                     ></TextAreaContainer>
                   </div>
+                  {song_error && song_error.data.song && (
+                    <Message
+                      severity="error"
+                      style={MessageContainer}
+                      text={song_error.data.song.message}
+                    />
+                  )}
                 </div>
                 {isUpdateSong === true ? (
                   <div className="center">
@@ -390,6 +425,13 @@ function Songs() {
                       Add
                     </SubButtonContainer>
                   </div>
+                )}
+                {message && (
+                  <Message
+                    severity="success"
+                    style={MessageContainer}
+                    text={message}
+                  />
                 )}
               </div>
             </div>

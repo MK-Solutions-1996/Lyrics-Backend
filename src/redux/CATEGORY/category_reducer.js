@@ -11,7 +11,7 @@ const initial_state = {
   message: "",
   categories: [],
   singleCategory: {},
-  error: ""
+  category_error: ""
 };
 
 const category_reducer = (state = initial_state, action) => {
@@ -26,27 +26,27 @@ const category_reducer = (state = initial_state, action) => {
         ...state,
         loading: false,
         message: action.payload,
-        error: ""
+        category_error: ""
       };
     case CATEGORY_FETCH_ALL:
       return {
         ...state,
         loading: false,
         categories: action.payload,
-        error: ""
+        category_error: ""
       };
     case CATEGORY_FETCH_SINGLE:
       return {
         ...state,
         loading: false,
         singleCategory: action.payload,
-        error: ""
+        category_error: ""
       };
     case CATEGORY_FETCH_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        category_error: action.payload
       };
     default:
       return state;

@@ -11,7 +11,7 @@ const initial_state = {
   message: "",
   artists: [],
   singleArtist: {},
-  error: ""
+  artist_error: ""
 };
 
 const artist_reducer = (state = initial_state, action) => {
@@ -26,27 +26,27 @@ const artist_reducer = (state = initial_state, action) => {
         ...state,
         loading: false,
         message: action.payload,
-        error: ""
+        artist_error: ""
       };
     case ARTIST_FETCH_ALL:
       return {
         ...state,
         loading: false,
         artists: action.payload,
-        error: ""
+        artist_error: ""
       };
     case ARTIST_FETCH_SINGLE:
       return {
         ...state,
         loading: false,
         singleArtist: action.payload,
-        error: ""
+        artist_error: ""
       };
     case ARTIST_FETCH_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        artist_error: action.payload
       };
     default:
       return state;
