@@ -7,7 +7,7 @@ import {
 } from "./artist_types";
 
 const initial_state = {
-  loading: false,
+  artist_loading: false,
   message: "",
   artists: [],
   singleArtist: {},
@@ -19,33 +19,33 @@ const artist_reducer = (state = initial_state, action) => {
     case ARTIST_FETCH_LOADING:
       return {
         ...state,
-        loading: true
+        artist_loading: true
       };
     case ARTIST_FETCH_MESSAGE:
       return {
         ...state,
-        loading: false,
+        artist_loading: false,
         message: action.payload,
         artist_error: ""
       };
     case ARTIST_FETCH_ALL:
       return {
         ...state,
-        loading: false,
+        artist_loading: false,
         artists: action.payload,
         artist_error: ""
       };
     case ARTIST_FETCH_SINGLE:
       return {
         ...state,
-        loading: false,
+        artist_loading: false,
         singleArtist: action.payload,
         artist_error: ""
       };
     case ARTIST_FETCH_ERROR:
       return {
         ...state,
-        loading: false,
+        artist_loading: false,
         artist_error: action.payload
       };
     default:

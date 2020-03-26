@@ -1,6 +1,5 @@
 import Axios from "axios";
-import history from '../../history';
-
+import history from "../../history";
 
 const intial_state = {
   loading: false,
@@ -22,7 +21,7 @@ const fetchLoading = () => {
 const fetchSuccess = user => {
   return {
     type: FETCH_SUCCESS,
-    payload: user,
+    payload: user
   };
 };
 
@@ -32,8 +31,6 @@ const fetchError = error => {
     payload: error
   };
 };
-
-
 
 export const signin_action = payload => {
   return dispatch => {
@@ -49,7 +46,7 @@ export const signin_action = payload => {
     })
       .then(res => {
         const result = res.data;
-        history.push('/mainPage');
+        history.push("/mainPage");
         dispatch(fetchSuccess(result));
       })
       .catch(err => {
@@ -71,7 +68,7 @@ export const signin_reducer = (state = intial_state, action) => {
         ...state,
         loading: false,
         user: action.payload,
-        error : ""
+        error: ""
       };
     case FETCH_ERROR:
       return {

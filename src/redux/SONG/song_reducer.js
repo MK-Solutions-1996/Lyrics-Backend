@@ -7,7 +7,7 @@ import {
 } from "./song_types";
 
 const initial_state = {
-  loading: false,
+  song_loading: false,
   message: "",
   songs: [],
   singleSong: {},
@@ -19,33 +19,33 @@ const song_reducer = (state = initial_state, action) => {
     case SONG_FETCH_LOADING:
       return {
         ...state,
-        loading: true
+        song_loading: true
       };
     case SONG_FETCH_MESSAGE:
       return {
         ...state,
-        loading: false,
+        song_loading: false,
         message: action.payload,
         song_error: ""
       };
     case SONG_FETCH_ALL:
       return {
         ...state,
-        loading: false,
+        song_loading: false,
         songs: action.payload,
         song_error: ""
       };
     case SONG_FETCH_SINGLE:
       return {
         ...state,
-        loading: false,
+        song_loading: false,
         singleSong: action.payload,
         song_error: ""
       };
     case SONG_FETCH_ERROR:
       return {
         ...state,
-        loading: false,
+        song_loading: false,
         song_error: action.payload
       };
     default:

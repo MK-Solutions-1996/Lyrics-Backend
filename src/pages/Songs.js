@@ -19,7 +19,8 @@ import {
   RefreshIconContainer,
   LongLabelContainer,
   MultiSelectContainer,
-  MessageContainer
+  MessageContainer,
+  SpinnerContainer
 } from "../components/Customs";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -48,7 +49,7 @@ function Songs() {
   const artist_state = useSelector(state => state.artist);
   const category_state = useSelector(state => state.category);
   const dispatch = useDispatch();
-  const { loading, songs, message, song_error } = song_state;
+  const { song_loading, songs, message, song_error } = song_state;
   const { artists, artist_error } = artist_state;
   const { categories, category_error } = category_state;
 
@@ -432,6 +433,11 @@ function Songs() {
                     style={MessageContainer}
                     text={message}
                   />
+                )}
+                {song_loading && (
+                  <div className="center">
+                    <SpinnerContainer className="spinner-border"></SpinnerContainer>
+                  </div>
                 )}
               </div>
             </div>

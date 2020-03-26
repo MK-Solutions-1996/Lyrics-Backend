@@ -11,7 +11,8 @@ import {
   SpanContainer,
   DeleteIconContainer,
   EditIconContainer,
-  MessageContainer
+  MessageContainer,
+  SpinnerContainer
 } from "../components/Customs";
 import { default_image_icon } from "../constants/imports";
 import { useSelector, useDispatch } from "react-redux";
@@ -68,7 +69,7 @@ function Artists() {
 
   const artist_state = useSelector(state => state.artist);
   const dispatch = useDispatch();
-  const { loading, artists, message, artist_error } = artist_state;
+  const { artist_loading, artists, message, artist_error } = artist_state;
 
   useEffect(() => {
     dispatch(get_all_artists_action());
@@ -342,6 +343,11 @@ function Artists() {
                         text={message}
                       />
                     )}
+                  </div>
+                )}
+                {artist_loading && (
+                  <div className="center">
+                    <SpinnerContainer className="spinner-border"></SpinnerContainer>
                   </div>
                 )}
               </div>

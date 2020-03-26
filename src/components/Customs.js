@@ -173,6 +173,11 @@ export const ImageContainer = styled.img`
   margin: 0.5rem;
 `;
 
+export const SpinnerContainer = styled.div`
+  height: 1.5rem;
+  width: 1.5rem;
+`;
+
 export const MultiSelectContainer = {
   width: "20vw",
   height: "2rem",

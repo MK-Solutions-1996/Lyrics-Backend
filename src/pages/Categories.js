@@ -8,7 +8,8 @@ import {
   SpanContainer,
   DeleteIconContainer,
   RefreshIconContainer,
-  MessageContainer
+  MessageContainer,
+  SpinnerContainer
 } from "../components/Customs";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -25,7 +26,12 @@ function Categories() {
 
   const category_state = useSelector(state => state.category);
   const dispatch = useDispatch();
-  const { loading, categories, message, category_error } = category_state;
+  const {
+    category_loading,
+    categories,
+    message,
+    category_error
+  } = category_state;
 
   useEffect(() => {
     dispatch(get_all_categories_action());
@@ -128,6 +134,11 @@ function Categories() {
                       style={MessageContainer}
                       text={message}
                     />
+                  )}
+                  {category_loading && (
+                    <div className="center">
+                      <SpinnerContainer className="spinner-border"></SpinnerContainer>
+                    </div>
                   )}
                 </div>
               </div>

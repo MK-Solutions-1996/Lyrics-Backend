@@ -6,9 +6,11 @@ import {
   TopicContainer,
   InputContainer,
   LongLabelContainer,
-  MessageContainer
+  MessageContainer,
+  SpinnerContainer
 } from "../components/Customs";
 import { Message } from "primereact/message";
+import { ProgressSpinner } from "primereact/progressspinner";
 import { useSelector, useDispatch } from "react-redux";
 import { signin_action } from "../redux";
 
@@ -56,7 +58,7 @@ function Login() {
               onChange={e => setPassword(e.target.value)}
             ></InputContainer>
           </div>
-          {error.data && (
+          {error && error.data && (
             <Message
               severity="error"
               style={MessageContainer}
@@ -68,6 +70,11 @@ function Login() {
               Login
             </ButtonContainer>
           </div>
+          {loading && (
+            <div className="center">
+              <SpinnerContainer className="spinner-border"></SpinnerContainer>
+            </div>
+          )}
           <div className="center">
             <Link to="/">
               <LongLabelContainer>Forgot your password?</LongLabelContainer>
