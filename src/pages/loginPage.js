@@ -65,6 +65,16 @@ function Login() {
               text={error.data}
             />
           )}
+          {typeof error === "undefined" ? (
+            <Message
+              severity="error"
+              style={MessageContainer}
+              text="Server is not running this time"
+            />
+          ) : (
+            <div></div>
+          )}
+
           <div className="center">
             <ButtonContainer onClick={() => dispatch(signin_action(payload))}>
               Login
