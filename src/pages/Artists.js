@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavigationBar } from "../components/NavigationBar";
-import Toast from "react-bootstrap/Toast";
+import $ from "jquery";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -37,8 +37,6 @@ function Artists() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
-  const [show, setShow] = useState(false);
-
   const refresh = () => {
     setIsUpdateArtist(false);
     setArtistId("");
@@ -56,7 +54,6 @@ function Artists() {
 
   const addArtist = () => {
     dispatch(save_artist_action(formData));
-    setShow(true);
     refresh();
   };
 
@@ -143,7 +140,13 @@ function Artists() {
       </div>
     );
   };
-
+  window.setTimeout(function() {
+    $(".alert")
+      .fadeTo(2000, 0)
+      .slideUp(2000, function() {
+        $(this).remove();
+      });
+  }, 3000);
   return (
     <div className="background">
       <NavigationBar />
@@ -341,11 +344,17 @@ function Artists() {
                       Add
                     </SubButtonContainer>
                     {message && (
-                      <Message
-                        severity="success"
-                        style={MessageContainer}
-                        text={message}
-                      />
+                      <div class="alert alert-success message" role="alert">
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="alert"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>Success!</strong> {message}
+                      </div>
                     )}
                   </div>
                 )}

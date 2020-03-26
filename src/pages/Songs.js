@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavigationBar } from "../components/NavigationBar";
-import { Dropdown } from "primereact/dropdown";
+import $ from "jquery";
 import { MultiSelect } from "primereact/multiselect";
 import { RadioButton } from "primereact/radiobutton";
 import { DataTable } from "primereact/datatable";
@@ -182,7 +182,13 @@ function Songs() {
       </div>
     );
   };
-
+  window.setTimeout(function() {
+    $(".alert")
+      .fadeTo(2000, 0)
+      .slideUp(2000, function() {
+        $(this).remove();
+      });
+  }, 3000);
   return (
     <div className="background">
       <NavigationBar />
@@ -426,11 +432,17 @@ function Songs() {
                       Add
                     </SubButtonContainer>
                     {message && (
-                      <Message
-                        severity="success"
-                        style={MessageContainer}
-                        text={message}
-                      />
+                      <div class="alert alert-success message" role="alert">
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="alert"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>Success!</strong> {message}
+                      </div>
                     )}
                   </div>
                 )}

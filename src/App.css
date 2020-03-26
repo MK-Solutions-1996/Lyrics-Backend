@@ -111,3 +111,8 @@ th {
   box-shadow: 5px 5px 10px 10px var(--darkRed);
   height: auto;
 }
+
+.message {
+  font-size: 0.8rem;
+  height: 3rem;
+}

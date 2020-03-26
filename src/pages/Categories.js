@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavigationBar } from "../components/NavigationBar";
+import $ from "jquery";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -65,6 +66,14 @@ function Categories() {
       </div>
     );
   };
+
+  window.setTimeout(function() {
+    $(".alert")
+      .fadeTo(2000, 0)
+      .slideUp(500, function() {
+        $(this).remove();
+      });
+  }, 3000);
 
   return (
     <div className="background">
@@ -132,11 +141,17 @@ function Categories() {
                     Add
                   </SubButtonContainer>
                   {message && (
-                    <Message
-                      severity="success"
-                      style={MessageContainer}
-                      text={message}
-                    />
+                    <div class="alert alert-success message" role="alert">
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="alert"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <strong>Success!</strong> {message}
+                    </div>
                   )}
                   {category_loading && (
                     <div className="center">
