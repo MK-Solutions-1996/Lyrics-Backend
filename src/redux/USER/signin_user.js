@@ -42,7 +42,8 @@ export const signin_action = payload => {
         username: payload.username,
         password: payload.password
       },
-      headers: { api_key: process.env.REACT_APP_API_KEY }
+      headers: { api_key: process.env.REACT_APP_API_KEY },
+      timeout: 4000
     })
       .then(res => {
         const result = res.data;

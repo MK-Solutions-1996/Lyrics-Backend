@@ -56,7 +56,8 @@ export const save_song_action = payload => {
         categories: payload.categories,
         song: payload.song
       },
-      headers: { api_key: process.env.REACT_APP_API_KEY }
+      headers: { api_key: process.env.REACT_APP_API_KEY },
+      timeout: 4000
     })
       .then(() => {
         //history.push('/mainPage');
@@ -76,7 +77,8 @@ export const get_all_songs_action = () => {
     Axios({
       method: "GET",
       url: process.env.REACT_APP_BASE_URL + "/song",
-      headers: { api_key: process.env.REACT_APP_API_KEY }
+      headers: { api_key: process.env.REACT_APP_API_KEY },
+      timeout: 4000
     })
       .then(res => {
         //history.push('/mainPage');
@@ -109,7 +111,8 @@ export const update_song_action = (songId, payload) => {
       method: "PATCH",
       url: process.env.REACT_APP_BASE_URL + "/song/" + songId,
       data: update_payload,
-      headers: { api_key: process.env.REACT_APP_API_KEY }
+      headers: { api_key: process.env.REACT_APP_API_KEY },
+      timeout: 4000
     })
       .then(() => {
         //history.push('/mainPage');
@@ -129,7 +132,8 @@ export const delete_song_action = songId => {
     Axios({
       method: "DELETE",
       url: process.env.REACT_APP_BASE_URL + "/song/" + songId,
-      headers: { api_key: process.env.REACT_APP_API_KEY }
+      headers: { api_key: process.env.REACT_APP_API_KEY },
+      timeout: 4000
     })
       .then(() => {
         //history.push('/mainPage');

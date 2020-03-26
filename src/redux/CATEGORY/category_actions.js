@@ -50,7 +50,8 @@ export const save_category_action = payload => {
       data: {
         name: payload.name
       },
-      headers: { api_key: process.env.REACT_APP_API_KEY }
+      headers: { api_key: process.env.REACT_APP_API_KEY },
+      timeout: 4000
     })
       .then(() => {
         //history.push('/mainPage');
@@ -70,7 +71,8 @@ export const get_all_categories_action = () => {
     Axios({
       method: "GET",
       url: process.env.REACT_APP_BASE_URL + "/category",
-      headers: { api_key: process.env.REACT_APP_API_KEY }
+      headers: { api_key: process.env.REACT_APP_API_KEY },
+      timeout: 4000
     })
       .then(res => {
         //history.push('/mainPage');
@@ -90,7 +92,8 @@ export const delete_category_action = id => {
     Axios({
       method: "DELETE",
       url: process.env.REACT_APP_BASE_URL + "/category/" + id,
-      headers: { api_key: process.env.REACT_APP_API_KEY }
+      headers: { api_key: process.env.REACT_APP_API_KEY },
+      timeout: 4000
     })
       .then(() => {
         //history.push('/mainPage');

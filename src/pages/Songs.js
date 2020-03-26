@@ -425,15 +425,16 @@ function Songs() {
                     <SubButtonContainer onClick={addSong}>
                       Add
                     </SubButtonContainer>
+                    {message && (
+                      <Message
+                        severity="success"
+                        style={MessageContainer}
+                        text={message}
+                      />
+                    )}
                   </div>
                 )}
-                {message && (
-                  <Message
-                    severity="success"
-                    style={MessageContainer}
-                    text={message}
-                  />
-                )}
+
                 {song_loading && (
                   <div className="center">
                     <SpinnerContainer className="spinner-border"></SpinnerContainer>

@@ -42,6 +42,11 @@ function Categories() {
     name: name
   };
 
+  const addCategory = payload => {
+    dispatch(save_category_action(payload));
+    setName("");
+  };
+
   const category_name_template = rowData => {
     return (
       <div className="center tableBody">
@@ -123,9 +128,7 @@ function Categories() {
                   )}
                 </div>
                 <div className="center">
-                  <SubButtonContainer
-                    onClick={() => dispatch(save_category_action(payload))}
-                  >
+                  <SubButtonContainer onClick={() => addCategory(payload)}>
                     Add
                   </SubButtonContainer>
                   {message && (

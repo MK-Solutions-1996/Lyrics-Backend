@@ -187,4 +187,7 @@ export const MultiSelectContainer = {
   fontFamily: "serif"
 };
 
-export const MessageContainer = { fontSize: "0.6rem", margin: "0.3rem" };
+export const MessageContainer = {
+  fontSize: "0.6rem",
+  margin: "0.1rem"
+};

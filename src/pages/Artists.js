@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavigationBar } from "../components/NavigationBar";
+import Toast from "react-bootstrap/Toast";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -36,6 +37,8 @@ function Artists() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
+  const [show, setShow] = useState(false);
+
   const refresh = () => {
     setIsUpdateArtist(false);
     setArtistId("");
@@ -53,6 +56,7 @@ function Artists() {
 
   const addArtist = () => {
     dispatch(save_artist_action(formData));
+    setShow(true);
     refresh();
   };
 
