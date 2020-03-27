@@ -31,6 +31,11 @@ export const NavigationBar = () => (
           <Link to="/" className="ml-auto">
             <ButtonContainer>Log Out</ButtonContainer>
           </Link>
+          <Link to="/settings" className="ml-auto">
+            <ButtonContainer>
+              <i class="fas fa-cog"></i>
+            </ButtonContainer>
+          </Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

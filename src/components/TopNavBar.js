@@ -16,14 +16,14 @@ export const TopNavBar = () => (
           <div className="nav-link">SINHALA LYRICS</div>
         </li>
       </ul>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      {/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <Link to="/" className="ml-auto">
             <ButtonContainer>Settings</ButtonContainer>
           </Link>
         </Nav>
-      </Navbar.Collapse>
+      </Navbar.Collapse> */}
     </Navbar>
   </NavigationBarDivContainer>
 );

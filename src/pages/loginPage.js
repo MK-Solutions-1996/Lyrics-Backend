@@ -10,7 +10,6 @@ import {
   SpinnerContainer
 } from "../components/Customs";
 import { Message } from "primereact/message";
-import { ProgressSpinner } from "primereact/progressspinner";
 import { useSelector, useDispatch } from "react-redux";
 import { signin_action } from "../redux";
 
@@ -26,9 +25,6 @@ function Login() {
   const dispatch = useDispatch();
   const signin_state = useSelector(state => state.signin);
   const { loading, user, error } = signin_state;
-
-  console.log("user:", user);
-  console.log("error:", error);
 
   return (
     <div className="background">
@@ -86,7 +82,7 @@ function Login() {
             </div>
           )}
           <div className="center">
-            <Link to="/">
+            <Link to="/forgotpassword">
               <LongLabelContainer>Forgot your password?</LongLabelContainer>
             </Link>
           </div>
