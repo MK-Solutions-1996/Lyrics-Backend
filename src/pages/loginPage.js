@@ -24,7 +24,7 @@ function Login() {
 
   const dispatch = useDispatch();
   const signin_state = useSelector(state => state.signin);
-  const { loading, user, error } = signin_state;
+  const { loading, error } = signin_state;
 
   return (
     <div className="background">
