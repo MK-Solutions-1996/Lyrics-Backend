@@ -6,6 +6,7 @@ import { RadioButton } from "primereact/radiobutton";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Message } from "primereact/message";
+import { songSa } from "../constants/imports";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -44,6 +45,8 @@ function Songs() {
   const [artistName, setArtistName] = useState([]);
   const [category, setCategory] = useState([]);
   const [song, setSong] = useState("");
+  const [file, setFile] = useState(null);
+  const [pfile, setpFile] = useState(null);
 
   const song_state = useSelector(state => state.song);
   const artist_state = useSelector(state => state.artist);
@@ -181,6 +184,18 @@ function Songs() {
         />
       </div>
     );
+  };
+
+  const onChangeHandler = event => {
+    console.log("Event:", event.target.files[0]);
+    setFile(event.target.files[0]);
+    let reader = new FileReader();
+
+    // reader.onloadend = () => {
+    //   setpFile(reader.result);
+    // };
+
+    // reader.readAsDataURL(event.target.files[0]);
   };
   window.setTimeout(function() {
     $(".alert")
@@ -416,6 +431,17 @@ function Songs() {
                       text={song_error.data.song.message}
                     />
                   )}
+                </div>
+                <div>
+                  <input
+                    type="file"
+                    name="file"
+                    onChange={e => onChangeHandler(e)}
+                  />
+                  <audio controls>
+                    <source src={pfile} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
                 </div>
                 {isUpdateSong === true ? (
                   <div className="center">

@@ -149,7 +149,7 @@ export const forgot_pwd_action = payload => {
     })
       .then(res => {
         const result = res.data;
-        history.push("/mainPage");
+        history.push("/");
         dispatch(fetchSuccess(result));
       })
       .catch(err => {
