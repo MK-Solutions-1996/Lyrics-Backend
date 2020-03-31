@@ -33,7 +33,7 @@ export const NavigationBar = () => (
           </Link>
           <Link to="/settings" className="ml-auto">
             <ButtonContainer>
-              <i class="fas fa-cog"></i>
+              <i className="fas fa-cog"></i>
             </ButtonContainer>
           </Link>
         </Nav>

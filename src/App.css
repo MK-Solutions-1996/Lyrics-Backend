@@ -113,6 +113,15 @@ th {
 }
 
 .message {
-  font-size: 0.8rem;
-  height: 3rem;
+  font-size: 0.6rem;
+  height: 1.5rem;
+  margin: 0.1rem;
+  padding: 0.1rem;
+}
+
+.ignore {
+  font-size: 0.6rem;
+  height: auto;
+  width: auto;
+  margin: 0.3rem;
 }

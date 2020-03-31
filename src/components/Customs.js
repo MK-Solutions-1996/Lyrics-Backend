@@ -178,6 +178,12 @@ export const SpinnerContainer = styled.div`
   width: 1.5rem;
 `;
 
+export const AudioContainer = styled.audio`
+  width: 20vw;
+  height: 5vh;
+  margin: 0.3rem;
+`;
+
 export const MultiSelectContainer = {
   width: "20vw",
   height: "2rem",

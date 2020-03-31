@@ -36,6 +36,7 @@ function Artists() {
   const [period, setPeriod] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+  const [imageAvailability, setImageAvailability] = useState("true");
 
   const refresh = () => {
     setIsUpdateArtist(false);
@@ -45,6 +46,7 @@ function Artists() {
     setPeriod("");
     setImagePreviewUrl(null);
     setSelectedFile(null);
+    setImageAvailability("true");
   };
 
   const updateArtist = () => {
@@ -66,6 +68,7 @@ function Artists() {
     setPeriod(artist.period);
     setImagePreviewUrl(artist.image);
     setSelectedFile(artist.image);
+    setImageAvailability(artist.imageAvailability);
   };
 
   const artist_state = useSelector(state => state.artist);
@@ -81,6 +84,7 @@ function Artists() {
   formData.append("singlishName", singlishName);
   formData.append("period", period);
   formData.append("image", selectedFile);
+  formData.append("imageAvailability", imageAvailability);
 
   //artist image preview function
   const fileChangedHandler = event => {
@@ -89,6 +93,7 @@ function Artists() {
 
     reader.onloadend = () => {
       setImagePreviewUrl(reader.result);
+      console.log("Preview:", reader.result);
     };
 
     reader.readAsDataURL(event.target.files[0]);
@@ -113,7 +118,12 @@ function Artists() {
   const image_template = rowData => {
     return (
       <div className="center tableBody">
-        <img src={rowData.image} alt="loading..." width="40" height="40" />
+        <img
+          src={rowData.image.image}
+          alt="loading..."
+          width="40"
+          height="40"
+        />
       </div>
     );
   };
@@ -147,6 +157,7 @@ function Artists() {
         $(this).remove();
       });
   }, 3000);
+
   return (
     <div className="background">
       <NavigationBar />
@@ -234,14 +245,23 @@ function Artists() {
                   </div>
                 )}
                 {artist_error && artist_error.data.image && (
-                  <div className="center">
+                  <div className="center oppositedirection">
                     <Message
                       severity="error"
                       style={MessageContainer}
-                      text={artist_error.data.image.message}
+                      text={artist_error.data.image.imageName.message}
                     />
+                    <button
+                      className="btn btn-secondary ignore"
+                      onClick={() => {
+                        setImageAvailability("false");
+                      }}
+                    >
+                      Ignore
+                    </button>
                   </div>
                 )}
+
                 <div className="form-group center oppositedirection">
                   <InputContainer
                     type="text"

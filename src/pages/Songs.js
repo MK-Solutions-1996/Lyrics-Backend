@@ -6,7 +6,6 @@ import { RadioButton } from "primereact/radiobutton";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Message } from "primereact/message";
-import { songSa } from "../constants/imports";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -21,7 +20,8 @@ import {
   LongLabelContainer,
   MultiSelectContainer,
   MessageContainer,
-  SpinnerContainer
+  SpinnerContainer,
+  AudioContainer
 } from "../components/Customs";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -186,17 +186,6 @@ function Songs() {
     );
   };
 
-  const onChangeHandler = event => {
-    console.log("Event:", event.target.files[0]);
-    setFile(event.target.files[0]);
-    let reader = new FileReader();
-
-    // reader.onloadend = () => {
-    //   setpFile(reader.result);
-    // };
-
-    // reader.readAsDataURL(event.target.files[0]);
-  };
   window.setTimeout(function() {
     $(".alert")
       .fadeTo(2000, 0)
@@ -204,6 +193,27 @@ function Songs() {
         $(this).remove();
       });
   }, 3000);
+
+  //audio preview function
+  var $audio = $("#myAudio");
+  $("input").on("change", function(e) {
+    var target = e.currentTarget;
+    var file = target.files[0];
+    var reader = new FileReader();
+
+    setFile(file);
+
+    console.log($audio[0]);
+    if (target.files && file) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $audio.attr("src", e.target.result);
+        //$audio.play();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
   return (
     <div className="background">
       <NavigationBar />
@@ -432,16 +442,9 @@ function Songs() {
                     />
                   )}
                 </div>
-                <div>
-                  <input
-                    type="file"
-                    name="file"
-                    onChange={e => onChangeHandler(e)}
-                  />
-                  <audio controls>
-                    <source src={pfile} type="audio/mpeg" />
-                    Your browser does not support the audio element.
-                  </audio>
+                <div className="center oppositedirection">
+                  <InputContainer type="file" />
+                  <AudioContainer controls id="myAudio"></AudioContainer>
                 </div>
                 {isUpdateSong === true ? (
                   <div className="center">
