@@ -41,21 +41,22 @@ const fetchError = error => {
   };
 };
 
-export const save_song_action = payload => {
+export const save_song_action = formData => {
   return dispatch => {
     dispatch(fetchLoading());
     Axios({
       method: "POST",
       url: process.env.REACT_APP_BASE_URL + "/song",
-      data: {
-        sinhalaTitle: payload.sinhalaTitle,
-        singlishTitle: payload.singlishTitle,
-        type: payload.type,
-        artistId: payload.artistId,
-        artistName: payload.artistName,
-        categories: payload.categories,
-        song: payload.song
-      },
+      data: formData,
+      // {
+      //   sinhalaTitle: payload.sinhalaTitle,
+      //   singlishTitle: payload.singlishTitle,
+      //   type: payload.type,
+      //   artistId: payload.artistId,
+      //   artistName: payload.artistName,
+      //   categories: payload.categories,
+      //   song: payload.song
+      // },
       headers: { api_key: process.env.REACT_APP_API_KEY },
       timeout: 4000
     })
@@ -92,17 +93,17 @@ export const get_all_songs_action = () => {
   };
 };
 
-export const update_song_action = (songId, payload) => {
-  const update_payload = [
-    { key: "sinhalaTitle", value: payload.sinhalaTitle },
-    { key: "singlishTitle", value: payload.singlishTitle },
-    { key: "artistId", value: payload.artistId },
-    { key: "categories", value: payload.categories },
-    { key: "song", value: payload.song },
-    { key: "likes", value: payload.likes }
-  ];
+export const update_song_action = (songId, formData) => {
+  // const update_payload = [
+  //   { key: "sinhalaTitle", value: payload.sinhalaTitle },
+  //   { key: "singlishTitle", value: payload.singlishTitle },
+  //   { key: "artistId", value: payload.artistId },
+  //   { key: "categories", value: payload.categories },
+  //   { key: "song", value: payload.song },
+  //   { key: "likes", value: payload.likes }
+  // ];
 
-  console.log("update_payload:", update_payload);
+  console.log("update_payload:", formData);
   console.log("SongId:", songId);
 
   return dispatch => {
@@ -110,7 +111,7 @@ export const update_song_action = (songId, payload) => {
     Axios({
       method: "PATCH",
       url: process.env.REACT_APP_BASE_URL + "/song/" + songId,
-      data: update_payload,
+      data: formData,
       headers: { api_key: process.env.REACT_APP_API_KEY },
       timeout: 4000
     })

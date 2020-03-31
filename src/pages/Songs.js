@@ -42,11 +42,12 @@ function Songs() {
   const [singlishTitle, setSinglishTitle] = useState("");
   const [songType, setSongType] = useState("");
   const [artistId, setArtistId] = useState([]);
-  const [artistName, setArtistName] = useState([]);
+  const [artist, setArtist] = useState([]);
   const [category, setCategory] = useState([]);
   const [song, setSong] = useState("");
   const [file, setFile] = useState(null);
-  const [pfile, setpFile] = useState(null);
+  // const [pfile, setpFile] = useState(null);
+  const [audioAvailability, setAudioAvailability] = useState("true");
 
   const song_state = useSelector(state => state.song);
   const artist_state = useSelector(state => state.artist);
@@ -56,29 +57,57 @@ function Songs() {
   const { artists, artist_error } = artist_state;
   const { categories, category_error } = category_state;
 
+  // const payload = {
+  //   sinhalaTitle: sinhalaTitle,
+  //   singlishTitle: singlishTitle,
+  //   type: songType,
+  //   artist: artist,
+  //   categories: category,
+  //   song: song,
+  //   audio: file
+  // };
   const artists_fetch_and_set_func = artistId => {
-    console.log("ArtistId:", artistId);
     setArtistId(artistId);
-    const artistNameArr = [];
-    artists.map(artist => {
+    const artistArr = [];
+    artists.map(a => {
       artistId.forEach(id => {
-        if (artist._id === id) {
-          artistNameArr.push(artist.singlishName);
+        if (a._id === id) {
+          // formData.append("artist", {
+          //   artistId: a._id,
+          //   artistName: a.sinhalaName
+          // });
+          const object = {
+            artistId: a._id,
+            artistName: a.sinhalaName
+          };
+          artistArr.push(object);
         }
       });
     });
-    setArtistName(artistNameArr);
+    setArtist(artistArr);
   };
 
-  const payload = {
-    sinhalaTitle: sinhalaTitle,
-    singlishTitle: singlishTitle,
-    type: songType,
-    artistId: artistId,
-    artistName: artistName,
-    categories: category,
-    song: song
-  };
+  var formData = new FormData();
+  formData.append("sinhalaTitle", sinhalaTitle);
+  formData.append("singlishTitle", singlishTitle);
+  formData.append("categories", category);
+  formData.append("song", song);
+  formData.append("type", songType);
+  formData.append("audioAvailability", audioAvailability);
+  formData.append("audio", file);
+
+  const artistArr = [
+    { artistId: "xdfg", artistName: "gnhbf" },
+    { artistId: "xdttbrg", artistName: "ethgbf" }
+  ];
+  // artistArr.map(item => {
+  //   formData.append("artist", {
+  //     artistId: item.artistId,
+  //     artistName: item.artistName
+  //   });
+  // });
+
+  formData.append("artist", artistArr);
 
   useEffect(() => {
     dispatch(get_all_artists_action());
@@ -105,18 +134,18 @@ function Songs() {
     setSinglishTitle("");
     setSongType("");
     setArtistId([]);
-    setArtistName([]);
+    setArtist([]);
     setCategory([]);
     setSong("");
   };
 
   const updateSong = () => {
-    dispatch(update_song_action(songId, payload));
+    dispatch(update_song_action(songId, formData));
     refresh();
   };
 
   const addSong = () => {
-    dispatch(save_song_action(payload));
+    dispatch(save_song_action(formData));
     refresh();
   };
 
@@ -127,12 +156,12 @@ function Songs() {
     setSinhalaTitle(song.sinhalaTitle);
     setSinglishTitle(song.singlishTitle);
     setSongType(song.type);
-    setArtistName(song.artistName);
+    setArtist(song.artist.artistName);
     setCategory(song.categories);
     setSong(song.song);
   };
 
-  console.log("payload:", payload);
+  //console.log("payload:", payload);
 
   const song_name_sinhala_template = rowData => {
     return (
@@ -153,9 +182,12 @@ function Songs() {
   const artists_template = rowData => {
     return (
       <div className="center tableBody oppositedirection">
-        {rowData.artistName.map(name => (
-          <SpanContainer>{name}</SpanContainer>
-        ))}
+        {/* {rowData.artist.artistName.map(name => ( */}
+        <SpanContainer>
+          artist
+          {/* {name} */}
+        </SpanContainer>
+        {/* ))} */}
       </div>
     );
   };
@@ -196,11 +228,10 @@ function Songs() {
 
   //audio preview function
   var $audio = $("#myAudio");
-  $("input").on("change", function(e) {
+  $("#myFile").on("change", function(e) {
     var target = e.currentTarget;
     var file = target.files[0];
     var reader = new FileReader();
-
     setFile(file);
 
     console.log($audio[0]);
@@ -443,7 +474,7 @@ function Songs() {
                   )}
                 </div>
                 <div className="center oppositedirection">
-                  <InputContainer type="file" />
+                  <InputContainer type="file" id="myFile" />
                   <AudioContainer controls id="myAudio"></AudioContainer>
                 </div>
                 {isUpdateSong === true ? (

@@ -93,7 +93,6 @@ function Artists() {
 
     reader.onloadend = () => {
       setImagePreviewUrl(reader.result);
-      console.log("Preview:", reader.result);
     };
 
     reader.readAsDataURL(event.target.files[0]);
@@ -157,7 +156,6 @@ function Artists() {
         $(this).remove();
       });
   }, 3000);
-
   return (
     <div className="background">
       <NavigationBar />
@@ -244,24 +242,15 @@ function Artists() {
                     ></ImageContainer>
                   </div>
                 )}
-                {artist_error && artist_error.data.image && (
-                  <div className="center oppositedirection">
+                {artist_error && artist_error.data.imageName && (
+                  <div className="center">
                     <Message
                       severity="error"
                       style={MessageContainer}
-                      text={artist_error.data.image.imageName.message}
+                      text={artist_error.data.imageName.message}
                     />
-                    <button
-                      className="btn btn-secondary ignore"
-                      onClick={() => {
-                        setImageAvailability("false");
-                      }}
-                    >
-                      Ignore
-                    </button>
                   </div>
                 )}
-
                 <div className="form-group center oppositedirection">
                   <InputContainer
                     type="text"
