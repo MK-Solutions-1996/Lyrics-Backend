@@ -57,6 +57,17 @@ function Songs() {
   const { artists, artist_error } = artist_state;
   const { categories, category_error } = category_state;
 
+  /* 
+  
+    This is temporary code
+  */
+  var temp = song_state.songs[0];
+  if (temp) {
+    var x = temp.artist[0];
+
+    console.log(JSON.parse(x));
+  }
+
   // const payload = {
   //   sinhalaTitle: sinhalaTitle,
   //   singlishTitle: singlishTitle,
@@ -100,6 +111,11 @@ function Songs() {
     { artistId: "xdfg", artistName: "gnhbf" },
     { artistId: "xdttbrg", artistName: "ethgbf" }
   ];
+
+  // for (var i = 0; i < artistArr.length; i++) {
+  //   formData.append("artist[]", artistArr[i].artistId);
+  // }
+
   // artistArr.map(item => {
   //   formData.append("artist", {
   //     artistId: item.artistId,
@@ -107,7 +123,7 @@ function Songs() {
   //   });
   // });
 
-  formData.append("artist", artistArr);
+  formData.append("artist", JSON.stringify(artistArr));
 
   useEffect(() => {
     dispatch(get_all_artists_action());
