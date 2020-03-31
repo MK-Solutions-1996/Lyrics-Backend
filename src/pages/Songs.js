@@ -65,7 +65,7 @@ function Songs() {
   if (temp) {
     var x = temp.artist[0];
 
-    console.log(JSON.parse(x));
+    console.log("pased artist", JSON.parse(x));
   }
 
   // const payload = {
