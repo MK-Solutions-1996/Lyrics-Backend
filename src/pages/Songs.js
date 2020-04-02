@@ -21,9 +21,9 @@ import {
   MultiSelectContainer,
   MessageContainer,
   SpinnerContainer,
-  AudioContainer
+  AudioContainer,
+  IgnoreButtonContainer
 } from "../components/Customs";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   get_all_songs_action,
@@ -42,11 +42,10 @@ function Songs() {
   const [singlishTitle, setSinglishTitle] = useState("");
   const [songType, setSongType] = useState("");
   const [artistId, setArtistId] = useState([]);
-  const [artist, setArtist] = useState([]);
   const [category, setCategory] = useState([]);
   const [song, setSong] = useState("");
+  const [likes, setLikes] = useState(0);
   const [file, setFile] = useState(null);
-  // const [pfile, setpFile] = useState(null);
   const [audioAvailability, setAudioAvailability] = useState("true");
 
   const song_state = useSelector(state => state.song);
@@ -54,76 +53,8 @@ function Songs() {
   const category_state = useSelector(state => state.category);
   const dispatch = useDispatch();
   const { song_loading, songs, message, song_error } = song_state;
-  const { artists, artist_error } = artist_state;
-  const { categories, category_error } = category_state;
-
-  /* 
-  
-    This is temporary code
-  */
-  var temp = song_state.songs[0];
-  if (temp) {
-    var x = temp.artist[0];
-
-    console.log("pased artist", JSON.parse(x));
-  }
-
-  // const payload = {
-  //   sinhalaTitle: sinhalaTitle,
-  //   singlishTitle: singlishTitle,
-  //   type: songType,
-  //   artist: artist,
-  //   categories: category,
-  //   song: song,
-  //   audio: file
-  // };
-  const artists_fetch_and_set_func = artistId => {
-    setArtistId(artistId);
-    const artistArr = [];
-    artists.map(a => {
-      artistId.forEach(id => {
-        if (a._id === id) {
-          // formData.append("artist", {
-          //   artistId: a._id,
-          //   artistName: a.sinhalaName
-          // });
-          const object = {
-            artistId: a._id,
-            artistName: a.sinhalaName
-          };
-          artistArr.push(object);
-        }
-      });
-    });
-    setArtist(artistArr);
-  };
-
-  var formData = new FormData();
-  formData.append("sinhalaTitle", sinhalaTitle);
-  formData.append("singlishTitle", singlishTitle);
-  formData.append("categories", category);
-  formData.append("song", song);
-  formData.append("type", songType);
-  formData.append("audioAvailability", audioAvailability);
-  formData.append("audio", file);
-
-  const artistArr = [
-    { artistId: "xdfg", artistName: "gnhbf" },
-    { artistId: "xdttbrg", artistName: "ethgbf" }
-  ];
-
-  // for (var i = 0; i < artistArr.length; i++) {
-  //   formData.append("artist[]", artistArr[i].artistId);
-  // }
-
-  // artistArr.map(item => {
-  //   formData.append("artist", {
-  //     artistId: item.artistId,
-  //     artistName: item.artistName
-  //   });
-  // });
-
-  formData.append("artist", JSON.stringify(artistArr));
+  const { artists } = artist_state;
+  const { categories } = category_state;
 
   useEffect(() => {
     dispatch(get_all_artists_action());
@@ -131,17 +62,56 @@ function Songs() {
     dispatch(get_all_songs_action());
   }, []);
 
+  //dropdowns fetches
   const artist_dropdown = [];
   artists.map(data => {
     const object = { label: data.singlishName, value: data._id };
     artist_dropdown.push(object);
   });
-
   const category_dropdown = [];
   categories.map(data => {
     const object = { label: data.name, value: data.name };
     category_dropdown.push(object);
   });
+
+  var formData = new FormData();
+  formData.append("sinhalaTitle", sinhalaTitle);
+  formData.append("singlishTitle", singlishTitle);
+  for (var i = 0; i < category.length; i++) {
+    formData.append("categories[]", category[i]);
+  }
+  formData.append("song", song);
+  formData.append("type", songType);
+  formData.append("audioAvailability", audioAvailability);
+  formData.append("audio", file);
+  for (var i = 0; i < artistId.length; i++) {
+    formData.append("artist[]", artistId[i]);
+  }
+  formData.append("likes", likes);
+
+  const addSong = () => {
+    dispatch(save_song_action(formData));
+    refresh();
+  };
+
+  const updateSong = () => {
+    dispatch(update_song_action(songId, formData));
+    refresh();
+  };
+
+  const updateSongTemplate = song => {
+    setIsUpdateSong(true);
+    setSongId(song._id);
+    setSinhalaTitle(song.sinhalaTitle);
+    setSinglishTitle(song.singlishTitle);
+    setSongType(song.type);
+    setArtistId(song.artist);
+    setCategory(song.categories);
+    setSong(song.song);
+    $("#myAudio").attr("src", song.audio.audio);
+    setFile(song.audio);
+    setLikes(song.likes);
+  };
 
   const refresh = () => {
     setIsUpdateSong(false);
@@ -150,35 +120,15 @@ function Songs() {
     setSinglishTitle("");
     setSongType("");
     setArtistId([]);
-    setArtist([]);
     setCategory([]);
     setSong("");
+    setFile(null);
+    $("#myFile").val("");
+    $("#myAudio").val("");
+    $("#myAudio").attr("src", "");
   };
 
-  const updateSong = () => {
-    dispatch(update_song_action(songId, formData));
-    refresh();
-  };
-
-  const addSong = () => {
-    dispatch(save_song_action(formData));
-    refresh();
-  };
-
-  const updateSongTemplate = song => {
-    artists_fetch_and_set_func(song.artistId);
-    setIsUpdateSong(true);
-    setSongId(song._id);
-    setSinhalaTitle(song.sinhalaTitle);
-    setSinglishTitle(song.singlishTitle);
-    setSongType(song.type);
-    setArtist(song.artist.artistName);
-    setCategory(song.categories);
-    setSong(song.song);
-  };
-
-  //console.log("payload:", payload);
-
+  //Song table column templates
   const song_name_sinhala_template = rowData => {
     return (
       <div className="center tableBody">
@@ -195,15 +145,28 @@ function Songs() {
     );
   };
 
+  const song_type_template = rowData => {
+    return (
+      <div className="center tableBody">
+        <SpanContainer>{rowData.type}</SpanContainer>
+      </div>
+    );
+  };
+
   const artists_template = rowData => {
+    const artistArr = [];
+    artists.map(artist => {
+      rowData.artist.forEach(id => {
+        if (artist._id === id) {
+          artistArr.push(artist.singlishName);
+        }
+      });
+    });
     return (
       <div className="center tableBody oppositedirection">
-        {/* {rowData.artist.artistName.map(name => ( */}
-        <SpanContainer>
-          artist
-          {/* {name} */}
-        </SpanContainer>
-        {/* ))} */}
+        {artistArr.map(artist => (
+          <SpanContainer>{artist}</SpanContainer>
+        ))}
       </div>
     );
   };
@@ -218,10 +181,28 @@ function Songs() {
     );
   };
 
+  const song_likes_template = rowData => {
+    return (
+      <div className="center tableBody">
+        <SpanContainer>{rowData.likes}</SpanContainer>
+      </div>
+    );
+  };
+
   const delete_edit_view_btns_template = rowData => {
+    console.log("song:", rowData.song);
     return (
       <div className="center direction">
-        <ViewIconContainer className="fas fa-eye" />
+        <ViewIconContainer
+          className="fas fa-eye"
+          data-toggle="modal"
+          data-target="#myModal"
+        />
+        <div className="modal" id="myModal">
+          <textarea readOnly style={{ height: "40vh", width: "60vw" }}>
+            {rowData.song}
+          </textarea>
+        </div>
         <EditIconContainer
           className="fas fa-edit"
           onClick={() => updateSongTemplate(rowData)}
@@ -234,6 +215,7 @@ function Songs() {
     );
   };
 
+  //success messages timeout function
   window.setTimeout(function() {
     $(".alert")
       .fadeTo(2000, 0)
@@ -250,12 +232,10 @@ function Songs() {
     var reader = new FileReader();
     setFile(file);
 
-    console.log($audio[0]);
     if (target.files && file) {
       var reader = new FileReader();
       reader.onload = function(e) {
         $audio.attr("src", e.target.result);
-        //$audio.play();
       };
       reader.readAsDataURL(file);
     }
@@ -298,6 +278,11 @@ function Songs() {
                     body={song_name_singlish_template}
                   />
                   <Column
+                    field="songType"
+                    header="Song Type"
+                    body={song_type_template}
+                  />
+                  <Column
                     field="artists"
                     header="Artists"
                     body={artists_template}
@@ -306,6 +291,11 @@ function Songs() {
                     field="categories"
                     header="Categories"
                     body={categories_template}
+                  />
+                  <Column
+                    field="likes"
+                    header="Likes"
+                    body={song_likes_template}
                   />
                   <Column
                     field="action"
@@ -436,19 +426,12 @@ function Songs() {
                     className="dropdown"
                     value={artistId}
                     options={artist_dropdown}
-                    onChange={e => artists_fetch_and_set_func(e.value)}
+                    onChange={e => setArtistId(e.value)}
                     style={MultiSelectContainer}
                     filter={true}
                     filterPlaceholder="Search"
                     placeholder="Choose Artists"
                   />
-                  {artist_error && artist_error.data.artistId && (
-                    <Message
-                      severity="error"
-                      style={MessageContainer}
-                      text={artist_error.data.artistId.message}
-                    />
-                  )}
                 </div>
                 <div className="form-group center oppositedirection">
                   <MultiSelect
@@ -461,13 +444,6 @@ function Songs() {
                     filterPlaceholder="Search"
                     placeholder="Choose Categories"
                   />
-                  {category_error && category_error.data.category && (
-                    <Message
-                      severity="error"
-                      style={MessageContainer}
-                      text={category_error.data.category.message}
-                    />
-                  )}
                 </div>
                 <div className="center oppositedirection">
                   <div className="form-group">
@@ -492,6 +468,23 @@ function Songs() {
                 <div className="center oppositedirection">
                   <InputContainer type="file" id="myFile" />
                   <AudioContainer controls id="myAudio"></AudioContainer>
+                  {song_error && song_error.data.audio && (
+                    <div className="center">
+                      <Message
+                        severity="error"
+                        style={MessageContainer}
+                        text={song_error.data.audio.message}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={() => setAudioAvailability(false)}
+                        style={IgnoreButtonContainer}
+                      >
+                        Ignore
+                      </button>
+                    </div>
+                  )}
                 </div>
                 {isUpdateSong === true ? (
                   <div className="center">
@@ -511,7 +504,7 @@ function Songs() {
                       <div class="alert alert-success message" role="alert">
                         <button
                           type="button"
-                          class="close"
+                          className="close"
                           data-dismiss="alert"
                           aria-label="Close"
                         >
@@ -522,7 +515,6 @@ function Songs() {
                     )}
                   </div>
                 )}
-
                 {song_loading && (
                   <div className="center">
                     <SpinnerContainer className="spinner-border"></SpinnerContainer>

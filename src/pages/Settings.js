@@ -26,6 +26,14 @@ function Settings() {
     dispatch(get_admin_action());
   }, []);
 
+  const change_pwd = () => {
+    if (newPwd === confirmPwd) {
+      dispatch(change_pwd_action(payload));
+    } else {
+      setIsError(true);
+    }
+  };
+
   var id = "";
   users.map(data => {
     id = data._id;
@@ -37,6 +45,7 @@ function Settings() {
     newPassword: newPwd
   };
 
+  //success messages timeout function
   window.setTimeout(function() {
     $(".alert")
       .fadeTo(5000, 0)
@@ -44,14 +53,6 @@ function Settings() {
         $(this).remove();
       });
   }, 10000);
-
-  const change_pwd = () => {
-    if (newPwd === confirmPwd) {
-      dispatch(change_pwd_action(payload));
-    } else {
-      setIsError(true);
-    }
-  };
 
   return (
     <div className="background">

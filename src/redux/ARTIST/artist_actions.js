@@ -49,16 +49,10 @@ export const save_artist_action = formData => {
       method: "POST",
       url: process.env.REACT_APP_BASE_URL + "/artist",
       data: formData,
-      // {
-      //   sinhalaName: payload.sinhalaName,
-      //   singlishName: payload.singlishName,
-      //   period: payload.period
-      // },
       headers: { api_key: process.env.REACT_APP_API_KEY },
       timeout: 4000
     })
       .then(() => {
-        //history.push('/mainPage');
         dispatch(fetchMessage("Saved successfully"));
         dispatch(get_all_artists_action());
       })
@@ -79,7 +73,6 @@ export const get_all_artists_action = () => {
       timeout: 4000
     })
       .then(res => {
-        //history.push('/mainPage');
         const result = res.data;
         dispatch(fetchALL(result));
       })
@@ -91,12 +84,6 @@ export const get_all_artists_action = () => {
 };
 
 export const update_artist_action = (artistId, formData) => {
-  // const update_payload = [
-  //   { key: "sinhalaName", value: payload.sinhalaName },
-  //   { key: "singlishName", value: payload.singlishName },
-  //   { key: "period", value: payload.period }
-  // ];
-
   return dispatch => {
     dispatch(fetchLoading());
     Axios({
@@ -107,7 +94,6 @@ export const update_artist_action = (artistId, formData) => {
       timeout: 4000
     })
       .then(() => {
-        //history.push('/mainPage');
         dispatch(fetchMessage("Updated successfully"));
         dispatch(get_all_artists_action());
       })
@@ -128,7 +114,6 @@ export const delete_artist_action = artistId => {
       timeout: 4000
     })
       .then(() => {
-        //history.push('/mainPage');
         dispatch(fetchMessage("Deleted successfully"));
         dispatch(get_all_artists_action());
       })

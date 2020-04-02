@@ -17,14 +17,14 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+  const signin_state = useSelector(state => state.signin);
+  const { loading, error } = signin_state;
+
   const payload = {
     username: username,
     password: password
   };
-
-  const dispatch = useDispatch();
-  const signin_state = useSelector(state => state.signin);
-  const { loading, error } = signin_state;
 
   return (
     <div className="background">

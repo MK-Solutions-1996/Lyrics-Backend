@@ -13,6 +13,7 @@ import {
   DeleteIconContainer,
   EditIconContainer,
   MessageContainer,
+  IgnoreButtonContainer,
   SpinnerContainer
 } from "../components/Customs";
 import { default_image_icon } from "../constants/imports";
@@ -27,9 +28,11 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { RadioButton } from "primereact/radiobutton";
 import { Message } from "primereact/message";
+import Image from "react-image-resizer";
 
 function Artists() {
   const [isUpdateArtist, setIsUpdateArtist] = useState(false);
+
   const [artistId, setArtistId] = useState("");
   const [sinhalaName, setSinhalaName] = useState("");
   const [singlishName, setSinglisName] = useState("");
@@ -38,42 +41,10 @@ function Artists() {
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [imageAvailability, setImageAvailability] = useState("true");
 
-  const refresh = () => {
-    setIsUpdateArtist(false);
-    setArtistId("");
-    setSinhalaName("");
-    setSinglisName("");
-    setPeriod("");
-    setImagePreviewUrl(null);
-    setSelectedFile(null);
-    setImageAvailability("true");
-  };
-
-  const updateArtist = () => {
-    dispatch(update_artist_action(artistId, formData));
-    refresh();
-  };
-
-  const addArtist = () => {
-    dispatch(save_artist_action(formData));
-    refresh();
-  };
-
-  //filling data for update
-  const updateArtistTemplate = artist => {
-    setIsUpdateArtist(true);
-    setArtistId(artist._id);
-    setSinhalaName(artist.sinhalaName);
-    setSinglisName(artist.singlishName);
-    setPeriod(artist.period);
-    setImagePreviewUrl(artist.image);
-    setSelectedFile(artist.image);
-    setImageAvailability(artist.imageAvailability);
-  };
-
   const artist_state = useSelector(state => state.artist);
   const dispatch = useDispatch();
   const { artist_loading, artists, message, artist_error } = artist_state;
+  console.log("Message:", artist_error);
 
   useEffect(() => {
     dispatch(get_all_artists_action());
@@ -85,6 +56,41 @@ function Artists() {
   formData.append("period", period);
   formData.append("image", selectedFile);
   formData.append("imageAvailability", imageAvailability);
+
+  const addArtist = () => {
+    dispatch(save_artist_action(formData));
+    refresh();
+  };
+
+  const updateArtist = () => {
+    dispatch(update_artist_action(artistId, formData));
+    refresh();
+  };
+
+  //filling data for update
+  const updateArtistTemplate = artist => {
+    setIsUpdateArtist(true);
+    setArtistId(artist._id);
+    setSinhalaName(artist.sinhalaName);
+    setSinglisName(artist.singlishName);
+    setPeriod(artist.period);
+    setImagePreviewUrl(artist.image.image);
+    setSelectedFile(artist.image);
+    setImageAvailability(artist.image.imageAvailability);
+  };
+
+  const refresh = () => {
+    setIsUpdateArtist(false);
+    setArtistId("");
+    setSinhalaName("");
+    setSinglisName("");
+    setPeriod("");
+    setImagePreviewUrl(null);
+    setSelectedFile(null);
+    setImageAvailability("true");
+    $("#myFile1").val("");
+    $("#myFile2").val("");
+  };
 
   //artist image preview function
   const fileChangedHandler = event => {
@@ -98,6 +104,7 @@ function Artists() {
     reader.readAsDataURL(event.target.files[0]);
   };
 
+  //Artist table column templates
   const artist_name_sinhala_template = rowData => {
     return (
       <div className="center tableBody">
@@ -149,6 +156,8 @@ function Artists() {
       </div>
     );
   };
+
+  //success messages timeout function
   window.setTimeout(function() {
     $(".alert")
       .fadeTo(2000, 0)
@@ -156,6 +165,7 @@ function Artists() {
         $(this).remove();
       });
   }, 3000);
+
   return (
     <div className="background">
       <NavigationBar />
@@ -222,33 +232,57 @@ function Artists() {
                     <InputContainer
                       type="file"
                       name="avatar"
+                      id="myFile1"
                       onChange={fileChangedHandler}
                     ></InputContainer>
-                    <ImageContainer
+                    {/* <ImageContainer
                       src={imagePreviewUrl}
                       alt="icon"
-                    ></ImageContainer>
+                    ></ImageContainer> */}
+                    <Image
+                      src={imagePreviewUrl}
+                      alt="icon"
+                      height={100}
+                      width={100}
+                      style={ImageContainer}
+                    ></Image>
                   </div>
                 ) : (
                   <div className="center oppositedirection">
                     <InputContainer
                       type="file"
                       name="avatar"
+                      id="myFile2"
                       onChange={fileChangedHandler}
                     ></InputContainer>
-                    <ImageContainer
+                    {/* <ImageContainer
                       src={default_image_icon}
                       alt="icon"
-                    ></ImageContainer>
+                    ></ImageContainer> */}
+                    <Image
+                      src={default_image_icon}
+                      alt="icon"
+                      height={100}
+                      width={100}
+                      style={ImageContainer}
+                    ></Image>
                   </div>
                 )}
-                {artist_error && artist_error.data.imageName && (
+                {artist_error && artist_error.data.image && (
                   <div className="center">
                     <Message
                       severity="error"
                       style={MessageContainer}
-                      text={artist_error.data.imageName.message}
+                      text={artist_error.data.image.message}
                     />
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setImageAvailability(false)}
+                      style={IgnoreButtonContainer}
+                    >
+                      Ignore
+                    </button>
                   </div>
                 )}
                 <div className="form-group center oppositedirection">
@@ -271,7 +305,6 @@ function Artists() {
                     </div>
                   )}
                 </div>
-
                 <div className="form-group center oppositedirection">
                   <InputContainer
                     type="text"
@@ -290,7 +323,6 @@ function Artists() {
                     />
                   )}
                 </div>
-
                 <div className="form-group center oppositedirection">
                   <div className="direction">
                     <div className="p-col-12">
@@ -356,7 +388,7 @@ function Artists() {
                       <div class="alert alert-success message" role="alert">
                         <button
                           type="button"
-                          class="close"
+                          className="close"
                           data-dismiss="alert"
                           aria-label="Close"
                         >

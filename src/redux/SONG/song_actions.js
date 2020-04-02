@@ -48,20 +48,10 @@ export const save_song_action = formData => {
       method: "POST",
       url: process.env.REACT_APP_BASE_URL + "/song",
       data: formData,
-      // {
-      //   sinhalaTitle: payload.sinhalaTitle,
-      //   singlishTitle: payload.singlishTitle,
-      //   type: payload.type,
-      //   artistId: payload.artistId,
-      //   artistName: payload.artistName,
-      //   categories: payload.categories,
-      //   song: payload.song
-      // },
       headers: { api_key: process.env.REACT_APP_API_KEY },
       timeout: 4000
     })
       .then(() => {
-        //history.push('/mainPage');
         dispatch(fetchMessage("Saved successfully"));
         dispatch(get_all_songs_action());
       })
@@ -82,7 +72,6 @@ export const get_all_songs_action = () => {
       timeout: 4000
     })
       .then(res => {
-        //history.push('/mainPage');
         const result = res.data;
         dispatch(fetchALL(result));
       })
@@ -94,18 +83,6 @@ export const get_all_songs_action = () => {
 };
 
 export const update_song_action = (songId, formData) => {
-  // const update_payload = [
-  //   { key: "sinhalaTitle", value: payload.sinhalaTitle },
-  //   { key: "singlishTitle", value: payload.singlishTitle },
-  //   { key: "artistId", value: payload.artistId },
-  //   { key: "categories", value: payload.categories },
-  //   { key: "song", value: payload.song },
-  //   { key: "likes", value: payload.likes }
-  // ];
-
-  console.log("update_payload:", formData);
-  console.log("SongId:", songId);
-
   return dispatch => {
     dispatch(fetchLoading());
     Axios({
@@ -116,7 +93,6 @@ export const update_song_action = (songId, formData) => {
       timeout: 4000
     })
       .then(() => {
-        //history.push('/mainPage');
         dispatch(fetchMessage("Updated successfully"));
         dispatch(get_all_songs_action());
       })
@@ -137,7 +113,6 @@ export const delete_song_action = songId => {
       timeout: 4000
     })
       .then(() => {
-        //history.push('/mainPage');
         dispatch(fetchMessage("Deleted successfully"));
         dispatch(get_all_songs_action());
       })

@@ -38,7 +38,6 @@ function Categories() {
     dispatch(get_all_categories_action());
   }, []);
 
-  //temporary
   const payload = {
     name: name
   };
@@ -48,6 +47,7 @@ function Categories() {
     setName("");
   };
 
+  //Category table column templates
   const category_name_template = rowData => {
     return (
       <div className="center tableBody">
@@ -67,6 +67,7 @@ function Categories() {
     );
   };
 
+  //success messages timeout function
   window.setTimeout(function() {
     $(".alert")
       .fadeTo(2000, 0)
