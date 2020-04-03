@@ -6,6 +6,7 @@ import { RadioButton } from "primereact/radiobutton";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Message } from "primereact/message";
+import { Dialog } from "primereact/dialog";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -47,6 +48,11 @@ function Songs() {
   const [likes, setLikes] = useState(0);
   const [file, setFile] = useState(null);
   const [audioAvailability, setAudioAvailability] = useState("true");
+
+  //View Song Dialog states
+  const [songForTemplate, setSongForTemplate] = useState("");
+  const [titleForTemplate, setTitleForTemplate] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const song_state = useSelector(state => state.song);
   const artist_state = useSelector(state => state.artist);
@@ -195,14 +201,19 @@ function Songs() {
       <div className="center direction">
         <ViewIconContainer
           className="fas fa-eye"
-          data-toggle="modal"
-          data-target="#myModal"
+          onClick={() => view__template(rowData)}
         />
-        <div className="modal" id="myModal">
-          <textarea readOnly style={{ height: "40vh", width: "60vw" }}>
-            {rowData.song}
+        <Dialog
+          header={titleForTemplate}
+          visible={visible}
+          style={{ width: "50vw" }}
+          modal={true}
+          onHide={() => setVisible(false)}
+        >
+          <textarea readOnly style={{ height: "40vh", width: "47.5vw" }}>
+            {songForTemplate}
           </textarea>
-        </div>
+        </Dialog>
         <EditIconContainer
           className="fas fa-edit"
           onClick={() => updateSongTemplate(rowData)}
@@ -213,6 +224,13 @@ function Songs() {
         />
       </div>
     );
+  };
+
+  //View song dialog template
+  const view__template = rowData => {
+    setTitleForTemplate(rowData.sinhalaTitle);
+    setSongForTemplate(rowData.song);
+    setVisible(true);
   };
 
   //success messages timeout function
