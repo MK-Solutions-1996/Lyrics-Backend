@@ -4,6 +4,7 @@ import { ButtonContainer } from "../components/Customs";
 import { Nav, Navbar } from "react-bootstrap";
 import { logo_icon } from "../constants/imports";
 import { NavigationBarDivContainer } from "../components/Customs";
+import disableBrowserBackButton from "disable-browser-back-navigation";
 
 export const NavigationBar = user => (
   <NavigationBarDivContainer>
@@ -37,8 +38,10 @@ export const NavigationBar = user => (
           >
             <ButtonContainer>Category</ButtonContainer>
           </Link>
-          <Link to="/" className="ml-auto">
-            <ButtonContainer>Log Out</ButtonContainer>
+          <Link to={{ pathname: "/", state: "" }} className="ml-auto">
+            <ButtonContainer onClick={() => disableBrowserBackButton()}>
+              Log Out
+            </ButtonContainer>
           </Link>
           <Link
             to={{ pathname: "/settings", state: { user } }}
