@@ -1,42 +1,43 @@
 import Axios from "axios";
+import {
+  USER_FETCH_LOADING,
+  USER_FETCH_MESSAGE,
+  USER_FETCH_ALL,
+  USER_FETCH_SINGLE,
+  USER_FETCH_ERROR
+} from "./user_types";
 import history from "../../history";
-
-const intial_state = {
-  loading: false,
-  user: "",
-  users: [],
-  error: ""
-};
-
-//Types
-const FETCH_LOADING = "FETCH_LOADING";
-const FETCH_SUCCESS = "FETCH_SUCCESS";
-const FETCH_ERROR = "FETCH_ERROR";
-const FETCH_ALL = "FETCH_ALL";
 
 const fetchLoading = () => {
   return {
-    type: FETCH_LOADING
+    type: USER_FETCH_LOADING
   };
 };
 
-const fetchSuccess = user => {
+const fetchMessage = message => {
   return {
-    type: FETCH_SUCCESS,
-    payload: user
+    type: USER_FETCH_MESSAGE,
+    payload: message
   };
 };
 
 const fetchALL = users => {
   return {
-    type: FETCH_ALL,
+    type: USER_FETCH_ALL,
     payload: users
+  };
+};
+
+const fetchSingle = user => {
+  return {
+    type: USER_FETCH_SINGLE,
+    payload: user
   };
 };
 
 const fetchError = error => {
   return {
-    type: FETCH_ERROR,
+    type: USER_FETCH_ERROR,
     payload: error
   };
 };
@@ -56,8 +57,9 @@ export const signin_action = payload => {
     })
       .then(res => {
         const result = res.data;
-        history.push("/mainPage");
-        dispatch(fetchSuccess(result));
+        history.push({ pathname: "/mainPage", state: result });
+        dispatch(fetchMessage(result));
+        dispatch(fetchSingle(result));
       })
       .catch(err => {
         const error = err.response;
@@ -103,8 +105,8 @@ export const change_pwd_action = payload => {
     })
       .then(res => {
         const result = res.data;
-        history.push("/mainPage");
-        dispatch(fetchSuccess(result));
+        history.push({ pathname: "/mainPage", state: result });
+        dispatch(fetchMessage(result));
       })
       .catch(err => {
         const error = err.response;
@@ -150,43 +152,11 @@ export const forgot_pwd_action = payload => {
       .then(res => {
         const result = res.data;
         history.push("/");
-        dispatch(fetchSuccess(result));
+        dispatch(fetchMessage(result));
       })
       .catch(err => {
         const error = err.response;
         dispatch(fetchError(error));
       });
   };
-};
-
-export const signin_reducer = (state = intial_state, action) => {
-  switch (action.type) {
-    case FETCH_LOADING:
-      return {
-        ...state,
-        loading: true
-      };
-    case FETCH_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        user: action.payload,
-        error: ""
-      };
-    case FETCH_ALL:
-      return {
-        ...state,
-        loading: false,
-        users: action.payload,
-        error: ""
-      };
-    case FETCH_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload
-      };
-    default:
-      return state;
-  }
 };

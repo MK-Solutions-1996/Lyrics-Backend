@@ -5,7 +5,7 @@ import { Nav, Navbar } from "react-bootstrap";
 import { logo_icon } from "../constants/imports";
 import { NavigationBarDivContainer } from "../components/Customs";
 
-export const NavigationBar = () => (
+export const NavigationBar = user => (
   <NavigationBarDivContainer>
     <Navbar expand="lg">
       <Navbar.Brand href="/">
@@ -19,19 +19,31 @@ export const NavigationBar = () => (
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
-          <Link to="/Artists" className="ml-auto">
+          <Link
+            to={{ pathname: "/Artists", state: { user } }}
+            className="ml-auto"
+          >
             <ButtonContainer>Artist</ButtonContainer>
           </Link>
-          <Link to="/Songs" className="ml-auto">
+          <Link
+            to={{ pathname: "/Songs", state: { user } }}
+            className="ml-auto"
+          >
             <ButtonContainer>Song</ButtonContainer>
           </Link>
-          <Link to="/Categories" className="ml-auto">
+          <Link
+            to={{ pathname: "/Categories", state: { user } }}
+            className="ml-auto"
+          >
             <ButtonContainer>Category</ButtonContainer>
           </Link>
           <Link to="/" className="ml-auto">
             <ButtonContainer>Log Out</ButtonContainer>
           </Link>
-          <Link to="/settings" className="ml-auto">
+          <Link
+            to={{ pathname: "/settings", state: { user } }}
+            className="ml-auto"
+          >
             <ButtonContainer>
               <i className="fas fa-cog"></i>
             </ButtonContainer>

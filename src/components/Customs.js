@@ -167,11 +167,11 @@ export const TextAreaContainer = styled.textarea`
   color: var(--mainBlack);
 `;
 
-// export const ImageContainer = styled.img`
-//   width: 10vw;
-//   height: 20vh;
-//   margin: 0.5rem;
-// `;
+export const ImageContainer = styled.img`
+  width: 10vw;
+  height: 20vh;
+  margin: 0.5rem;
+`;
 
 export const SpinnerContainer = styled.div`
   height: 1.5rem;
@@ -196,10 +196,6 @@ export const MultiSelectContainer = {
 export const MessageContainer = {
   fontSize: "0.6rem",
   margin: "0.1rem"
-};
-
-export const ImageContainer = {
-  margin: "0.5rem"
 };
 
 export const IgnoreButtonContainer = {

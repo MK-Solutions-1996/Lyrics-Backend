@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
+import DefaultPage from "./defaultes";
 import { NavigationBar } from "../components/NavigationBar";
 import $ from "jquery";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { RadioButton } from "primereact/radiobutton";
+import { Message } from "primereact/message";
+import { useLocation } from "react-router-dom";
+import { default_image_icon } from "../constants/imports";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  get_all_artists_action,
+  save_artist_action,
+  delete_artist_action,
+  update_artist_action
+} from "../redux";
 import {
   TopicContainer,
   SubTopicContainer,
@@ -16,21 +30,10 @@ import {
   IgnoreButtonContainer,
   SpinnerContainer
 } from "../components/Customs";
-import { default_image_icon } from "../constants/imports";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  get_all_artists_action,
-  save_artist_action,
-  delete_artist_action,
-  update_artist_action
-} from "../redux";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { RadioButton } from "primereact/radiobutton";
-import { Message } from "primereact/message";
-import Image from "react-image-resizer";
 
 function Artists() {
+  const location = useLocation();
+
   const [isUpdateArtist, setIsUpdateArtist] = useState(false);
 
   const [artistId, setArtistId] = useState("");
@@ -44,7 +47,6 @@ function Artists() {
   const artist_state = useSelector(state => state.artist);
   const dispatch = useDispatch();
   const { artist_loading, artists, message, artist_error } = artist_state;
-  console.log("Message:", artist_error);
 
   useEffect(() => {
     dispatch(get_all_artists_action());
@@ -167,248 +169,253 @@ function Artists() {
   }, 3000);
 
   return (
-    <div className="background">
-      <NavigationBar />
-      <div className="center">
-        <div className="card">
-          <div className="direction">
-            <div>
-              <div className="center">
-                <TopicContainer>Artists</TopicContainer>
-              </div>
-              <RefreshIconContainer
-                onClick={() => dispatch(get_all_artists_action())}
-                className="fas fa-sync-alt"
-              ></RefreshIconContainer>
-              <div className="artistsTable">
-                <DataTable
-                  value={artists}
-                  responsive
-                  paginator={true}
-                  rows={5}
-                  rowHover
-                  rowsPerPageOptions={[5, 10, 25, 50]}
-                  emptyMessage="No artists found"
-                  currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
-                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                >
-                  <Column
-                    field="artistNameSinhala"
-                    header="Artist Name (Sinhala)"
-                    body={artist_name_sinhala_template}
-                  />
-                  <Column
-                    field="artistNameSinglish"
-                    header="Artist Name (Singlish)"
-                    body={artist_name_singlish_template}
-                  />
-                  <Column field="image" header="Image" body={image_template} />
-                  <Column
-                    field="period"
-                    header="Period"
-                    body={period_template}
-                  />
-                  <Column
-                    field="action"
-                    header="Action"
-                    body={delete_edit_btns_template}
-                  />
-                </DataTable>
-              </div>
-            </div>
-            <div className="center">
-              <div className="miniCard">
-                {isUpdateArtist === true ? (
+    <div>
+      {location.state ? (
+        <div className="background">
+          <NavigationBar user={location.state} />
+          <div className="center">
+            <div className="card">
+              <div className="direction">
+                <div>
                   <div className="center">
-                    <SubTopicContainer>Update Artist</SubTopicContainer>
+                    <TopicContainer>Artists</TopicContainer>
                   </div>
-                ) : (
-                  <div className="center">
-                    <SubTopicContainer>Add Artist</SubTopicContainer>
-                  </div>
-                )}
-                {imagePreviewUrl ? (
-                  <div className="center oppositedirection">
-                    <InputContainer
-                      type="file"
-                      name="avatar"
-                      id="myFile1"
-                      onChange={fileChangedHandler}
-                    ></InputContainer>
-                    {/* <ImageContainer
-                      src={imagePreviewUrl}
-                      alt="icon"
-                    ></ImageContainer> */}
-                    <Image
-                      src={imagePreviewUrl}
-                      alt="icon"
-                      height={100}
-                      width={100}
-                      style={ImageContainer}
-                    ></Image>
-                  </div>
-                ) : (
-                  <div className="center oppositedirection">
-                    <InputContainer
-                      type="file"
-                      name="avatar"
-                      id="myFile2"
-                      onChange={fileChangedHandler}
-                    ></InputContainer>
-                    {/* <ImageContainer
-                      src={default_image_icon}
-                      alt="icon"
-                    ></ImageContainer> */}
-                    <Image
-                      src={default_image_icon}
-                      alt="icon"
-                      height={100}
-                      width={100}
-                      style={ImageContainer}
-                    ></Image>
-                  </div>
-                )}
-                {artist_error && artist_error.data.image && (
-                  <div className="center">
-                    <Message
-                      severity="error"
-                      style={MessageContainer}
-                      text={artist_error.data.image.message}
-                    />
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      onClick={() => setImageAvailability(false)}
-                      style={IgnoreButtonContainer}
+                  <RefreshIconContainer
+                    onClick={() => dispatch(get_all_artists_action())}
+                    className="fas fa-sync-alt"
+                  ></RefreshIconContainer>
+                  <div className="artistsTable">
+                    <DataTable
+                      value={artists}
+                      responsive
+                      paginator={true}
+                      rows={5}
+                      rowHover
+                      rowsPerPageOptions={[5, 10, 25, 50]}
+                      emptyMessage="No artists found"
+                      currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
+                      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     >
-                      Ignore
-                    </button>
-                  </div>
-                )}
-                <div className="form-group center oppositedirection">
-                  <InputContainer
-                    type="text"
-                    className="form-control"
-                    id="artist_name_sinhala"
-                    name="artist_name_sinhala"
-                    placeholder="Artist Name (Sinhala)"
-                    value={sinhalaName}
-                    onChange={e => setSinhalaName(e.target.value)}
-                  ></InputContainer>
-                  {artist_error && artist_error.data.sinhalaName && (
-                    <div className="center">
-                      <Message
-                        severity="error"
-                        style={MessageContainer}
-                        text={artist_error.data.sinhalaName.message}
+                      <Column
+                        field="artistNameSinhala"
+                        header="Artist Name (Sinhala)"
+                        body={artist_name_sinhala_template}
                       />
-                    </div>
-                  )}
-                </div>
-                <div className="form-group center oppositedirection">
-                  <InputContainer
-                    type="text"
-                    className="form-control"
-                    id="artist_name_singlish"
-                    name="artist_name_singlish"
-                    placeholder="Artist Name (Singlish)"
-                    value={singlishName}
-                    onChange={e => setSinglisName(e.target.value)}
-                  ></InputContainer>
-                  {artist_error && artist_error.data.singlishName && (
-                    <Message
-                      severity="error"
-                      style={MessageContainer}
-                      text={artist_error.data.singlishName.message}
-                    />
-                  )}
-                </div>
-                <div className="form-group center oppositedirection">
-                  <div className="direction">
-                    <div className="p-col-12">
-                      <RadioButton
-                        inputId="rb1"
-                        name="period"
-                        value="Old"
-                        onChange={e => setPeriod(e.value)}
-                        checked={period === "Old"}
-                        style={{
-                          margin: "0.2rem"
-                        }}
+                      <Column
+                        field="artistNameSinglish"
+                        header="Artist Name (Singlish)"
+                        body={artist_name_singlish_template}
                       />
-                      <LongLabelContainer
-                        htmlFor="rb1"
-                        className="p-radiobutton-label"
-                      >
-                        Old
-                      </LongLabelContainer>
-                    </div>
-                    <div className="p-col-12">
-                      <RadioButton
-                        inputId="rb2"
-                        name="period"
-                        value="New"
-                        onChange={e => setPeriod(e.value)}
-                        checked={period === "New"}
-                        style={{
-                          margin: "0.2rem"
-                        }}
+                      <Column
+                        field="image"
+                        header="Image"
+                        body={image_template}
                       />
-                      <LongLabelContainer
-                        htmlFor="rb1"
-                        className="p-radiobutton-label"
-                      >
-                        New
-                      </LongLabelContainer>
-                    </div>
+                      <Column
+                        field="period"
+                        header="Period"
+                        body={period_template}
+                      />
+                      <Column
+                        field="action"
+                        header="Action"
+                        body={delete_edit_btns_template}
+                      />
+                    </DataTable>
                   </div>
-                  {artist_error && artist_error.data.period && (
-                    <Message
-                      severity="error"
-                      style={MessageContainer}
-                      text={artist_error.data.period.message}
-                    />
-                  )}
                 </div>
-                {isUpdateArtist === true ? (
-                  <div className="center">
-                    <SubButtonContainer onClick={updateArtist}>
-                      Update
-                    </SubButtonContainer>
-                    <SubButtonContainer onClick={refresh}>
-                      Cancel
-                    </SubButtonContainer>
-                  </div>
-                ) : (
-                  <div className="center">
-                    <SubButtonContainer onClick={addArtist}>
-                      Add
-                    </SubButtonContainer>
-                    {message && (
-                      <div class="alert alert-success message" role="alert">
+                <div className="center">
+                  <div className="miniCard">
+                    {isUpdateArtist === true ? (
+                      <div className="center">
+                        <SubTopicContainer>Update Artist</SubTopicContainer>
+                      </div>
+                    ) : (
+                      <div className="center">
+                        <SubTopicContainer>Add Artist</SubTopicContainer>
+                      </div>
+                    )}
+                    {imagePreviewUrl ? (
+                      <div className="center oppositedirection">
+                        <InputContainer
+                          type="file"
+                          name="avatar"
+                          id="myFile1"
+                          onChange={fileChangedHandler}
+                        ></InputContainer>
+                        <ImageContainer
+                          src={imagePreviewUrl}
+                          alt="icon"
+                        ></ImageContainer>
+                      </div>
+                    ) : (
+                      <div className="center oppositedirection">
+                        <InputContainer
+                          type="file"
+                          name="avatar"
+                          id="myFile2"
+                          onChange={fileChangedHandler}
+                        ></InputContainer>
+                        <ImageContainer
+                          src={default_image_icon}
+                          alt="icon"
+                        ></ImageContainer>
+                      </div>
+                    )}
+                    {artist_error && artist_error.data.image && (
+                      <div className="center">
+                        <Message
+                          severity="error"
+                          style={MessageContainer}
+                          text={artist_error.data.image.message}
+                        />
                         <button
                           type="button"
-                          className="close"
-                          data-dismiss="alert"
-                          aria-label="Close"
+                          className="btn btn-secondary"
+                          onClick={() => setImageAvailability(false)}
+                          style={IgnoreButtonContainer}
                         >
-                          <span aria-hidden="true">&times;</span>
+                          Ignore
                         </button>
-                        <strong>Success!</strong> {message}
+                      </div>
+                    )}
+                    <div className="form-group center oppositedirection">
+                      <InputContainer
+                        type="text"
+                        className="form-control"
+                        id="artist_name_sinhala"
+                        name="artist_name_sinhala"
+                        placeholder="Artist Name (Sinhala)"
+                        value={sinhalaName}
+                        onChange={e => setSinhalaName(e.target.value)}
+                      ></InputContainer>
+                      {artist_error && artist_error.data.sinhalaName && (
+                        <div className="center">
+                          <Message
+                            severity="error"
+                            style={MessageContainer}
+                            text={artist_error.data.sinhalaName.message}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div className="form-group center oppositedirection">
+                      <InputContainer
+                        type="text"
+                        className="form-control"
+                        id="artist_name_singlish"
+                        name="artist_name_singlish"
+                        placeholder="Artist Name (Singlish)"
+                        value={singlishName}
+                        onChange={e => setSinglisName(e.target.value)}
+                      ></InputContainer>
+                      {artist_error && artist_error.data.singlishName && (
+                        <Message
+                          severity="error"
+                          style={MessageContainer}
+                          text={artist_error.data.singlishName.message}
+                        />
+                      )}
+                    </div>
+                    <div className="form-group center oppositedirection">
+                      <div className="direction">
+                        <div className="p-col-12">
+                          <RadioButton
+                            inputId="rb1"
+                            name="period"
+                            value="Old"
+                            onChange={e => setPeriod(e.value)}
+                            checked={period === "Old"}
+                            style={{
+                              margin: "0.2rem"
+                            }}
+                          />
+                          <LongLabelContainer
+                            htmlFor="rb1"
+                            className="p-radiobutton-label"
+                          >
+                            Old
+                          </LongLabelContainer>
+                        </div>
+                        <div className="p-col-12">
+                          <RadioButton
+                            inputId="rb2"
+                            name="period"
+                            value="New"
+                            onChange={e => setPeriod(e.value)}
+                            checked={period === "New"}
+                            style={{
+                              margin: "0.2rem"
+                            }}
+                          />
+                          <LongLabelContainer
+                            htmlFor="rb1"
+                            className="p-radiobutton-label"
+                          >
+                            New
+                          </LongLabelContainer>
+                        </div>
+                      </div>
+                      {artist_error && artist_error.data.period && (
+                        <Message
+                          severity="error"
+                          style={MessageContainer}
+                          text={artist_error.data.period.message}
+                        />
+                      )}
+                    </div>
+                    {isUpdateArtist === true ? (
+                      <div className="center">
+                        <SubButtonContainer onClick={updateArtist}>
+                          Update
+                        </SubButtonContainer>
+                        <SubButtonContainer onClick={refresh}>
+                          Cancel
+                        </SubButtonContainer>
+                      </div>
+                    ) : (
+                      <div className="center oppositedirection">
+                        <SubButtonContainer onClick={addArtist}>
+                          Add
+                        </SubButtonContainer>
+                        {message && (
+                          <div class="alert alert-success message" role="alert">
+                            <button
+                              type="button"
+                              className="close"
+                              data-dismiss="alert"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>Success!</strong> {message}
+                          </div>
+                        )}
+                        {artist_loading && (
+                          <div className="center">
+                            <SpinnerContainer className="spinner-border"></SpinnerContainer>
+                          </div>
+                        )}
+                        {typeof artist_error === "undefined" ? (
+                          <Message
+                            severity="error"
+                            style={MessageContainer}
+                            text="Server is not running this time"
+                          />
+                        ) : (
+                          <div></div>
+                        )}
                       </div>
                     )}
                   </div>
-                )}
-                {artist_loading && (
-                  <div className="center">
-                    <SpinnerContainer className="spinner-border"></SpinnerContainer>
-                  </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <DefaultPage />
+      )}
     </div>
   );
 }

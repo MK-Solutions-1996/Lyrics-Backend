@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TopNavBar } from "../components/TopNavBar";
+import { Message } from "primereact/message";
+import { useSelector, useDispatch } from "react-redux";
+import { signin_action } from "../redux";
 import {
   ButtonContainer,
   TopicContainer,
@@ -9,17 +12,14 @@ import {
   MessageContainer,
   SpinnerContainer
 } from "../components/Customs";
-import { Message } from "primereact/message";
-import { useSelector, useDispatch } from "react-redux";
-import { signin_action } from "../redux";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const signin_state = useSelector(state => state.signin);
-  const { loading, error } = signin_state;
+  const signin_state = useSelector(state => state.user);
+  const { user_loading, user_error } = signin_state;
 
   const payload = {
     username: username,
@@ -54,14 +54,14 @@ function Login() {
               onChange={e => setPassword(e.target.value)}
             ></InputContainer>
           </div>
-          {error && error.data && (
+          {user_error && user_error.data && (
             <Message
               severity="error"
               style={MessageContainer}
-              text={error.data}
+              text={user_error.data}
             />
           )}
-          {typeof error === "undefined" ? (
+          {typeof user_error === "undefined" ? (
             <Message
               severity="error"
               style={MessageContainer}
@@ -76,7 +76,7 @@ function Login() {
               Login
             </ButtonContainer>
           </div>
-          {loading && (
+          {user_loading && (
             <div className="center">
               <SpinnerContainer className="spinner-border"></SpinnerContainer>
             </div>
