@@ -160,10 +160,10 @@ function Artists() {
   };
 
   //success messages timeout function
-  window.setTimeout(function() {
+  window.setTimeout(function () {
     $(".alert")
       .fadeTo(2000, 0)
-      .slideUp(2000, function() {
+      .slideUp(2000, function () {
         $(this).remove();
       });
   }, 3000);
@@ -231,10 +231,10 @@ function Artists() {
                         <SubTopicContainer>Update Artist</SubTopicContainer>
                       </div>
                     ) : (
-                      <div className="center">
-                        <SubTopicContainer>Add Artist</SubTopicContainer>
-                      </div>
-                    )}
+                        <div className="center">
+                          <SubTopicContainer>Add Artist</SubTopicContainer>
+                        </div>
+                      )}
                     {imagePreviewUrl ? (
                       <div className="center oppositedirection">
                         <InputContainer
@@ -249,19 +249,19 @@ function Artists() {
                         ></ImageContainer>
                       </div>
                     ) : (
-                      <div className="center oppositedirection">
-                        <InputContainer
-                          type="file"
-                          name="avatar"
-                          id="myFile2"
-                          onChange={fileChangedHandler}
-                        ></InputContainer>
-                        <ImageContainer
-                          src={default_image_icon}
-                          alt="icon"
-                        ></ImageContainer>
-                      </div>
-                    )}
+                        <div className="center oppositedirection">
+                          <InputContainer
+                            type="file"
+                            name="avatar"
+                            id="myFile2"
+                            onChange={fileChangedHandler}
+                          ></InputContainer>
+                          <ImageContainer
+                            src={default_image_icon}
+                            alt="icon"
+                          ></ImageContainer>
+                        </div>
+                      )}
                     {artist_error && artist_error.data.image && (
                       <div className="center">
                         <Message
@@ -374,39 +374,39 @@ function Artists() {
                         </SubButtonContainer>
                       </div>
                     ) : (
-                      <div className="center oppositedirection">
-                        <SubButtonContainer onClick={addArtist}>
-                          Add
+                        <div className="center oppositedirection">
+                          <SubButtonContainer onClick={addArtist}>
+                            Add
                         </SubButtonContainer>
-                        {message && (
-                          <div class="alert alert-success message" role="alert">
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="alert"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                            <strong>Success!</strong> {message}
-                          </div>
-                        )}
-                        {artist_loading && (
-                          <div className="center">
-                            <SpinnerContainer className="spinner-border"></SpinnerContainer>
-                          </div>
-                        )}
-                        {typeof artist_error === "undefined" ? (
-                          <Message
-                            severity="error"
-                            style={MessageContainer}
-                            text="Server is not running this time"
-                          />
-                        ) : (
-                          <div></div>
-                        )}
-                      </div>
-                    )}
+                          {message && (
+                            <div class="alert alert-success message" role="alert">
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="alert"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                              <strong>Success!</strong> {message}
+                            </div>
+                          )}
+                          {artist_loading && (
+                            <div className="center">
+                              <SpinnerContainer className="spinner-border"></SpinnerContainer>
+                            </div>
+                          )}
+                          {typeof artist_error === "undefined" ? (
+                            <Message
+                              severity="error"
+                              style={MessageContainer}
+                              text="Server is not running this time"
+                            />
+                          ) : (
+                              <div></div>
+                            )}
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>
@@ -414,8 +414,8 @@ function Artists() {
           </div>
         </div>
       ) : (
-        <DefaultPage />
-      )}
+          <DefaultPage />
+        )}
     </div>
   );
 }
