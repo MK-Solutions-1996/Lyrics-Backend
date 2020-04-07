@@ -6,7 +6,6 @@ import {
   ARTIST_FETCH_SINGLE,
   ARTIST_FETCH_ERROR
 } from "./artist_types";
-import { timeout } from "q";
 
 const fetchLoading = () => {
   return {
@@ -49,8 +48,7 @@ export const save_artist_action = formData => {
       method: "POST",
       url: process.env.REACT_APP_BASE_URL + "/artist",
       data: formData,
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
         dispatch(fetchMessage("Saved successfully"));
@@ -69,8 +67,7 @@ export const get_all_artists_action = () => {
     Axios({
       method: "GET",
       url: process.env.REACT_APP_BASE_URL + "/artist",
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(res => {
         const result = res.data;
@@ -90,8 +87,7 @@ export const update_artist_action = (artistId, formData) => {
       method: "PATCH",
       url: process.env.REACT_APP_BASE_URL + "/artist/" + artistId,
       data: formData,
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
         dispatch(fetchMessage("Updated successfully"));
@@ -110,8 +106,7 @@ export const delete_artist_action = artistId => {
     Axios({
       method: "DELETE",
       url: process.env.REACT_APP_BASE_URL + "/artist/" + artistId,
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
         dispatch(fetchMessage("Deleted successfully"));

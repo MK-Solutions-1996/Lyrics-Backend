@@ -52,8 +52,7 @@ export const signin_action = payload => {
         username: payload.username,
         password: payload.password
       },
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(res => {
         const result = res.data;
@@ -74,11 +73,9 @@ export const get_admin_action = () => {
     Axios({
       method: "GET",
       url: process.env.REACT_APP_BASE_URL + "/admin",
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(res => {
-        //history.push('/mainPage');
         const result = res.data;
         dispatch(fetchALL(result));
       })
@@ -100,8 +97,7 @@ export const change_pwd_action = payload => {
         password: payload.password,
         newPassword: payload.newPassword
       },
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(res => {
         const result = res.data;
@@ -121,8 +117,7 @@ export const get_verification_code_action = () => {
     Axios({
       method: "GET",
       url: process.env.REACT_APP_BASE_URL + "/admin/verification",
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(res => {
         const result = res.data;
@@ -146,8 +141,7 @@ export const forgot_pwd_action = payload => {
         newPassword: payload.newPassword,
         confirmPassword: payload.confirmPassword
       },
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(res => {
         const result = res.data;

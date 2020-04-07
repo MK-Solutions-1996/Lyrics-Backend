@@ -48,8 +48,7 @@ export const save_song_action = formData => {
       method: "POST",
       url: process.env.REACT_APP_BASE_URL + "/song",
       data: formData,
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
         dispatch(fetchMessage("Saved successfully"));
@@ -68,8 +67,7 @@ export const get_all_songs_action = () => {
     Axios({
       method: "GET",
       url: process.env.REACT_APP_BASE_URL + "/song",
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(res => {
         const result = res.data;
@@ -89,8 +87,7 @@ export const update_song_action = (songId, formData) => {
       method: "PATCH",
       url: process.env.REACT_APP_BASE_URL + "/song/" + songId,
       data: formData,
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
         dispatch(fetchMessage("Updated successfully"));
@@ -109,8 +106,7 @@ export const delete_song_action = songId => {
     Axios({
       method: "DELETE",
       url: process.env.REACT_APP_BASE_URL + "/song/" + songId,
-      headers: { api_key: process.env.REACT_APP_API_KEY },
-      timeout: 4000
+      headers: { api_key: process.env.REACT_APP_API_KEY }
     })
       .then(() => {
         dispatch(fetchMessage("Deleted successfully"));
