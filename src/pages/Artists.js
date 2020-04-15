@@ -13,7 +13,7 @@ import {
   get_all_artists_action,
   save_artist_action,
   delete_artist_action,
-  update_artist_action
+  update_artist_action,
 } from "../redux";
 import {
   TopicContainer,
@@ -28,7 +28,7 @@ import {
   EditIconContainer,
   MessageContainer,
   IgnoreButtonContainer,
-  SpinnerContainer
+  SpinnerContainer,
 } from "../components/Customs";
 
 function Artists() {
@@ -44,7 +44,7 @@ function Artists() {
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [imageAvailability, setImageAvailability] = useState("true");
 
-  const artist_state = useSelector(state => state.artist);
+  const artist_state = useSelector((state) => state.artist);
   const dispatch = useDispatch();
   const { artist_loading, artists, message, artist_error } = artist_state;
 
@@ -70,7 +70,7 @@ function Artists() {
   };
 
   //filling data for update
-  const updateArtistTemplate = artist => {
+  const updateArtistTemplate = (artist) => {
     setIsUpdateArtist(true);
     setArtistId(artist._id);
     setSinhalaName(artist.sinhalaName);
@@ -95,7 +95,7 @@ function Artists() {
   };
 
   //artist image preview function
-  const fileChangedHandler = event => {
+  const fileChangedHandler = (event) => {
     setSelectedFile(event.target.files[0]);
     let reader = new FileReader();
 
@@ -107,7 +107,7 @@ function Artists() {
   };
 
   //Artist table column templates
-  const artist_name_sinhala_template = rowData => {
+  const artist_name_sinhala_template = (rowData) => {
     return (
       <div className="center tableBody">
         <SpanContainer>{rowData.sinhalaName}</SpanContainer>
@@ -115,7 +115,7 @@ function Artists() {
     );
   };
 
-  const artist_name_singlish_template = rowData => {
+  const artist_name_singlish_template = (rowData) => {
     return (
       <div className="center tableBody">
         <SpanContainer>{rowData.singlishName}</SpanContainer>
@@ -123,7 +123,7 @@ function Artists() {
     );
   };
 
-  const image_template = rowData => {
+  const image_template = (rowData) => {
     return (
       <div className="center tableBody">
         <img
@@ -136,7 +136,7 @@ function Artists() {
     );
   };
 
-  const period_template = rowData => {
+  const period_template = (rowData) => {
     return (
       <div className="center tableBody">
         <SpanContainer>{rowData.period}</SpanContainer>
@@ -144,7 +144,7 @@ function Artists() {
     );
   };
 
-  const delete_edit_btns_template = rowData => {
+  const delete_edit_btns_template = (rowData) => {
     return (
       <div className="center direction">
         <EditIconContainer
@@ -215,11 +215,13 @@ function Artists() {
                         field="period"
                         header="Period"
                         body={period_template}
+                        style={{ width: "10%" }}
                       />
                       <Column
                         field="action"
                         header="Action"
                         body={delete_edit_btns_template}
+                        style={{ width: "15%" }}
                       />
                     </DataTable>
                   </div>
@@ -231,10 +233,10 @@ function Artists() {
                         <SubTopicContainer>Update Artist</SubTopicContainer>
                       </div>
                     ) : (
-                        <div className="center">
-                          <SubTopicContainer>Add Artist</SubTopicContainer>
-                        </div>
-                      )}
+                      <div className="center">
+                        <SubTopicContainer>Add Artist</SubTopicContainer>
+                      </div>
+                    )}
                     {imagePreviewUrl ? (
                       <div className="center oppositedirection">
                         <InputContainer
@@ -249,19 +251,19 @@ function Artists() {
                         ></ImageContainer>
                       </div>
                     ) : (
-                        <div className="center oppositedirection">
-                          <InputContainer
-                            type="file"
-                            name="avatar"
-                            id="myFile2"
-                            onChange={fileChangedHandler}
-                          ></InputContainer>
-                          <ImageContainer
-                            src={default_image_icon}
-                            alt="icon"
-                          ></ImageContainer>
-                        </div>
-                      )}
+                      <div className="center oppositedirection">
+                        <InputContainer
+                          type="file"
+                          name="avatar"
+                          id="myFile2"
+                          onChange={fileChangedHandler}
+                        ></InputContainer>
+                        <ImageContainer
+                          src={default_image_icon}
+                          alt="icon"
+                        ></ImageContainer>
+                      </div>
+                    )}
                     {artist_error && artist_error.data.image && (
                       <div className="center">
                         <Message
@@ -287,7 +289,7 @@ function Artists() {
                         name="artist_name_sinhala"
                         placeholder="Artist Name (Sinhala)"
                         value={sinhalaName}
-                        onChange={e => setSinhalaName(e.target.value)}
+                        onChange={(e) => setSinhalaName(e.target.value)}
                       ></InputContainer>
                       {artist_error && artist_error.data.sinhalaName && (
                         <div className="center">
@@ -307,7 +309,7 @@ function Artists() {
                         name="artist_name_singlish"
                         placeholder="Artist Name (Singlish)"
                         value={singlishName}
-                        onChange={e => setSinglisName(e.target.value)}
+                        onChange={(e) => setSinglisName(e.target.value)}
                       ></InputContainer>
                       {artist_error && artist_error.data.singlishName && (
                         <Message
@@ -324,10 +326,10 @@ function Artists() {
                             inputId="rb1"
                             name="period"
                             value="Old"
-                            onChange={e => setPeriod(e.value)}
+                            onChange={(e) => setPeriod(e.value)}
                             checked={period === "Old"}
                             style={{
-                              margin: "0.2rem"
+                              margin: "0.2rem",
                             }}
                           />
                           <LongLabelContainer
@@ -342,10 +344,10 @@ function Artists() {
                             inputId="rb2"
                             name="period"
                             value="New"
-                            onChange={e => setPeriod(e.value)}
+                            onChange={(e) => setPeriod(e.value)}
                             checked={period === "New"}
                             style={{
-                              margin: "0.2rem"
+                              margin: "0.2rem",
                             }}
                           />
                           <LongLabelContainer
@@ -374,39 +376,39 @@ function Artists() {
                         </SubButtonContainer>
                       </div>
                     ) : (
-                        <div className="center oppositedirection">
-                          <SubButtonContainer onClick={addArtist}>
-                            Add
+                      <div className="center oppositedirection">
+                        <SubButtonContainer onClick={addArtist}>
+                          Add
                         </SubButtonContainer>
-                          {message && (
-                            <div class="alert alert-success message" role="alert">
-                              <button
-                                type="button"
-                                className="close"
-                                data-dismiss="alert"
-                                aria-label="Close"
-                              >
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                              <strong>Success!</strong> {message}
-                            </div>
-                          )}
-                          {artist_loading && (
-                            <div className="center">
-                              <SpinnerContainer className="spinner-border"></SpinnerContainer>
-                            </div>
-                          )}
-                          {typeof artist_error === "undefined" ? (
-                            <Message
-                              severity="error"
-                              style={MessageContainer}
-                              text="Server is not running this time"
-                            />
-                          ) : (
-                              <div></div>
-                            )}
-                        </div>
-                      )}
+                        {message && (
+                          <div class="alert alert-success message" role="alert">
+                            <button
+                              type="button"
+                              className="close"
+                              data-dismiss="alert"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>Success!</strong> {message}
+                          </div>
+                        )}
+                        {artist_loading && (
+                          <div className="center">
+                            <SpinnerContainer className="spinner-border"></SpinnerContainer>
+                          </div>
+                        )}
+                        {typeof artist_error === "undefined" ? (
+                          <Message
+                            severity="error"
+                            style={MessageContainer}
+                            text="Server is not running this time"
+                          />
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -414,8 +416,8 @@ function Artists() {
           </div>
         </div>
       ) : (
-          <DefaultPage />
-        )}
+        <DefaultPage />
+      )}
     </div>
   );
 }

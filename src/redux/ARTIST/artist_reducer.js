@@ -3,7 +3,8 @@ import {
   ARTIST_FETCH_MESSAGE,
   ARTIST_FETCH_ALL,
   ARTIST_FETCH_SINGLE,
-  ARTIST_FETCH_ERROR
+  ARTIST_FETCH_ERROR,
+  ARTIST_CLEAR_STATE,
 } from "./artist_types";
 
 const initial_state = {
@@ -11,7 +12,7 @@ const initial_state = {
   message: "",
   artists: [],
   singleArtist: {},
-  artist_error: ""
+  artist_error: "",
 };
 
 const artist_reducer = (state = initial_state, action) => {
@@ -19,35 +20,37 @@ const artist_reducer = (state = initial_state, action) => {
     case ARTIST_FETCH_LOADING:
       return {
         ...state,
-        artist_loading: true
+        artist_loading: true,
       };
     case ARTIST_FETCH_MESSAGE:
       return {
         ...state,
         artist_loading: false,
         message: action.payload,
-        artist_error: ""
+        artist_error: "",
       };
     case ARTIST_FETCH_ALL:
       return {
         ...state,
         artist_loading: false,
         artists: action.payload,
-        artist_error: ""
+        artist_error: "",
       };
     case ARTIST_FETCH_SINGLE:
       return {
         ...state,
         artist_loading: false,
         singleArtist: action.payload,
-        artist_error: ""
+        artist_error: "",
       };
     case ARTIST_FETCH_ERROR:
       return {
         ...state,
         artist_loading: false,
-        artist_error: action.payload
+        artist_error: action.payload,
       };
+    case ARTIST_CLEAR_STATE:
+      return initial_state;
     default:
       return state;
   }

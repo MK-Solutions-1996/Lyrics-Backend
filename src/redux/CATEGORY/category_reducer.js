@@ -3,7 +3,8 @@ import {
   CATEGORY_FETCH_MESSAGE,
   CATEGORY_FETCH_ALL,
   CATEGORY_FETCH_SINGLE,
-  CATEGORY_FETCH_ERROR
+  CATEGORY_FETCH_ERROR,
+  CATEGORY_CLEAR_STATE,
 } from "./category_types";
 
 const initial_state = {
@@ -11,7 +12,7 @@ const initial_state = {
   message: "",
   categories: [],
   singleCategory: {},
-  category_error: ""
+  category_error: "",
 };
 
 const category_reducer = (state = initial_state, action) => {
@@ -19,35 +20,37 @@ const category_reducer = (state = initial_state, action) => {
     case CATEGORY_FETCH_LOADING:
       return {
         ...state,
-        category_loading: true
+        category_loading: true,
       };
     case CATEGORY_FETCH_MESSAGE:
       return {
         ...state,
         category_loading: false,
         message: action.payload,
-        category_error: ""
+        category_error: "",
       };
     case CATEGORY_FETCH_ALL:
       return {
         ...state,
         category_loading: false,
         categories: action.payload,
-        category_error: ""
+        category_error: "",
       };
     case CATEGORY_FETCH_SINGLE:
       return {
         ...state,
         category_loading: false,
         singleCategory: action.payload,
-        category_error: ""
+        category_error: "",
       };
     case CATEGORY_FETCH_ERROR:
       return {
         ...state,
         category_loading: false,
-        category_error: action.payload
+        category_error: action.payload,
       };
+    case CATEGORY_CLEAR_STATE:
+      return initial_state;
     default:
       return state;
   }

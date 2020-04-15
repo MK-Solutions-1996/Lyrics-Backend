@@ -16,7 +16,7 @@ import {
   update_song_action,
   delete_song_action,
   get_all_artists_action,
-  get_all_categories_action
+  get_all_categories_action,
 } from "../redux";
 import {
   TopicContainer,
@@ -34,7 +34,7 @@ import {
   MessageContainer,
   SpinnerContainer,
   AudioContainer,
-  IgnoreButtonContainer
+  IgnoreButtonContainer,
 } from "../components/Customs";
 
 function Songs() {
@@ -58,9 +58,9 @@ function Songs() {
   const [titleForTemplate, setTitleForTemplate] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const song_state = useSelector(state => state.song);
-  const artist_state = useSelector(state => state.artist);
-  const category_state = useSelector(state => state.category);
+  const song_state = useSelector((state) => state.song);
+  const artist_state = useSelector((state) => state.artist);
+  const category_state = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const { song_loading, songs, message, song_error } = song_state;
   const { artists } = artist_state;
@@ -74,12 +74,12 @@ function Songs() {
 
   //dropdowns fetches
   const artist_dropdown = [];
-  artists.map(data => {
+  artists.map((data) => {
     const object = { label: data.singlishName, value: data._id };
     artist_dropdown.push(object);
   });
   const category_dropdown = [];
-  categories.map(data => {
+  categories.map((data) => {
     const object = { label: data.name, value: data.name };
     category_dropdown.push(object);
   });
@@ -110,7 +110,7 @@ function Songs() {
   };
 
   //filling data for update
-  const updateSongTemplate = song => {
+  const updateSongTemplate = (song) => {
     setIsUpdateSong(true);
     setSongId(song._id);
     setSinhalaTitle(song.sinhalaTitle);
@@ -140,7 +140,7 @@ function Songs() {
   };
 
   //Song table column templates
-  const song_name_sinhala_template = rowData => {
+  const song_name_sinhala_template = (rowData) => {
     return (
       <div className="center tableBody">
         <SpanContainer>{rowData.sinhalaTitle}</SpanContainer>
@@ -148,7 +148,7 @@ function Songs() {
     );
   };
 
-  const song_name_singlish_template = rowData => {
+  const song_name_singlish_template = (rowData) => {
     return (
       <div className="center tableBody">
         <SpanContainer>{rowData.singlishTitle}</SpanContainer>
@@ -156,7 +156,7 @@ function Songs() {
     );
   };
 
-  const song_type_template = rowData => {
+  const song_type_template = (rowData) => {
     return (
       <div className="center tableBody">
         <SpanContainer>{rowData.type}</SpanContainer>
@@ -164,10 +164,10 @@ function Songs() {
     );
   };
 
-  const artists_template = rowData => {
+  const artists_template = (rowData) => {
     const artistArr = [];
-    artists.map(artist => {
-      rowData.artist.forEach(id => {
+    artists.map((artist) => {
+      rowData.artist.forEach((id) => {
         if (artist._id === id) {
           artistArr.push(artist.singlishName);
         }
@@ -175,24 +175,24 @@ function Songs() {
     });
     return (
       <div className="center tableBody oppositedirection">
-        {artistArr.map(artist => (
+        {artistArr.map((artist) => (
           <SpanContainer>{artist}</SpanContainer>
         ))}
       </div>
     );
   };
 
-  const categories_template = rowData => {
+  const categories_template = (rowData) => {
     return (
       <div className="center tableBody oppositedirection">
-        {rowData.categories.map(category => (
+        {rowData.categories.map((category) => (
           <SpanContainer>{category}</SpanContainer>
         ))}
       </div>
     );
   };
 
-  const song_likes_template = rowData => {
+  const song_likes_template = (rowData) => {
     return (
       <div className="center tableBody">
         <SpanContainer>{rowData.likes}</SpanContainer>
@@ -200,7 +200,7 @@ function Songs() {
     );
   };
 
-  const delete_edit_view_btns_template = rowData => {
+  const delete_edit_view_btns_template = (rowData) => {
     return (
       <div className="center direction">
         <ViewIconContainer
@@ -231,24 +231,24 @@ function Songs() {
   };
 
   //View song dialog template
-  const view__template = rowData => {
+  const view__template = (rowData) => {
     setTitleForTemplate(rowData.sinhalaTitle);
     setSongForTemplate(rowData.song);
     setVisible(true);
   };
 
   //success messages timeout function
-  window.setTimeout(function() {
+  window.setTimeout(function () {
     $(".alert")
       .fadeTo(2000, 0)
-      .slideUp(2000, function() {
+      .slideUp(2000, function () {
         $(this).remove();
       });
   }, 3000);
 
   //audio preview function
   var $audio = $("#myAudio");
-  $("#myFile").on("change", function(e) {
+  $("#myFile").on("change", function (e) {
     var target = e.currentTarget;
     var file = target.files[0];
     var reader = new FileReader();
@@ -256,7 +256,7 @@ function Songs() {
 
     if (target.files && file) {
       var reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         $audio.attr("src", e.target.result);
       };
       reader.readAsDataURL(file);
@@ -284,7 +284,7 @@ function Songs() {
                       value={songs}
                       responsive
                       paginator={true}
-                      rows={10}
+                      rows={5}
                       rowHover
                       rowsPerPageOptions={[5, 10, 25, 50]}
                       emptyMessage="No songs found"
@@ -295,36 +295,43 @@ function Songs() {
                         field="songTitleSinhala"
                         header="Song Title (Sinhala)"
                         body={song_name_sinhala_template}
+                        style={{ width: "15%" }}
                       />
                       <Column
                         field="songTitleSinglish"
                         header="Song Title (Singlish)"
                         body={song_name_singlish_template}
+                        style={{ width: "15%" }}
                       />
                       <Column
                         field="songType"
                         header="Song Type"
                         body={song_type_template}
+                        style={{ width: "10%" }}
                       />
                       <Column
                         field="artists"
                         header="Artists"
                         body={artists_template}
+                        style={{ width: "18%" }}
                       />
                       <Column
                         field="categories"
                         header="Categories"
                         body={categories_template}
+                        style={{ width: "18%" }}
                       />
                       <Column
                         field="likes"
                         header="Likes"
                         body={song_likes_template}
+                        style={{ width: "7%" }}
                       />
                       <Column
                         field="action"
                         header="Action"
                         body={delete_edit_view_btns_template}
+                        style={{ width: "15%" }}
                       />
                     </DataTable>
                   </div>
@@ -352,7 +359,7 @@ function Songs() {
                         name="title_name_sinhala"
                         placeholder="Title Name (Sinhala)"
                         value={sinhalaTitle}
-                        onChange={e => setSinhalaTitle(e.target.value)}
+                        onChange={(e) => setSinhalaTitle(e.target.value)}
                       ></InputContainer>
                       {song_error && song_error.data.sinhalaTitle && (
                         <Message
@@ -370,7 +377,7 @@ function Songs() {
                         name="title_name_singlish"
                         placeholder="Title Name (Singlish)"
                         value={singlishTitle}
-                        onChange={e => setSinglishTitle(e.target.value)}
+                        onChange={(e) => setSinglishTitle(e.target.value)}
                       ></InputContainer>
                       {song_error && song_error.data.singlishTitle && (
                         <Message
@@ -387,10 +394,10 @@ function Songs() {
                             inputId="rb1"
                             name="type"
                             value="Solo"
-                            onChange={e => setSongType(e.value)}
+                            onChange={(e) => setSongType(e.value)}
                             checked={songType === "Solo"}
                             style={{
-                              margin: "0.2rem"
+                              margin: "0.2rem",
                             }}
                           />
                           <LongLabelContainer
@@ -405,10 +412,10 @@ function Songs() {
                             inputId="rb2"
                             name="type"
                             value="Duet"
-                            onChange={e => setSongType(e.value)}
+                            onChange={(e) => setSongType(e.value)}
                             checked={songType === "Duet"}
                             style={{
-                              margin: "0.2rem"
+                              margin: "0.2rem",
                             }}
                           />
                           <LongLabelContainer
@@ -423,10 +430,10 @@ function Songs() {
                             inputId="rb3"
                             name="type"
                             value="Group"
-                            onChange={e => setSongType(e.value)}
+                            onChange={(e) => setSongType(e.value)}
                             checked={songType === "Group"}
                             style={{
-                              marginLeft: "0.2rem"
+                              marginLeft: "0.2rem",
                             }}
                           />
                           <LongLabelContainer
@@ -450,7 +457,7 @@ function Songs() {
                         className="dropdown"
                         value={artistId}
                         options={artist_dropdown}
-                        onChange={e => setArtistId(e.value)}
+                        onChange={(e) => setArtistId(e.value)}
                         style={MultiSelectContainer}
                         filter={true}
                         filterPlaceholder="Search"
@@ -462,7 +469,7 @@ function Songs() {
                         className="dropdown"
                         value={category}
                         options={category_dropdown}
-                        onChange={e => setCategory(e.value)}
+                        onChange={(e) => setCategory(e.value)}
                         style={MultiSelectContainer}
                         filter={true}
                         filterPlaceholder="Search"
@@ -478,7 +485,7 @@ function Songs() {
                           name="song_body"
                           placeholder="Song"
                           value={song}
-                          onChange={e => setSong(e.target.value)}
+                          onChange={(e) => setSong(e.target.value)}
                         ></TextAreaContainer>
                       </div>
                       {song_error && song_error.data.song && (

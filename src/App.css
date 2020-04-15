@@ -67,7 +67,7 @@
 /* songs table */
 .songsTable {
   position: relative;
-  height: 60vh;
+  height: 70vh;
   width: 60vw;
   overflow: auto;
   display: block;

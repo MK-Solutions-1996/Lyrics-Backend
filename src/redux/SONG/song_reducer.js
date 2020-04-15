@@ -3,7 +3,8 @@ import {
   SONG_FETCH_MESSAGE,
   SONG_FETCH_ALL,
   SONG_FETCH_SINGLE,
-  SONG_FETCH_ERROR
+  SONG_FETCH_ERROR,
+  SONG_CLEAR_STATE,
 } from "./song_types";
 
 const initial_state = {
@@ -11,7 +12,7 @@ const initial_state = {
   message: "",
   songs: [],
   singleSong: {},
-  song_error: ""
+  song_error: "",
 };
 
 const song_reducer = (state = initial_state, action) => {
@@ -19,35 +20,37 @@ const song_reducer = (state = initial_state, action) => {
     case SONG_FETCH_LOADING:
       return {
         ...state,
-        song_loading: true
+        song_loading: true,
       };
     case SONG_FETCH_MESSAGE:
       return {
         ...state,
         song_loading: false,
         message: action.payload,
-        song_error: ""
+        song_error: "",
       };
     case SONG_FETCH_ALL:
       return {
         ...state,
         song_loading: false,
         songs: action.payload,
-        song_error: ""
+        song_error: "",
       };
     case SONG_FETCH_SINGLE:
       return {
         ...state,
         song_loading: false,
         singleSong: action.payload,
-        song_error: ""
+        song_error: "",
       };
     case SONG_FETCH_ERROR:
       return {
         ...state,
         song_loading: false,
-        song_error: action.payload
+        song_error: action.payload,
       };
+    case SONG_CLEAR_STATE:
+      return initial_state;
     default:
       return state;
   }
