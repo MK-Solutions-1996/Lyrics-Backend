@@ -59,8 +59,8 @@ export const save_artist_action = (formData) => {
     })
       .then(() => {
         dispatch(fetchMessage("Saved successfully"));
-        dispatch(get_all_artists_action());
         dispatch(clear_state_action());
+        dispatch(get_all_artists_action());
       })
       .catch((err) => {
         const error = err.response;
@@ -99,8 +99,8 @@ export const update_artist_action = (artistId, formData) => {
     })
       .then(() => {
         dispatch(fetchMessage("Updated successfully"));
-        dispatch(get_all_artists_action());
         dispatch(clear_state_action());
+        dispatch(get_all_artists_action());
       })
       .catch((err) => {
         const error = err.response;
@@ -119,8 +119,8 @@ export const delete_artist_action = (artistId) => {
     })
       .then(() => {
         dispatch(fetchMessage("Deleted successfully"));
-        dispatch(get_all_artists_action());
         dispatch(clear_state_action());
+        dispatch(get_all_artists_action());
       })
       .catch((err) => {
         const error = err.response;
@@ -131,8 +131,6 @@ export const delete_artist_action = (artistId) => {
 
 export const clear_state_action = () => {
   return (dispatch) => {
-    setTimeout(() => {
-      dispatch(clearState());
-    }, 1000);
+    dispatch(clearState());
   };
 };

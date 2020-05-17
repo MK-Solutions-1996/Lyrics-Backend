@@ -6,6 +6,8 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { RadioButton } from "primereact/radiobutton";
 import { Message } from "primereact/message";
+import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
 import { useLocation } from "react-router-dom";
 import { default_image_icon } from "../constants/imports";
 import { useSelector, useDispatch } from "react-redux";
@@ -43,14 +45,24 @@ function Artists() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [imageAvailability, setImageAvailability] = useState("true");
+  const [delVisible, setDelVisible] = useState(false);
 
   const artist_state = useSelector((state) => state.artist);
   const dispatch = useDispatch();
   const { artist_loading, artists, message, artist_error } = artist_state;
 
+  const [searchText, setSearchText] = useState("");
+  const [searchArray, setSearchArray] = useState([]);
+
   useEffect(() => {
     dispatch(get_all_artists_action());
   }, []);
+
+  useEffect(() => {
+    if (!artist_loading) {
+      setSearchArray(artists);
+    }
+  }, [artist_loading]);
 
   var formData = new FormData();
   formData.append("sinhalaName", sinhalaName);
@@ -92,6 +104,17 @@ function Artists() {
     setImageAvailability("true");
     $("#myFile1").val("");
     $("#myFile2").val("");
+  };
+
+  //search
+  const searchFilter = (text) => {
+    setSearchText(text);
+    const lowerText = text.toLowerCase();
+    const newData = artists.filter((item) => {
+      const itemData = `${item.singlishName.toLowerCase()} ${item.sinhalaName}`;
+      return itemData.indexOf(lowerText) > -1;
+    });
+    setSearchArray(newData);
   };
 
   //artist image preview function
@@ -153,10 +176,39 @@ function Artists() {
         />
         <DeleteIconContainer
           className="fas fa-trash"
-          onClick={() => dispatch(delete_artist_action(rowData._id))}
+          onClick={() => setDelVisible(true)}
         />
+        <Dialog
+          visible={delVisible}
+          style={{ width: "20vw" }}
+          modal={true}
+          onHide={() => setDelVisible(false)}
+        >
+          <label style={{ fontSize: "1rem" }}>
+            Do you really want to delete this artist?
+          </label>
+          <div className="center direction">
+            <Button
+              label="Yes"
+              icon="pi pi-check"
+              onClick={() => del_template(rowData)}
+            />
+            <Button
+              label="No"
+              icon="pi pi-times"
+              onClick={() => setDelVisible(false)}
+              className="p-button-secondary"
+            />
+          </div>
+        </Dialog>
       </div>
     );
+  };
+
+  //Delete dialog template
+  const del_template = (rowData) => {
+    dispatch(delete_artist_action(rowData._id));
+    setDelVisible(false);
   };
 
   //success messages timeout function
@@ -179,14 +231,26 @@ function Artists() {
                 <div>
                   <div className="center">
                     <TopicContainer>Artists</TopicContainer>
+                    <RefreshIconContainer
+                      onClick={() => dispatch(get_all_artists_action())}
+                      className="fas fa-sync-alt"
+                    ></RefreshIconContainer>
                   </div>
-                  <RefreshIconContainer
-                    onClick={() => dispatch(get_all_artists_action())}
-                    className="fas fa-sync-alt"
-                  ></RefreshIconContainer>
+                  <div className="direction">
+                    <InputContainer
+                      type="text"
+                      className="form-control"
+                      id="search"
+                      name="search"
+                      placeholder="Search"
+                      value={searchText}
+                      onChange={(e) => searchFilter(e.target.value)}
+                      style={{ margin: "0.5rem" }}
+                    />
+                  </div>
                   <div className="artistsTable">
                     <DataTable
-                      value={artists}
+                      value={searchArray}
                       responsive
                       paginator={true}
                       rows={5}

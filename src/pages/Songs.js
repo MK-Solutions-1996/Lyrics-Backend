@@ -3,13 +3,14 @@ import DefaultPage from "./defaultes";
 import { NavigationBar } from "../components/NavigationBar";
 import $ from "jquery";
 import { MultiSelect } from "primereact/multiselect";
+import { Button } from "primereact/button";
 import { RadioButton } from "primereact/radiobutton";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Message } from "primereact/message";
 import { Dialog } from "primereact/dialog";
 import { useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
   get_all_songs_action,
   save_song_action,
@@ -57,6 +58,7 @@ function Songs() {
   const [songForTemplate, setSongForTemplate] = useState("");
   const [titleForTemplate, setTitleForTemplate] = useState("");
   const [visible, setVisible] = useState(false);
+  const [delVisible, setDelVisible] = useState(false);
 
   const song_state = useSelector((state) => state.song);
   const artist_state = useSelector((state) => state.artist);
@@ -66,11 +68,20 @@ function Songs() {
   const { artists } = artist_state;
   const { categories } = category_state;
 
+  const [searchText, setSearchText] = useState("");
+  const [searchArray, setSearchArray] = useState([]);
+
   useEffect(() => {
     dispatch(get_all_artists_action());
     dispatch(get_all_categories_action());
     dispatch(get_all_songs_action());
   }, []);
+
+  useEffect(() => {
+    if (!song_loading) {
+      setSearchArray(songs);
+    }
+  }, [song_loading]);
 
   //dropdowns fetches
   const artist_dropdown = [];
@@ -83,6 +94,19 @@ function Songs() {
     const object = { label: data.name, value: data.name };
     category_dropdown.push(object);
   });
+
+  //search
+  const searchFilter = (text) => {
+    setSearchText(text);
+    const lowerText = text.toLowerCase();
+    const newData = songs.filter((item) => {
+      const itemData = `${item.singlishTitle.toLowerCase()} ${
+        item.sinhalaTitle
+      } ${item.song}`;
+      return itemData.indexOf(lowerText) > -1;
+    });
+    setSearchArray(newData);
+  };
 
   var formData = new FormData();
   formData.append("sinhalaTitle", sinhalaTitle);
@@ -134,6 +158,7 @@ function Songs() {
     setCategory([]);
     setSong("");
     setFile(null);
+    setSearchText("");
     $("#myFile").val("");
     $("#myAudio").val("");
     $("#myAudio").attr("src", "");
@@ -224,10 +249,39 @@ function Songs() {
         />
         <DeleteIconContainer
           className="fas fa-trash"
-          onClick={() => dispatch(delete_song_action(rowData._id))}
+          onClick={() => setDelVisible(true)}
         />
+        <Dialog
+          visible={delVisible}
+          style={{ width: "20vw" }}
+          modal={true}
+          onHide={() => setDelVisible(false)}
+        >
+          <label style={{ fontSize: "1rem" }}>
+            Do you really want to delete this song?
+          </label>
+          <div className="center direction">
+            <Button
+              label="Yes"
+              icon="pi pi-check"
+              onClick={() => del_template(rowData)}
+            />
+            <Button
+              label="No"
+              icon="pi pi-times"
+              onClick={() => setDelVisible(false)}
+              className="p-button-secondary"
+            />
+          </div>
+        </Dialog>
       </div>
     );
+  };
+
+  //Delete dialog template
+  const del_template = (rowData) => {
+    dispatch(delete_song_action(rowData._id));
+    setDelVisible(false);
   };
 
   //View song dialog template
@@ -272,16 +326,28 @@ function Songs() {
             <div className="card">
               <div className="direction">
                 <div>
-                  <div className="center">
+                  <div className="center direction">
                     <TopicContainer>Songs</TopicContainer>
+                    <RefreshIconContainer
+                      onClick={() => dispatch(get_all_songs_action())}
+                      className="fas fa-sync-alt"
+                    ></RefreshIconContainer>
                   </div>
-                  <RefreshIconContainer
-                    onClick={() => dispatch(get_all_songs_action())}
-                    className="fas fa-sync-alt"
-                  ></RefreshIconContainer>
+                  <div className="direction">
+                    <InputContainer
+                      type="text"
+                      className="form-control"
+                      id="search"
+                      name="search"
+                      placeholder="Search"
+                      value={searchText}
+                      onChange={(e) => searchFilter(e.target.value)}
+                      style={{ margin: "0.5rem" }}
+                    />
+                  </div>
                   <div className="songsTable">
                     <DataTable
-                      value={songs}
+                      value={searchArray}
                       responsive
                       paginator={true}
                       rows={5}

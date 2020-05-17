@@ -5,12 +5,14 @@ import $ from "jquery";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Message } from "primereact/message";
+import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   get_all_categories_action,
   save_category_action,
-  delete_category_action
+  delete_category_action,
 } from "../redux";
 import {
   TopicContainer,
@@ -21,42 +23,63 @@ import {
   DeleteIconContainer,
   RefreshIconContainer,
   MessageContainer,
-  SpinnerContainer
+  SpinnerContainer,
 } from "../components/Customs";
 
 function Categories() {
   const location = useLocation();
 
   const [name, setName] = useState("");
+  const [delVisible, setDelVisible] = useState(false);
 
-  const category_state = useSelector(state => state.category);
+  const category_state = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const {
     category_loading,
     categories,
     message,
-    category_error
+    category_error,
   } = category_state;
+
+  const [searchText, setSearchText] = useState("");
+  const [searchArray, setSearchArray] = useState([]);
 
   useEffect(() => {
     dispatch(get_all_categories_action());
   }, []);
 
+  useEffect(() => {
+    if (!category_loading) {
+      setSearchArray(categories);
+    }
+  }, [category_loading]);
+
   const payload = {
-    name: name
+    name: name,
+  };
+
+  //search
+  const searchFilter = (text) => {
+    setSearchText(text);
+    const lowerText = text.toLowerCase();
+    const newData = categories.filter((item) => {
+      const itemData = `${item.name.toLowerCase()} ${item.name}`;
+      return itemData.indexOf(lowerText) > -1;
+    });
+    setSearchArray(newData);
   };
 
   const refresh = () => {
-    setName("");
+    $("#category_name").val("");
   };
 
-  const addCategory = payload => {
+  const addCategory = (payload) => {
     dispatch(save_category_action(payload));
     refresh();
   };
 
   //Category table column templates
-  const category_name_template = rowData => {
+  const category_name_template = (rowData) => {
     return (
       <div className="center tableBody">
         <SpanContainer>{rowData.name}</SpanContainer>
@@ -64,22 +87,51 @@ function Categories() {
     );
   };
 
-  const delete_btn_template = rowData => {
+  const delete_btn_template = (rowData) => {
     return (
       <div className="center">
         <DeleteIconContainer
           className="fas fa-trash"
-          onClick={() => dispatch(delete_category_action(rowData._id))}
+          onClick={() => setDelVisible(true)}
         />
+        <Dialog
+          visible={delVisible}
+          style={{ width: "20vw" }}
+          modal={true}
+          onHide={() => setDelVisible(false)}
+        >
+          <label style={{ fontSize: "1rem" }}>
+            Do you really want to delete this category?
+          </label>
+          <div className="center direction">
+            <Button
+              label="Yes"
+              icon="pi pi-check"
+              onClick={() => del_template(rowData)}
+            />
+            <Button
+              label="No"
+              icon="pi pi-times"
+              onClick={() => setDelVisible(false)}
+              className="p-button-secondary"
+            />
+          </div>
+        </Dialog>
       </div>
     );
   };
 
+  //Delete dialog template
+  const del_template = (rowData) => {
+    dispatch(delete_category_action(rowData._id));
+    setDelVisible(false);
+  };
+
   //success messages timeout function
-  window.setTimeout(function() {
+  window.setTimeout(function () {
     $(".alert")
       .fadeTo(2000, 0)
-      .slideUp(500, function() {
+      .slideUp(500, function () {
         $(this).remove();
       });
   }, 3000);
@@ -95,14 +147,26 @@ function Categories() {
                 <div>
                   <div className="center">
                     <TopicContainer>Categories</TopicContainer>
+                    <RefreshIconContainer
+                      onClick={() => dispatch(get_all_categories_action())}
+                      className="fas fa-sync-alt"
+                    ></RefreshIconContainer>
                   </div>
-                  <RefreshIconContainer
-                    onClick={() => dispatch(get_all_categories_action())}
-                    className="fas fa-sync-alt"
-                  ></RefreshIconContainer>
+                  <div className="direction">
+                    <InputContainer
+                      type="text"
+                      className="form-control"
+                      id="search"
+                      name="search"
+                      placeholder="Search"
+                      value={searchText}
+                      onChange={(e) => searchFilter(e.target.value)}
+                      style={{ margin: "0.5rem" }}
+                    />
+                  </div>
                   <div className="categoriesTable">
                     <DataTable
-                      value={categories}
+                      value={searchArray}
                       responsive
                       paginator={true}
                       rows={10}
@@ -137,7 +201,7 @@ function Categories() {
                         id="category_name"
                         name="category_name"
                         placeholder="Category Name"
-                        onChange={e => setName(e.target.value)}
+                        onChange={(e) => setName(e.target.value)}
                       ></InputContainer>
                       {category_error && category_error.data.name && (
                         <Message
