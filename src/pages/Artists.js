@@ -180,12 +180,12 @@ function Artists() {
         />
         <Dialog
           visible={delVisible}
-          style={{ width: "20vw" }}
+          style={{ width: "50vw" }}
           modal={true}
           onHide={() => setDelVisible(false)}
         >
-          <label style={{ fontSize: "1rem" }}>
-            Do you really want to delete this artist?
+          <label className="center" style={{ fontSize: "1rem" }}>
+            Do you really want to delete this artist - {rowData.singlishName}?
           </label>
           <div className="center direction">
             <Button
@@ -208,6 +208,7 @@ function Artists() {
   //Delete dialog template
   const del_template = (rowData) => {
     dispatch(delete_artist_action(rowData._id));
+    refresh();
     setDelVisible(false);
   };
 

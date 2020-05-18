@@ -96,12 +96,12 @@ function Categories() {
         />
         <Dialog
           visible={delVisible}
-          style={{ width: "20vw" }}
+          style={{ width: "50vw" }}
           modal={true}
           onHide={() => setDelVisible(false)}
         >
-          <label style={{ fontSize: "1rem" }}>
-            Do you really want to delete this category?
+          <label className="center" style={{ fontSize: "1rem" }}>
+            Do you really want to delete this category - {rowData.name}?
           </label>
           <div className="center direction">
             <Button
@@ -124,6 +124,7 @@ function Categories() {
   //Delete dialog template
   const del_template = (rowData) => {
     dispatch(delete_category_action(rowData._id));
+    refresh();
     setDelVisible(false);
   };
 

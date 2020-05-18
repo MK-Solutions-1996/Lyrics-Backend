@@ -253,12 +253,12 @@ function Songs() {
         />
         <Dialog
           visible={delVisible}
-          style={{ width: "20vw" }}
+          style={{ width: "50vw" }}
           modal={true}
           onHide={() => setDelVisible(false)}
         >
-          <label style={{ fontSize: "1rem" }}>
-            Do you really want to delete this song?
+          <label className="center" style={{ fontSize: "1rem" }}>
+            Do you really want to delete this song - {rowData.singlishTitle}?
           </label>
           <div className="center direction">
             <Button
@@ -281,6 +281,7 @@ function Songs() {
   //Delete dialog template
   const del_template = (rowData) => {
     dispatch(delete_song_action(rowData._id));
+    refresh();
     setDelVisible(false);
   };
 
