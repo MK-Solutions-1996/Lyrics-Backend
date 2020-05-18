@@ -60,7 +60,9 @@ export const save_song_action = (formData) => {
       .then(() => {
         dispatch(fetchMessage("Saved successfully"));
         dispatch(clear_state_action());
-        dispatch(get_all_songs_action());
+        setTimeout(() => {
+          dispatch(get_all_songs_action());
+        }, 1000);
       })
       .catch((err) => {
         const error = err.response;
@@ -100,7 +102,9 @@ export const update_song_action = (songId, formData) => {
       .then(() => {
         dispatch(fetchMessage("Updated successfully"));
         dispatch(clear_state_action());
-        dispatch(get_all_songs_action());
+        setTimeout(() => {
+          dispatch(get_all_songs_action());
+        }, 1000);
       })
       .catch((err) => {
         const error = err.response;
@@ -120,7 +124,9 @@ export const delete_song_action = (songId) => {
       .then(() => {
         dispatch(fetchMessage("Deleted successfully"));
         dispatch(clear_state_action());
-        dispatch(get_all_songs_action());
+        setTimeout(() => {
+          dispatch(get_all_songs_action());
+        }, 1000);
       })
       .catch((err) => {
         const error = err.response;
@@ -131,6 +137,8 @@ export const delete_song_action = (songId) => {
 
 export const clear_state_action = () => {
   return (dispatch) => {
-    dispatch(clearState());
+    setTimeout(() => {
+      dispatch(clearState());
+    }, 1000);
   };
 };

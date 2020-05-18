@@ -62,7 +62,9 @@ export const save_category_action = (payload) => {
       .then(() => {
         dispatch(fetchMessage("Saved successfully"));
         dispatch(clear_state_action());
-        dispatch(get_all_categories_action());
+        setTimeout(() => {
+          dispatch(get_all_categories_action());
+        }, 1000);
       })
       .catch((err) => {
         const error = err.response;
@@ -101,7 +103,9 @@ export const delete_category_action = (id) => {
       .then(() => {
         dispatch(fetchMessage("Deleted successfully"));
         dispatch(clear_state_action());
-        dispatch(get_all_categories_action());
+        setTimeout(() => {
+          dispatch(get_all_categories_action());
+        }, 1000);
       })
       .catch((err) => {
         const error = err.response;
@@ -112,6 +116,8 @@ export const delete_category_action = (id) => {
 
 export const clear_state_action = () => {
   return (dispatch) => {
-    dispatch(clearState());
+    setTimeout(() => {
+      dispatch(clearState());
+    }, 1000);
   };
 };
