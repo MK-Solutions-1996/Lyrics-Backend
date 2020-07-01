@@ -3,7 +3,7 @@ import {
   ARTIST_FETCH_LOADING,
   ARTIST_FETCH_MESSAGE,
   ARTIST_FETCH_ALL,
-  ARTIST_FETCH_SINGLE,
+  // ARTIST_FETCH_SINGLE,
   ARTIST_FETCH_ERROR,
   ARTIST_CLEAR_STATE,
 } from "./artist_types";
@@ -28,12 +28,12 @@ const fetchALL = (artists) => {
   };
 };
 
-const fetchSingle = (artist) => {
-  return {
-    type: ARTIST_FETCH_SINGLE,
-    payload: artist,
-  };
-};
+// const fetchSingle = (artist) => {
+//   return {
+//     type: ARTIST_FETCH_SINGLE,
+//     payload: artist,
+//   };
+// };
 
 const fetchError = (error) => {
   return {

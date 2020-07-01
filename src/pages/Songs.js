@@ -11,7 +11,7 @@ import { Message } from "primereact/message";
 import { Dialog } from "primereact/dialog";
 import { Spinner } from "primereact/spinner";
 import { useLocation } from "react-router-dom";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   get_all_songs_action,
   save_song_action,
@@ -119,8 +119,8 @@ function Songs() {
   formData.append("type", songType);
   formData.append("audioAvailability", audioAvailability);
   formData.append("audio", file);
-  for (var i = 0; i < artistId.length; i++) {
-    formData.append("artist[]", artistId[i]);
+  for (var j = 0; j < artistId.length; j++) {
+    formData.append("artist[]", artistId[j]);
   }
   formData.append("likes", likes);
 
@@ -312,7 +312,6 @@ function Songs() {
     setFile(file);
 
     if (target.files && file) {
-      var reader = new FileReader();
       reader.onload = function (e) {
         $audio.attr("src", e.target.result);
       };

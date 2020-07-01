@@ -3,7 +3,7 @@ import {
   CATEGORY_FETCH_LOADING,
   CATEGORY_FETCH_MESSAGE,
   CATEGORY_FETCH_ALL,
-  CATEGORY_FETCH_SINGLE,
+  // CATEGORY_FETCH_SINGLE,
   CATEGORY_FETCH_ERROR,
   CATEGORY_CLEAR_STATE,
 } from "./category_types";
@@ -28,12 +28,12 @@ const fetchALL = (categories) => {
   };
 };
 
-const fetchSingle = (category) => {
-  return {
-    type: CATEGORY_FETCH_SINGLE,
-    payload: category,
-  };
-};
+// const fetchSingle = (category) => {
+//   return {
+//     type: CATEGORY_FETCH_SINGLE,
+//     payload: category,
+//   };
+// };
 
 const fetchError = (error) => {
   return {

@@ -3,7 +3,7 @@ import {
   SONG_FETCH_LOADING,
   SONG_FETCH_MESSAGE,
   SONG_FETCH_ALL,
-  SONG_FETCH_SINGLE,
+  // SONG_FETCH_SINGLE,
   SONG_FETCH_ERROR,
   SONG_CLEAR_STATE,
 } from "./song_types";
@@ -28,12 +28,12 @@ const fetchALL = (songs) => {
   };
 };
 
-const fetchSingle = (song) => {
-  return {
-    type: SONG_FETCH_SINGLE,
-    payload: song,
-  };
-};
+// const fetchSingle = (song) => {
+//   return {
+//     type: SONG_FETCH_SINGLE,
+//     payload: song,
+//   };
+// };
 
 const fetchError = (error) => {
   return {
