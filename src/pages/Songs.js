@@ -9,6 +9,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Message } from "primereact/message";
 import { Dialog } from "primereact/dialog";
+import { Spinner } from "primereact/spinner";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
@@ -157,6 +158,7 @@ function Songs() {
     setArtistId([]);
     setCategory([]);
     setSong("");
+    setLikes(0);
     setFile(null);
     setSearchText("");
     $("#myFile").val("");
@@ -562,6 +564,13 @@ function Songs() {
                           text={song_error.data.song.message}
                         />
                       )}
+                    </div>
+                    <div className="form-group center oppositedirection">
+                      <Spinner
+                        value={likes}
+                        size={30}
+                        onChange={(e) => setLikes(e.value)}
+                      />
                     </div>
                     <div className="center oppositedirection">
                       <InputContainer type="file" id="myFile" />

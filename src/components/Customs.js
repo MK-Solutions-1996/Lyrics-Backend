@@ -190,15 +190,15 @@ export const MultiSelectContainer = {
   borderRadius: "0.4rem",
   margin: "0 0.3rem 0rem 0.3rem",
   fontSize: "0.8rem",
-  fontFamily: "serif"
+  fontFamily: "serif",
 };
 
 export const MessageContainer = {
   fontSize: "0.6rem",
-  margin: "0.1rem"
+  margin: "0.1rem",
 };
 
 export const IgnoreButtonContainer = {
   fontSize: "0.6rem",
-  margin: "0.1rem"
+  margin: "0.1rem",
 };
